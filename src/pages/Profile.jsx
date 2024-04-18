@@ -4,6 +4,8 @@ import ProfileInput from '../components/ProfileInput'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { backendAPI } from '../config/axiosConfig'
+import { useAuth } from '../contexts/AuthContext'
 
 
 
@@ -25,26 +27,29 @@ const Profile = () => {
     const [ageError, setAgeError] = useState(false)
     const [ageErrorMessage, setAgeErrorMessage] = useState("")
     const [cityError, setCityError] = useState(false)
+    const {accessToken} = useAuth()
+    const [isStarting, setIsStarting] = useState(true)
+
 
     useEffect(() => {
-        
-        const sampleData = {
-            email: "example@gmail.com",
-            names: "Juan Carlos",
-            paternalSurname: "Pérez",
-            maternalSurname: "García",
-            age: "25",
-            city: "CDMX",
-            countryCode: "52",
-            phone: "75845512"
-        }
-        setNames(sampleData.names)
-        setPaternalSurname(sampleData.paternalSurname)
-        setMaternalSurname(sampleData.maternalSurname)
-        setAge(sampleData.age)
-        setCity(sampleData.city)
-        setPhone(`+${sampleData.countryCode}-${sampleData.phone}`)
-    },[])
+        if(accessToken === "") return
+        backendAPI.get("/user", {headers: {"Authorization": `Bearer ${accessToken}`}}).then((response) => {
+            
+            setNames(response.data.user.names)
+            setPaternalSurname(response.data.user.paternalSurname)
+            setMaternalSurname(response.data.user.maternalSurname)
+            setAge(response.data.user.age)
+            setCity(response.data.user.city)
+            setPhone(`+${response.data.user.countryCode}-${response.data.user.phone}`)
+            setIsStarting(false)
+        }).catch((error) => {
+            console.log(error)
+        })
+
+    },[accessToken])
+    
+
+    
 
   const submitChanges = (e) => {
     e.preventDefault()
@@ -96,7 +101,16 @@ const Profile = () => {
         
     }
     if(errors > 0) return
-    setEditable(!editable)
+
+    let ageNumber = parseInt(age)
+    let countryCodeNumber = parseInt(dialCode)
+    
+    backendAPI.patch("/user", {names, paternalSurname, maternalSurname, age:ageNumber, city, phone: phoneNumber, countryCode: countryCodeNumber}, {headers: {"Authorization": `Bearer ${accessToken}`}}).then((response) => {
+        setEditable(!editable)
+    }).catch((error) => {
+        console.error("Error al actualizar el perfil:", error)
+    })
+    
   }  
 
   return (
@@ -106,8 +120,9 @@ const Profile = () => {
             <FontAwesomeIcon type="submit" onClick={submitChanges} icon={editable ? faCheck : faPencil } className="text-white cursor-pointer" size={"xl"} />
             
         </div>
+
         <div className="flex flex-col justify-center items-left py-[3rem] px-[24rem] gap-[4rem]">
-            {editable ? 
+            {isStarting ? <p className="text-white text-title text-center">CARGANDO...</p> :editable ? 
             <form onSubmit={submitChanges}>
                 <ProfileInput title={"Nombres"} content={names} setContent={setNames} type={"text"} setError={setNameError} placeholder={"Escriba su nombre"}/>
                 <br/>

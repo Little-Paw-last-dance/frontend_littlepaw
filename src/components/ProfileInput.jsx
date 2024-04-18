@@ -3,12 +3,13 @@ import React from 'react'
 import PhoneInput from 'react-phone-input-2'
 
 
-const ProfileInput = ({title, content, setContent, type, setError}) => {
+const ProfileInput = ({title, content, setContent, type, setError, placeholder}) => {
     const handlePhone = (e,value) => {
         let phone = e?.split(value?.dialCode)[1]
         setContent(`+${value?.dialCode}-${phone}`)
     }
     const handleInputChanges = (e) => {
+        if(e.target.value.match(/\d/) && type === "text") return
         setContent(e.target.value)
         if(setError) {
             setError(false)
@@ -31,7 +32,7 @@ const ProfileInput = ({title, content, setContent, type, setError}) => {
             dropdownStyle={{backgroundColor: "#F7D783", borderWidth: "3px", borderColor: "white", }}
             inputStyle={{backgroundColor: "#F7D783", borderWidth: "3px", borderColor: "white", height: "3rem", fontSize: "1rem"}}
             />:
-        <TextField type={type} sx={{"& .MuiOutlinedInput-root": {"&.MuiInputBase-root fieldset": {borderColor: "white", borderWidth:"3px"}}}} id="standard" inputProps={{id: title}} variant="outlined" value={content} onChange={handleInputChanges}/>
+        <TextField placeholder={placeholder} type={type} sx={{"& .MuiOutlinedInput-root": {"&.MuiInputBase-root fieldset": {borderColor: "white", borderWidth:"3px"}}}} id="standard" inputProps={{id: title, style:{fontFamily:"Roboto", fontWeight:700}}} variant="outlined" value={content} onChange={handleInputChanges}/>
         
         }
     </div>

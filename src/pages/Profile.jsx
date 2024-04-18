@@ -46,7 +46,8 @@ const Profile = () => {
         setPhone(`+${sampleData.countryCode}-${sampleData.phone}`)
     },[])
 
-  const submitChanges = () => {
+  const submitChanges = (e) => {
+    e.preventDefault()
     let errors = 0
     setPhoneError(false)
     setPhoneErrorMessage("")
@@ -102,23 +103,23 @@ const Profile = () => {
     <div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
         <div className="flex flex-row justify-center items-center gap-[1rem]">
             <h1 className="font-anybody text-title text-white font-bold text-center">Perfil</h1>
-            <FontAwesomeIcon onClick={submitChanges} icon={editable ? faCheck : faPencil } className="text-white cursor-pointer" size={"xl"} />
+            <FontAwesomeIcon type="submit" onClick={submitChanges} icon={editable ? faCheck : faPencil } className="text-white cursor-pointer" size={"xl"} />
             
         </div>
         <div className="flex flex-col justify-center items-left py-[3rem] px-[24rem] gap-[4rem]">
             {editable ? 
-            <form>
-                <ProfileInput title={"Nombres"} content={names} setContent={setNames} type={"text"} setError={setNameError}/>
+            <form onSubmit={submitChanges}>
+                <ProfileInput title={"Nombres"} content={names} setContent={setNames} type={"text"} setError={setNameError} placeholder={"Escriba su nombre"}/>
                 <br/>
                 {nameError && <p className="text-red-500 text-sm font-bold">{nameErrorMessage}</p>}
-                <ProfileInput title={"Apellido Paterno"} content={paternalSurname} setContent={setPaternalSurname} type={"text"} setError={setPaternalSurnameError}/>
+                <ProfileInput title={"Apellido Paterno"} content={paternalSurname} setContent={setPaternalSurname} type={"text"} setError={setPaternalSurnameError} placeholder={"Escriba su apellido paterno"}/>
                 <br/>
                 {paternalSurnameError && <p className="text-red-500 text-sm font-bold">{paternalSurnameErrorMessage}</p>}
-                <ProfileInput title={"Apellido Materno"} content={maternalSurname} setContent={setMaternalSurname} type={"text"}/>
-                <ProfileInput title={"Edad"} content={age} setContent={setAge} type={"number"} setError={setAgeError}/>
+                <ProfileInput title={"Apellido Materno"} content={maternalSurname} setContent={setMaternalSurname} type={"text"} placeholder={"Escriba su apellido materno"}/>
+                <ProfileInput title={"Edad"} content={age} setContent={setAge} type={"number"} setError={setAgeError} placeholder={"Escriba su edad"}/>
                 <br/>
                 {ageError && <p className="text-red-500 text-sm font-bold">{ageErrorMessage}</p>}
-                <ProfileInput title={"Ciudad"} content={city} setContent={setCity} type={"text"} setError={setCityError}/>
+                <ProfileInput title={"Ciudad"} content={city} setContent={setCity} type={"text"} setError={setCityError} placeholder={"Escriba su ciudad"}/>
                 <br/>
                 {cityError && <p className="text-red-500 text-sm font-bold">{cityError}</p>}
 
@@ -129,7 +130,7 @@ const Profile = () => {
             : <>
             <ProfileInfo title={"Nombres"} content={names}/>
             <ProfileInfo title={"Apellido Paterno"} content={paternalSurname}/>
-            <ProfileInfo title={"Apellido Materno"} content={maternalSurname}/>
+            {maternalSurname !== "" && <ProfileInfo title={"Apellido Materno"} content={maternalSurname}/>}
             <ProfileInfo title={"Edad"} content={age} />
             <ProfileInfo title={"Ciudad"} content={city}/>
             <ProfileInfo title={"Teléfono"} content={phone}/>

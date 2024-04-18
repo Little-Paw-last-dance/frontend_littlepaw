@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import { TextField, Button, Grid } from '@mui/material';
 import { auth } from '../config/firebaseConfig'; // Importa la instancia de autenticación de Firebase
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth,email, password); 
-      // Manejar la autenticación exitosa aquí (redireccionar, mostrar mensaje, etc.)
+      navigate('/');
     } catch (error) {
       setError(error.message);
     }

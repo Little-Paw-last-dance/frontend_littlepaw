@@ -1,15 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, Grid } from '@mui/material';
-
+import { auth } from '../config/firebaseConfig'; // Importa la instancia de autenticación de Firebase
+import { signInWithEmailAndPassword } from 'firebase/auth';
 const LoginForm = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+
+  const handleLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth,email, password); 
+      // Manejar la autenticación exitosa aquí (redireccionar, mostrar mensaje, etc.)
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <Grid container direction="column" spacing={3} alignItems="center">
-      <TextField label="Correo electrónico" variant="outlined" fullWidth InputLabelProps={{ className: 'custom-input-label' }} />
-      <TextField label="Contraseña" variant="outlined" type="password" fullWidth InputLabelProps={{ className: 'custom-input-label' }} style={{ marginTop: 15 }}/>
-      <Button variant="contained" className="bg-yellow-300 text-white" fullWidth style={{ backgroundColor: '#E0B46C', marginTop: 15 }}>
+      <TextField
+        label="Correo electrónico"
+        variant="outlined"
+        fullWidth
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <TextField
+        label="Contraseña"
+        variant="outlined"
+        type="password"
+        fullWidth
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        style={{ marginTop: 15 }}
+      />
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <Button
+        variant="contained"
+        className="bg-yellow-300 text-white"
+        fullWidth
+        style={{ backgroundColor: '#E0B46C', marginTop: 15 }}
+        onClick={handleLogin}
+      >
         Iniciar sesión
       </Button>
-      
     </Grid>
   );
 };

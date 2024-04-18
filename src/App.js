@@ -1,10 +1,12 @@
 import logo from './logo.svg';
-import './App.css';
+import Profile from './pages/Profile';
+import 'react-phone-input-2/lib/style.css'
 
 function App() {
   return (
-    <div className="App">
-      
+    <div >
+      <Profile />
+  
     </div>
   );
 }

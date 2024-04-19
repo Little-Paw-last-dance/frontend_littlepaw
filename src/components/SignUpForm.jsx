@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Grid, TextField, Button, MenuItem } from "@mui/material";
 import { backendAPI } from "../config/axiosConfig";
 import { useNavigate } from "react-router-dom";
-
-
+import PhoneInput from 'react-phone-input-2'
 const SignUpForm = () => {
   const countries = [
     { value: "1", label: "🇺🇸 +1" },
@@ -24,6 +23,18 @@ const SignUpForm = () => {
     // Agrega más países según sea necesario
   ];
 
+  const boliviaCities = [
+    { value: "Santa Cruz", label: "Santa Cruz" },
+    { value: "La Paz", label: "La Paz" },
+    { value: "Cochabamba", label: "Cochabamba" },
+    { value: "Sucre", label: "Sucre" },
+    { value: "Tarija", label: "Tarija" },
+    { value: "Potosí", label: "Potosí" },
+    { value: "Oruro", label: "Oruro" },
+    { value: "Beni", label: "Beni" },
+    { value: "Pando", label: "Pando" },
+  ];
+
   const [formData, setFormData] = useState({
     names: "",
     paternalSurname: "",
@@ -32,29 +43,27 @@ const SignUpForm = () => {
     city: "",
     password: "",
     confirmPassword: "",
-    countryCode: 0,
-    phone: 0,
+    countryCode: "",
+    phone: "",
     age: 0,
   });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    
     let updatedValue = value;
-    if (name === "age" || name === "countryCode" || name === "phone") {
-      updatedValue = parseInt(value, 10);
-    }
+
     setFormData({ ...formData, [name]: updatedValue });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await backendAPI.post( "/user",
+      const response = await backendAPI.post(
+        "/user",
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
-      
+      console.log(response.data);
       setFormData({
         names: "",
         paternalSurname: "",
@@ -63,12 +72,11 @@ const SignUpForm = () => {
         city: "",
         password: "",
         confirmPassword: "",
-        countryCode: 591,
-        phone: 0,
+        countryCode: "",
+        phone: "",
         age: 0,
       });
       navigate("/login");
-
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
@@ -86,8 +94,9 @@ const SignUpForm = () => {
             variant="outlined"
             fullWidth
             required
-            value={formData.name}
+            value={formData.names}
             onChange={handleChange}
+            inputProps={{ pattern: "[A-Za-z ]+", title: "Solo se permiten letras y espacios" }}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -99,6 +108,7 @@ const SignUpForm = () => {
             required
             value={formData.paternalSurname}
             onChange={handleChange}
+            inputProps={{ pattern: "[A-Za-z ]+", title: "Solo se permiten letras y espacios" }}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -110,6 +120,7 @@ const SignUpForm = () => {
             required
             value={formData.maternalSurname}
             onChange={handleChange}
+            inputProps={{ pattern: "[A-Za-z ]+", title: "Solo se permiten letras y espacios" }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -126,13 +137,20 @@ const SignUpForm = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             name="city"
+            select
             label="Ciudad"
             variant="outlined"
             fullWidth
             required
             value={formData.city}
             onChange={handleChange}
-          />
+          >
+            {boliviaCities.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -179,18 +197,12 @@ const SignUpForm = () => {
         <Grid item xs={12} sm={5}>
           <TextField
             name="phone"
-            type="number"
             label="Número de Teléfono"
             variant="outlined"
             fullWidth
             required
             value={formData.phone}
             onChange={handleChange}
-            color="primary" // Cambia el color del texto al tocar
-            focused // Establece el enfoque al tocar
-            InputLabelProps={{
-              style: { color: "#E0B46C" }, // Cambia el color de la etiqueta al tocar
-            }}
           />
         </Grid>
         <Grid item xs={12} sm={5}>

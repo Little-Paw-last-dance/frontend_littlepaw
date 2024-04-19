@@ -8,7 +8,7 @@ const LoginPage = () => {
     //que ocupe toda la pantalla con el fondo amarillo
     <div className="bg-yellow-300" style={{ width: '100%', height: '100%' }}>
       <Container disableGutters style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <Typography variant="h2" align="center" gutterBottom style={{ fontFamily: 'Anybody, sans-serif', color: '#E0B46C', paddingBottom: 55 }}>
+        <Typography variant="h2" align="center" gutterBottom style={{ color: '#E0B46C', paddingBottom: 55 }}>
           Little Paw
         </Typography>
         <LoginForm />

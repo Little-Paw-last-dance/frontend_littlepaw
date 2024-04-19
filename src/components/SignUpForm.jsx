@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Grid, TextField, Button, MenuItem } from "@mui/material";
-import axios from "axios";
+import { backendAPI } from "../config/axiosConfig";
+import { useNavigate } from "react-router-dom";
+
 
 const SignUpForm = () => {
   const countries = [
@@ -37,7 +39,7 @@ const SignUpForm = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    // Convertir el valor a número si es el campo age, countryCode o phone
+    
     let updatedValue = value;
     if (name === "age" || name === "countryCode" || name === "phone") {
       updatedValue = parseInt(value, 10);
@@ -48,12 +50,11 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/v1/user",
+      const response = await backendAPI.post( "/user",
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
-      console.log(response.data);
+      
       setFormData({
         names: "",
         paternalSurname: "",
@@ -66,10 +67,14 @@ const SignUpForm = () => {
         phone: 0,
         age: 0,
       });
+      navigate("/login");
+
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
   };
+
+  const navigate = useNavigate();
 
   return (
     <form onSubmit={handleSubmit}>
@@ -120,12 +125,12 @@ const SignUpForm = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            name="location"
-            label="Ubicación"
+            name="city"
+            label="Ciudad"
             variant="outlined"
             fullWidth
             required
-            value={formData.location}
+            value={formData.city}
             onChange={handleChange}
           />
         </Grid>

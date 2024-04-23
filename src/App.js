@@ -7,7 +7,7 @@ import MainPage from './components/MainPage';
 import logo from './logo.svg';
 import Profile from './pages/Profile';
 import 'react-phone-input-2/lib/style.css'
-
+import AddPetPage from './pages/AddPetPage';
 
 const App = () => {
   return (
@@ -18,7 +18,9 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/addpet" element={<AddPetPage />} />
           <Route path="/" element={<MainPage/>}/>
+
         </Routes>
         </AuthProvider>
       </Router>

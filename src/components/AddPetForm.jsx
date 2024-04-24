@@ -52,8 +52,8 @@ const AddPetForm = () => {
 
     try {
       // Utiliza Axios para hacer el POST al backend
-      const response = await axios.post(
-        `http://localhost:8000/api/v1/pet`,
+      const response = await backendAPI.post(
+        `/pet`,
         formData,
         {
           headers: {

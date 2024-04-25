@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { Grid, TextField, Button, MenuItem, Typography } from "@mui/material";
-import axios from "axios"; // Importa Axios
-import { backendAPI } from "../config/axiosConfig"; // Importa la URL del backend
-import { useAuth } from '../contexts/AuthContext'; // Importa el contexto de autenticación
+import { Grid, TextField, Button, MenuItem, Typography } from "@mui/material"; 
+import { backendAPI } from "../config/axiosConfig"; 
+import { useAuth } from '../contexts/AuthContext'; 
 import { useNavigate } from "react-router-dom";
 
 const AddPetForm = () => {
   const [selectedGender, setSelectedGender] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
-  const { accessToken } = useAuth(); // Obtiene el accessToken del contexto de autenticación
+  const { accessToken } = useAuth(); 
   const navigate = useNavigate();
 
 
@@ -18,9 +17,8 @@ const AddPetForm = () => {
 
   const handleImageUpload = async (event, index) => {
     const file = event.target.files[0];
-    if (!file) return; // No se seleccionó ningún archivo
+    if (!file) return; 
 
-    // Lee el archivo como un blob y luego conviértelo a base64
     const reader = new FileReader();
     reader.onload = (e) => {
       const imageUrl = e.target.result;
@@ -51,24 +49,21 @@ const AddPetForm = () => {
     };
 
     try {
-      // Utiliza Axios para hacer el POST al backend
       const response = await backendAPI.post(
         `/pet`,
         formData,
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`, // Agrega el token de autorización al header
+            Authorization: `Bearer ${accessToken}`, 
           },
         }
       );
-      console.log("Respuesta del servidor:", response.data);
-
-      // Redirecciona a otra página después de completar el registro
+      
       navigate("/");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
-      // Maneja el error según sea necesario
+
     }
   };
 

@@ -5,7 +5,6 @@ import RegisterLink from '../components/RegisterLink';
 import logoImg from '../assets/logo.png';
 const LoginPage = () => {
   return (
-    //que ocupe toda la pantalla con el fondo amarillo
     <div className="bg-yellow-300" style={{ width: '100%', height: '100%' }}>
       <Container disableGutters style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <img src={logoImg} alt="logo" style={{ width: 150, height: 150 }} />

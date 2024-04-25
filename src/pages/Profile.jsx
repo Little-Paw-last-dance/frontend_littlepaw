@@ -6,6 +6,8 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { backendAPI } from '../config/axiosConfig'
 import { useAuth } from '../contexts/AuthContext'
+import { Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -29,6 +31,7 @@ const Profile = () => {
     const [cityError, setCityError] = useState(false)
     const {accessToken} = useAuth()
     const [isStarting, setIsStarting] = useState(true)
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -134,7 +137,7 @@ const Profile = () => {
                 <ProfileInput title={"Edad"} content={age} setContent={setAge} type={"number"} setError={setAgeError} placeholder={"Escriba su edad"}/>
                 <br/>
                 {ageError && <p className="text-red-500 text-sm font-bold">{ageErrorMessage}</p>}
-                <ProfileInput title={"Ciudad"} content={city} setContent={setCity} type={"text"} setError={setCityError} placeholder={"Escriba su ciudad"}/>
+                <ProfileInput title={"Ciudad"} isSelect content={city} setContent={setCity} type={"text"} setError={setCityError} placeholder={"Escriba su ciudad"}/>
                 <br/>
                 {cityError && <p className="text-red-500 text-sm font-bold">{cityError}</p>}
 
@@ -151,9 +154,13 @@ const Profile = () => {
             <ProfileInfo title={"Teléfono"} content={phone}/>
             </>
             }
-            
-
         </div>
+
+        <div className="flex flex-row justify-center items-center gap-[1rem]">
+            <Button variant="contained" className="bg-yellow-300 text-white "  style={{ backgroundColor: "#E0B46C", marginTop: 15, width: 100 }} onClick={() => {navigate("/")}}>VOLVER</Button>
+        </div>
+
+        
 
     </div>
   )

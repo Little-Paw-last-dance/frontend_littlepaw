@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         try {
             await signOut(auth);
-            navigate('/login');
+            navigate('/welcome');
         } catch (error) {
             console.error("Error al cerrar sesión:", error);
         }

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Grid, TextField, Button, MenuItem } from "@mui/material";
 import { backendAPI } from "../config/axiosConfig";
 import { useNavigate } from "react-router-dom";
-import PhoneInput from 'react-phone-input-2'
 const SignUpForm = () => {
   const countries = [
     { value: "1", label: "🇺🇸 +1" },
@@ -20,7 +19,7 @@ const SignUpForm = () => {
     { value: "595", label: "PY +595" },
     { value: "507", label: "PA +507" },
     { value: "51", label: "PE +51" },
-    // Agrega más países según sea necesario
+    
   ];
 
   const boliviaCities = [
@@ -51,6 +50,10 @@ const SignUpForm = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     let updatedValue = value;
+    
+    if (name === "age" || name === "countryCode" || name === "phone") {
+      updatedValue = parseInt(value, 10);
+    }
 
     setFormData({ ...formData, [name]: updatedValue });
   };
@@ -63,7 +66,6 @@ const SignUpForm = () => {
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
-      console.log(response.data);
       setFormData({
         names: "",
         paternalSurname: "",

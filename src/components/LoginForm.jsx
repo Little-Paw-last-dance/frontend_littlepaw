@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid } from '@mui/material';
-import { auth } from '../config/firebaseConfig'; // Importa la instancia de autenticación de Firebase
+import { auth } from '../config/firebaseConfig'; 
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 const LoginForm = () => {

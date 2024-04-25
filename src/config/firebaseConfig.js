@@ -11,9 +11,9 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
-// Inicializa Firebase si no está inicializado
+
 const firebaseApp = initializeApp(firebaseConfig);
-// Obtiene una referencia al servicio de autenticación
+
 const auth = getAuth(firebaseApp);
 
 export {auth};

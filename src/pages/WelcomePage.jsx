@@ -7,9 +7,9 @@ const WelcomePage = () => {
     <div
       className="min-h-screen relative flex flex-col justify-center items-center"
       style={{
-        backgroundImage: `url(${logo})`, // Establece la imagen de fondo
-        backgroundSize: "cover", // Ajusta el tamaño de la imagen para cubrir el fondo
-        backgroundPosition: "center", // Centra la imagen en el fondo
+        backgroundImage: `url(${logo})`, 
+        backgroundSize: "cover", 
+        backgroundPosition: "center", 
       }}
     >
       <div className="absolute inset-0 bg-black opacity-50"></div>

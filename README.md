@@ -3,10 +3,6 @@
 ## LICENSE
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Licencia de Little-Paw-last-dance Frontend</title>
-</head>
 <body>
     <p>
         <a href="https://github.com/Little-Paw-last-dance/frontend_littlepaw" target="_blank">Little-Paw-last-dance Frontend</a> © 2024 por Little Paw está licenciado bajo 

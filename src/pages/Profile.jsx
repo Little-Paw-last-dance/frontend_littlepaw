@@ -3,7 +3,7 @@ import ProfileInfo from '../components/ProfileInfo'
 import ProfileInput from '../components/ProfileInput'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+
 import { backendAPI } from '../config/axiosConfig'
 import { useAuth } from '../contexts/AuthContext'
 import { Button } from '@mui/material'
@@ -110,6 +110,7 @@ const Profile = () => {
     
     backendAPI.patch("/user", {names, paternalSurname, maternalSurname, age:ageNumber, city, phone: phoneNumber, countryCode: countryCodeNumber}, {headers: {"Authorization": `Bearer ${accessToken}`}}).then((response) => {
         setEditable(!editable)
+        window.scrollTo(0, 0)
     }).catch((error) => {
         console.error("Error al actualizar el perfil:", error)
     })
@@ -120,7 +121,8 @@ const Profile = () => {
     <div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
         <div className="flex flex-row justify-center items-center gap-[1rem]">
             <h1 className="font-anybody text-title text-white font-bold text-center">Perfil</h1>
-            <FontAwesomeIcon type="submit" onClick={submitChanges} icon={editable ? faCheck : faPencil } className="text-white cursor-pointer" size={"xl"} />
+            {!editable &&
+            <FontAwesomeIcon onClick={() => {setEditable(!editable)}} icon={faPencil } className="text-white cursor-pointer" size={"xl"} />}
             
         </div>
 
@@ -157,6 +159,7 @@ const Profile = () => {
         </div>
 
         <div className="flex flex-row justify-center items-center gap-[1rem]">
+            {editable && <Button variant="contained" type="submit" className="bg-yellow-300 text-white "  style={{ backgroundColor: "#E0B46C", marginTop: 15, }} onClick={submitChanges}>GUARDAR CAMBIOS</Button>}
             <Button variant="contained" className="bg-yellow-300 text-white "  style={{ backgroundColor: "#E0B46C", marginTop: 15, width: 100 }} onClick={() => {navigate("/")}}>VOLVER</Button>
         </div>
 

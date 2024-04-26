@@ -4,10 +4,11 @@ import AddPetForm from '../components/AddPetForm';
 import logoImg from '../assets/logo.png';
 
 const AddPetPage = () => {
-  
+ 
   return (
-    <div className="bg-yellow-300 min-h-screen flex flex-col justify-center items-center">
-      <Typography variant="h2" align="center" gutterBottom style={{ fontFamily: 'Anybody, sans-serif', color: '#E0B46C', paddingBottom: 55, paddingTop: 55 }}>
+    <div className="bg-primary min-h-screen flex flex-col justify-center items-center">
+      <Typography variant="h2" align="center" gutterBottom fontWeight="bold" 
+      style={{ fontFamily: 'Montserrat, sans-serif', color: '#47361A', paddingBottom: 55, paddingTop: 55 }}>
         Añadir Mascota
       </Typography>
       <Container maxWidth="sm" disableGutters>

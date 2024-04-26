@@ -3,13 +3,49 @@ import { Grid, TextField, Button, MenuItem, Typography } from "@mui/material";
 import { backendAPI } from "../config/axiosConfig"; 
 import { useAuth } from '../contexts/AuthContext'; 
 import { useNavigate } from "react-router-dom";
-
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
+import { outlinedInputClasses } from "@mui/material/OutlinedInput";
+const customTheme = (outerTheme) =>
+  createTheme({
+    palette: {
+      mode: outerTheme.palette.mode,
+    },
+    components: {
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            "--TextField-brandBorderColor": "#47361A",
+            "--TextField-brandBorderHoverColor": "#47361A",
+            "--TextField-brandBorderFocusedColor": "#47361A",
+            "& label.Mui-focused": {
+              color: "var(--TextField-brandBorderFocusedColor)",
+            },
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          notchedOutline: {
+            borderColor: "var(--TextField-brandBorderColor)",
+          },
+          root: {
+            [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
+              borderColor: "var(--TextField-brandBorderHoverColor)",
+            },
+            [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
+              borderColor: "var(--TextField-brandBorderFocusedColor)",
+            },
+          },
+        },
+      },
+    },
+  });
 const AddPetForm = () => {
   const [selectedGender, setSelectedGender] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
   const { accessToken } = useAuth(); 
   const navigate = useNavigate();
-
+  const outerTheme = useTheme();
 
   const handleGenderSelect = (gender) => {
     setSelectedGender(gender);
@@ -70,6 +106,7 @@ const AddPetForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={3}>
+      <ThemeProvider theme={customTheme(outerTheme)}> 
         <Grid item xs={12} sm={6}>
           <TextField
             name="names"
@@ -139,7 +176,7 @@ const AddPetForm = () => {
             fullWidth
             onClick={() => handleGenderSelect("Male")}
             style={{
-              backgroundColor: selectedGender === "Male" ? "#E0B46C" : "#F7D783",
+              backgroundColor: selectedGender === "Male" ? "#47361A" : "#AD833E",
               color: "#FFFFFF",
             }}
           >
@@ -153,7 +190,7 @@ const AddPetForm = () => {
             fullWidth
             onClick={() => handleGenderSelect("Female")}
             style={{
-              backgroundColor: selectedGender === "Female" ? "#E0B46C" : "#F7D783",
+              backgroundColor: selectedGender === "Female" ? "#47361A" : "#AD833E",
               color: "#FFFFFF",
             }}
           >
@@ -173,7 +210,15 @@ const AddPetForm = () => {
                   variant="contained"
                   fullWidth
                   onClick={() => handleRemoveImage(index)}
-                  style={{ backgroundColor: "#E0B46C", color: "#FFFFFF" }}
+                  sx={{
+                    backgroundColor: "#47361A",
+                    color: "#F7C677",
+                    paddingTop: 2,
+                    paddingBottom: 2,
+                    "&:hover": {
+                      backgroundColor: "#705528", // Cambia el color al colocar el mouse sobre el botón
+                    },
+                  }}
                 >
                   Seleccionar otra imagen
                 </Button>
@@ -185,7 +230,15 @@ const AddPetForm = () => {
                     component="span"
                     variant="contained"
                     fullWidth
-                    style={{ backgroundColor: "#E0B46C", color: "#FFFFFF" }}
+                    sx={{
+                      backgroundColor: "#47361A",
+                      color: "#F7C677",
+                      paddingTop: 2,
+                      paddingBottom: 2,
+                      "&:hover": {
+                        backgroundColor: "#705528", // Cambia el color al colocar el mouse sobre el botón
+                      },
+                    }}
                   >
                     Subir Imagen {index + 1}
                   </Button>
@@ -207,11 +260,20 @@ const AddPetForm = () => {
             type="submit"
             variant="contained"
             fullWidth
-            style={{ backgroundColor: "#E0B46C", marginTop: 10, marginBottom: 10 }}
+            sx={{
+              backgroundColor: "#47361A",
+              color: "#F7C677",
+              paddingTop: 2,
+              paddingBottom: 2,
+              "&:hover": {
+                backgroundColor: "#705528", // Cambia el color al colocar el mouse sobre el botón
+              },
+            }}
           >
             Agregar Mascota
           </Button>
         </Grid>
+        </ThemeProvider>
       </Grid>
     </form>
   );

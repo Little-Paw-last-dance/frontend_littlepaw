@@ -6,8 +6,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#F7D783",
-        secondary: "#E0B46C"
+        primary: "#F7C677",
+        secondary: "#D6A24D",
+        thrird: "#47361A",
+        
       },
       fontSize: {
         title: '3rem'
@@ -18,7 +20,7 @@ module.exports = {
         bold: 700
       },
       fontFamily: {
-        sans: ['Roboto', 'sans-serif'],
+        sans: ['Helvetica Now', 'sans-serif'],
         anybody: ['Anybody', 'sans-serif']
       }
     },

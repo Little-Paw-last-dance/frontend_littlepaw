@@ -14,7 +14,8 @@ const LoginPage = () => {
       gutterBottom
       style={{
         paddingBottom: 55,
-        fontFamily: 'Helvetica Now, sans-serif', // Cambia la tipografía a Helvetica Now
+        fontFamily: 'Montserrat, sans-serif',
+        fontWeight: 700, 
       }}
     >
       Little Paw

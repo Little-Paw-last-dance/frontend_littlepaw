@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Grid, TextField, Button, Typography } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Grid, TextField, Button } from "@mui/material";
 import { backendAPI } from "../config/axiosConfig";
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import { getAllCountries } from 'countries-and-timezones';
 
 const customTheme = (outerTheme) =>
   createTheme({
@@ -46,12 +47,22 @@ const customTheme = (outerTheme) =>
 
 const AddShelterForm = () => {
   const [selectedGender, setSelectedGender] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null); 
+  const [imageUrl, setImageUrl] = useState(null);
   const { accessToken } = useAuth();
   const navigate = useNavigate();
   const outerTheme = useTheme();
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [countryCode, setCountryCode] = useState(''); 
+  const [countryCode, setCountryCode] = useState('');
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    const allCountries = getAllCountries();
+    const countriesArray = Object.values(allCountries).map((country) => ({
+      name: country.name,
+      code: country.countryCallingCodes && country.countryCallingCodes[0] ? country.countryCallingCodes[0] : '', // Verifica si existe el código de país
+    }));
+    setCountries(countriesArray);
+  }, []);
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -60,11 +71,18 @@ const AddShelterForm = () => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const imageUrl = e.target.result;
-      setImageUrl(imageUrl); 
+      setImageUrl(imageUrl);
     };
     reader.readAsDataURL(file);
   };
 
+  const handlePhoneChange = (value, country) => {
+    setPhoneNumber(value); // Actualiza el número de teléfono
+    if (country) {
+      const countryCode = country.countryCode || '';
+      setCountryCode(countryCode); // Actualiza el código de país
+    }
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -73,9 +91,9 @@ const AddShelterForm = () => {
       location: event.target.location.value,
       urlPage: event.target.urlPage.value,
       phone: phoneNumber,
-      countryCode: countryCode, 
+      countryCode: countryCode,
       sex: selectedGender,
-      photo: [imageUrl], 
+      photo: [imageUrl],
     };
 
     try {
@@ -94,12 +112,6 @@ const AddShelterForm = () => {
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
-  };
-
-  // Función para manejar el cambio de país en el PhoneInput
-  const handlePhoneChange = (value, country) => {
-    setPhoneNumber(value); // Actualiza el número de teléfono
-    setCountryCode(country.countryCode); // Actualiza el código de país
   };
 
   return (
@@ -142,7 +154,7 @@ const AddShelterForm = () => {
               country={'bo'}
               placeholder="Número de teléfono"
               value={phoneNumber}
-              onChange={handlePhoneChange} // Usa la función handlePhoneChange
+              onChange={handlePhoneChange}
               inputStyle={{
                 width: '100%',
                 height: '3rem',
@@ -154,7 +166,6 @@ const AddShelterForm = () => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            {/* Mostrar la imagen seleccionada */}
             {imageUrl && (
               <img
                 src={imageUrl}
@@ -162,7 +173,6 @@ const AddShelterForm = () => {
                 style={{ width: "100%", height: "auto", marginBottom: 10 }}
               />
             )}
-            {/* Input para subir la imagen */}
             <input
               type="file"
               accept="image/*"

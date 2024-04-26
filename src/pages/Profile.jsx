@@ -120,14 +120,14 @@ const Profile = () => {
   return (
     <div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
         <div className="flex flex-row justify-center items-center gap-[1rem]">
-            <h1 className="font-anybody text-title text-white font-bold text-center">Perfil</h1>
+            <h1 className="font-montserrat text-title text-white font-bold text-center">Perfil</h1>
             {!editable &&
             <FontAwesomeIcon onClick={() => {setEditable(!editable)}} icon={faPencil } className="text-white cursor-pointer" size={"xl"} />}
             
         </div>
 
         <div className="flex flex-col justify-center items-left py-[3rem] px-[24rem] gap-[4rem]">
-            {isStarting ? <p className="text-white text-title text-center">CARGANDO...</p> :editable ? 
+            {isStarting ? <p className="font-montserrat text-white text-title text-center">CARGANDO...</p> :editable ? 
             <form onSubmit={submitChanges}>
                 <ProfileInput title={"Nombres"} content={names} setContent={setNames} type={"text"} setError={setNameError} placeholder={"Escriba su nombre"}/>
                 <br/>

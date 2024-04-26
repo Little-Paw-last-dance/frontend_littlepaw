@@ -7,7 +7,7 @@ const SignUpPage = () => {
   return (
     <div className="bg-primary min-h-screen flex flex-col justify-center items-center">
       <img src={logoImg} alt="logo" style={{ width: 150, height: 150 }} />
-      <Typography variant="h2" align="center" gutterBottom style={{ fontFamily: 'Anybody, sans-serif', color: '#E0B46C', paddingBottom: 55, paddingTop: 55 }}>
+      <Typography variant="h2" align="center" gutterBottom style={{ fontFamily: 'Montserrat, sans-serif', color: '#E0B46C', paddingBottom: 55, paddingTop: 55 }}>
         Little Paw
       </Typography>
       <Container maxWidth="sm" disableGutters>

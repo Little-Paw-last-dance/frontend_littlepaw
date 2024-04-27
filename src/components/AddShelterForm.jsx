@@ -55,17 +55,20 @@ const AddShelterForm = () => {
   const [countryCode, setCountryCode] = useState('');
   const [countries, setCountries] = useState([]);
   const [completePhoneNumber, setCompletePhoneNumber] = useState('');
+  const [imageError, setImageError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
 
   useEffect(() => {
     const allCountries = getAllCountries();
     const countriesArray = Object.values(allCountries).map((country) => ({
       name: country.name,
-      code: country.countryCallingCodes && country.countryCallingCodes[0] ? country.countryCallingCodes[0] : '', // Verifica si existe el código de país
+      code: country.countryCallingCodes && country.countryCallingCodes[0] ? country.countryCallingCodes[0] : '', 
     }));
     setCountries(countriesArray);
   }, []);
 
   const handleImageUpload = async (event) => {
+    setImageError(false);
     const file = event.target.files[0];
     if (!file) return;
 
@@ -78,6 +81,7 @@ const AddShelterForm = () => {
   };
 
   const handlePhoneChange = (value, country) => {
+    setPhoneError(false);
     let phone = value?.split(country?.dialCode)[1];
     setPhoneNumber(phone); 
     if (country) {
@@ -87,8 +91,18 @@ const AddShelterForm = () => {
     }
   };
   const handleSubmit = async (event) => {
+    let errors = 0
     event.preventDefault();
     let countryCodeNumber = parseInt(countryCode);
+    if(!imageUrl) {
+      setImageError(true);
+      errors++;
+    }
+    if(phoneNumber === "undefined" || phoneNumber.length < 8){
+      setPhoneError(true);
+      errors++;
+    }
+    if(errors > 0) return;
     const formData = {
       name: event.target.names.value,
       location: event.target.location.value,
@@ -164,8 +178,15 @@ const AddShelterForm = () => {
                 backgroundColor: '#F7C677',
                 borderColor: '#47361A',
               }}
+              buttonStyle={{backgroundColor: "#F7C677",borderColor: "#47361A"}}
+              dropdownStyle={{backgroundColor: "#F7C677", borderColor: "#47361A", }}
               containerClass="react-tel-input"
             />
+            {phoneError && (
+              <p style={{ color: 'red', fontSize: '1rem', textAlign:'center' }}>
+                Debe ingresar un número de teléfono válido
+              </p>
+            )}
           </Grid>
           <Grid item xs={12} sm={6}>
             {imageUrl && (
@@ -200,6 +221,9 @@ const AddShelterForm = () => {
                 {imageUrl ? "Reemplazar Imagen" : "Agregar Imagen"}
               </Button>
             </label>
+            {imageError && (
+              <p style={{ color: 'red', fontSize: '1rem' }}>Debe seleccionar una imagen</p>
+            )}
           </Grid>
 
           <Grid item xs={12}>

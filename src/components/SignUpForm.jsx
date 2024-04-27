@@ -134,9 +134,11 @@ const SignUpForm = () => {
               required
               value={formData.names}
               onChange={handleChange}
+              text="Montserrat, sans-serif"
               inputProps={{
                 pattern: "[A-Za-z ]+",
                 title: "Solo se permiten letras y espacios",
+                fontFamily: "Montserrat, sans-serif",
               }}
               color="primary"
             />
@@ -274,6 +276,7 @@ const SignUpForm = () => {
               required
               value={formData.age}
               onChange={handleChange}
+              fontFamily="Montserrat, sans-serif"
             />
           </Grid>
         </ThemeProvider>
@@ -287,9 +290,11 @@ const SignUpForm = () => {
               color: "#F7C677",
               paddingTop: 2,
               paddingBottom: 2,
+              fontFamily: "Montserrat, sans-serif",
               "&:hover": {
                 backgroundColor: "#705528", // Cambia el color al colocar el mouse sobre el botón
               },
+              
             }}
           >
             Registrarse

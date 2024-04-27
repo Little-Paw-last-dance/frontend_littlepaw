@@ -16,6 +16,7 @@ const LoginPage = () => {
         paddingBottom: 55,
         fontFamily: 'Montserrat, sans-serif',
         fontWeight: 700, 
+        color: '#47361A',
       }}
     >
       Little Paw

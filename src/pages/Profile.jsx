@@ -120,9 +120,9 @@ const Profile = () => {
   return (
     <div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
         <div className="flex flex-row justify-center items-center gap-[1rem]">
-            <h1 className="font-montserrat text-title text-white font-bold text-center">Perfil</h1>
+            <h1 className="font-montserrat text-title text-thrird font-bold text-center">Perfil</h1>
             {!editable &&
-            <FontAwesomeIcon onClick={() => {setEditable(!editable)}} icon={faPencil } className="text-white cursor-pointer" size={"xl"} />}
+            <FontAwesomeIcon onClick={() => {setEditable(!editable)}} icon={faPencil } className="text-thrird cursor-pointer" size={"xl"} />}
             
         </div>
 
@@ -159,8 +159,8 @@ const Profile = () => {
         </div>
 
         <div className="flex flex-row justify-center items-center gap-[1rem]">
-            {editable && <Button variant="contained" type="submit" className="bg-yellow-300 text-white "  style={{ backgroundColor: "#E0B46C", marginTop: 15, }} onClick={submitChanges}>GUARDAR CAMBIOS</Button>}
-            <Button variant="contained" className="bg-yellow-300 text-white "  style={{ backgroundColor: "#E0B46C", marginTop: 15, width: 100 }} onClick={() => {navigate("/")}}>VOLVER</Button>
+            {editable && <Button variant="contained" type="submit"  style={{ backgroundColor: "#47361A",color: "#F7C677", marginTop: 15, }} onClick={submitChanges}>GUARDAR CAMBIOS</Button>}
+            <Button variant="contained"  style={{ backgroundColor: "#47361A",color: "#F7C677",marginTop: 15, width: 100 }} onClick={() => {navigate("/")}}>VOLVER</Button>
         </div>
 
         

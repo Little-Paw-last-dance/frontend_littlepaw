@@ -9,6 +9,7 @@ module.exports = {
         primary: "#F7C677",
         secondary: "#D6A24D",
         thrird: "#47361A",
+        fourth: "#5C4521",
         
       },
       fontSize: {

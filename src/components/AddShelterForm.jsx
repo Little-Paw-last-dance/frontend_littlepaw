@@ -54,6 +54,7 @@ const AddShelterForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('');
   const [countries, setCountries] = useState([]);
+  const [completePhoneNumber, setCompletePhoneNumber] = useState('');
 
   useEffect(() => {
     const allCountries = getAllCountries();
@@ -77,25 +78,26 @@ const AddShelterForm = () => {
   };
 
   const handlePhoneChange = (value, country) => {
-    setPhoneNumber(value); // Actualiza el número de teléfono
+    let phone = value?.split(country?.dialCode)[1];
+    setPhoneNumber(phone); 
     if (country) {
-      const countryCode = country.countryCode || '';
-      setCountryCode(countryCode); // Actualiza el código de país
+      const countryCode = country?.dialCode;
+      setCountryCode(countryCode); 
+      setCompletePhoneNumber(`+${countryCode}-${phone}`);
     }
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    let countryCodeNumber = parseInt(countryCode);
     const formData = {
       name: event.target.names.value,
       location: event.target.location.value,
       urlPage: event.target.urlPage.value,
       phone: phoneNumber,
-      countryCode: countryCode,
-      sex: selectedGender,
-      photo: [imageUrl],
+      countryCode: countryCodeNumber,
+      photo: imageUrl,
     };
-
+    console.log(formData);
     try {
       const response = await backendAPI.post(
         `/shelter`,
@@ -153,7 +155,7 @@ const AddShelterForm = () => {
             <PhoneInput
               country={'bo'}
               placeholder="Número de teléfono"
-              value={phoneNumber}
+              value={completePhoneNumber}
               onChange={handlePhoneChange}
               inputStyle={{
                 width: '100%',

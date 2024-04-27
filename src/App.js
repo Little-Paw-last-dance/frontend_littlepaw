@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import 'react-phone-input-2/lib/style.css'
 import AddPetPage from './pages/AddPetPage';
 import WelcomePage from './pages/WelcomePage';
+import AddShelter from './pages/AddShelterPage';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/addpet" element={<AddPetPage />} />
           <Route path="/welcome" element={<WelcomePage />} />
+          <Route path="/addshelter" element={<AddShelter />} />
           <Route path="/" element={<MainPage/>}/>
 
         </Routes>

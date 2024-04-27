@@ -19,13 +19,13 @@ const WelcomePage = () => {
         <div className="flex justify-center space-x-6">
           <Link
             to="/signup"
-            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-2xl"
+            className="bg-primary hover:bg-secondary text-thrird font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-2xl"
           >
             Registrarse
           </Link>
           <Link
             to="/login"
-            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-2xl"
+            className="bg-primary hover:bg-secondary text-thrird font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-2xl"
           >
             Iniciar Sesión
           </Link>

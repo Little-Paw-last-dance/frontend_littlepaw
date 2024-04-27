@@ -4,6 +4,7 @@ import { backendAPI } from "../config/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
+import PhoneInput from 'react-phone-input-2';
 const customTheme = (outerTheme) =>
   createTheme({
     palette: {
@@ -79,26 +80,55 @@ const SignUpForm = () => {
     city: "",
     password: "",
     confirmPassword: "",
-    countryCode: "",
+    countryCode: 591,
     phone: "",
     age: 0,
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [matchPasswordError, setMatchPasswordError] = useState(false);
+  const [completePhoneNumber, setCompletePhoneNumber] = useState('');
+  const [phoneError, setPhoneError] = useState(false);
+  const [generalError, setGeneralError] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     let updatedValue = value;
-
     if (name === "age" || name === "countryCode" || name === "phone") {
       updatedValue = parseInt(value, 10);
     }
-
     setFormData({ ...formData, [name]: updatedValue });
   };
 
+  const handlePhoneChange = (value, country) => {
+    setPhoneError(false);
+    let phone = value?.split(country?.dialCode)[1];
+    console.log(phone)
+    let newFormData = {...formData, phone: phone}
+    setFormData(newFormData); 
+    if (country) {
+      const countryCode = country?.dialCode;
+      setFormData({...newFormData, countryCode: parseInt(countryCode)});
+      setCompletePhoneNumber(`+${countryCode}-${phone}`);
+    }
+  };
+
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    let errors = 0;
+    if (formData.password !== formData.confirmPassword) {
+      setMatchPasswordError(true);
+      errors++;
+    }
+    if(formData.phone=== "undefined" || formData.phone.length < 8){
+      setPhoneError(true);
+      errors++;
+    }
+    if (errors > 0) return;
+    setIsLoading(true);
     try {
-      const response = await backendAPI.post("/user", formData, {
+      await backendAPI.post("/user", formData, {
         headers: { "Content-Type": "application/json" },
       });
       setFormData({
@@ -116,7 +146,11 @@ const SignUpForm = () => {
       navigate("/login");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
+      setGeneralError(true);
+    } finally {
+      setIsLoading(false);
     }
+    
   };
 
   const navigate = useNavigate();
@@ -178,6 +212,7 @@ const SignUpForm = () => {
               name="email"
               label="Correo electrónico"
               variant="outlined"
+              type="email"
               fullWidth
               required
               value={formData.email}
@@ -223,6 +258,11 @@ const SignUpForm = () => {
               required
               value={formData.password}
               onChange={handleChange}
+              inputProps={{
+                pattern: ".{8,}",
+                title: "La contraseña debe tener al menos 8 caracteres",
+                
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -236,35 +276,35 @@ const SignUpForm = () => {
               value={formData.confirmPassword}
               onChange={handleChange}
             />
+            {matchPasswordError && (
+              <p style={{ color: "red", fontSize: "1rem", textAlign:"center" }}>
+                Las contraseñas no coinciden
+              </p>
+            )}
           </Grid>
-          <Grid item xs={12} sm={2}>
-            <TextField
-              name="countryCode"
-              select
-              label="Código de País"
-              variant="outlined"
-              fullWidth
-              required
-              value={formData.countryCode}
-              onChange={handleChange}
-            >
-              {countries.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-          <Grid item xs={12} sm={5}>
-            <TextField
-              name="phone"
-              label="Número de Teléfono"
-              variant="outlined"
-              fullWidth
-              required
-              value={formData.phone}
-              onChange={handleChange}
+          <Grid item xs={12} sm={6}>
+          <PhoneInput
+              country={'bo'}
+              placeholder="Número de teléfono"
+              value={completePhoneNumber}
+              onChange={handlePhoneChange}
+              inputStyle={{
+                width: '100%',
+                height: '3rem',
+                fontSize: '1rem',
+                backgroundColor: '#F7C677',
+                borderColor: '#47361A',
+              }}
+              buttonStyle={{backgroundColor: "#F7C677",borderColor: "#47361A"}}
+              dropdownStyle={{backgroundColor: "#F7C677", borderColor: "#47361A", }}
+              containerClass="react-tel-input"
             />
+            {phoneError && (
+              <p style={{ color: 'red', fontSize: '1rem', textAlign:'center' }}>
+                Debe ingresar un número de teléfono válido
+              </p>
+            )}
+            
           </Grid>
           <Grid item xs={12} sm={5}>
             <TextField
@@ -281,8 +321,14 @@ const SignUpForm = () => {
           </Grid>
         </ThemeProvider>
         <Grid item xs={12}>
+          {generalError && (
+            <p style={{ color: "red", fontSize: "1rem", textAlign:"center" }}>
+              Hubo un error al enviar el formulario
+            </p>
+          )}
           <Button
             type="submit"
+            disabled={isLoading}
             variant="contained"
             fullWidth
             sx={{
@@ -292,12 +338,12 @@ const SignUpForm = () => {
               paddingBottom: 2,
               fontFamily: "Montserrat, sans-serif",
               "&:hover": {
-                backgroundColor: "#705528", // Cambia el color al colocar el mouse sobre el botón
+                backgroundColor: "#705528", 
               },
               
             }}
           >
-            Registrarse
+            {isLoading ? "Enviando..." : "Registrarse"}
           </Button>
         </Grid>
       </Grid>

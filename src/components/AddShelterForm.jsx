@@ -46,6 +46,7 @@ const customTheme = (outerTheme) =>
   });
 
 const AddShelterForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedGender, setSelectedGender] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const { accessToken } = useAuth();
@@ -57,6 +58,7 @@ const AddShelterForm = () => {
   const [completePhoneNumber, setCompletePhoneNumber] = useState('');
   const [imageError, setImageError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
+  const [urlError, setUrlError] = useState(false);
 
   useEffect(() => {
     const allCountries = getAllCountries();
@@ -102,6 +104,12 @@ const AddShelterForm = () => {
       setPhoneError(true);
       errors++;
     }
+    try{
+      new URL(event.target.urlPage.value);
+    } catch (error) {
+      setUrlError(true);
+      errors++;
+    }
     if(errors > 0) return;
     const formData = {
       name: event.target.names.value,
@@ -111,9 +119,9 @@ const AddShelterForm = () => {
       countryCode: countryCodeNumber,
       photo: imageUrl,
     };
-    console.log(formData);
+    setIsLoading(true);
     try {
-      const response = await backendAPI.post(
+      await backendAPI.post(
         `/shelter`,
         formData,
         {
@@ -127,6 +135,8 @@ const AddShelterForm = () => {
       navigate("/");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -163,8 +173,11 @@ const AddShelterForm = () => {
               fullWidth
               required
               color="primary"
+              onChange={() => setUrlError(false)}
             />
+            {urlError && <p style={{ color: 'red', fontSize: '1rem', textAlign:'center' }}>Debe ingresar una URL válida</p>}
           </Grid>
+          
           <Grid item xs={12} sm={6}>
             <PhoneInput
               country={'bo'}
@@ -222,12 +235,13 @@ const AddShelterForm = () => {
               </Button>
             </label>
             {imageError && (
-              <p style={{ color: 'red', fontSize: '1rem' }}>Debe seleccionar una imagen</p>
+              <p style={{ color: 'red', fontSize: '1rem', textAlign:'center' }}>Debe seleccionar una imagen</p>
             )}
           </Grid>
 
           <Grid item xs={12}>
             <Button
+              disabled={isLoading}
               type="submit"
               variant="contained"
               fullWidth
@@ -241,7 +255,7 @@ const AddShelterForm = () => {
                 },
               }}
             >
-              Agregar Refugio
+              {isLoading ? "Cargando..." : "Agregar Refugio"}
             </Button>
           </Grid>
         </ThemeProvider>

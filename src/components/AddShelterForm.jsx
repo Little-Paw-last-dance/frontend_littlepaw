@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Grid, TextField, Button } from "@mui/material";
 import { backendAPI } from "../config/axiosConfig";
 import { useAuth } from '../contexts/AuthContext';
@@ -9,26 +9,7 @@ import 'react-phone-input-2/lib/style.css';
 
 const AddShelterForm = () => {
 
-  const { accessToken, logout } = useAuth();
-  useEffect(() => {
-    if(accessToken === "") return
-      setIsStarting(true)
-      backendAPI.get("/user", {headers: {"Authorization": `Bearer ${accessToken}`}}).then((response) => {
-          let roles = response.data.user.roles.map((role) => role.name)
-          if(!roles.includes("admin")){
-              logout().then(() => {
-                navigate("/welcome")
-              }).catch((error) => {
-                console.error("Error al cerrar sesión:", error)
-              })
-          }
-      }).catch((error) => {
-          console.error(`Hubo un error al obtener los roles de usuario: ${error}`)
-      }).finally(() => {
-        setIsStarting(false)
-      })
-  },[accessToken])
-  const [isStarting, setIsStarting] = useState(false)
+  const { accessToken} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   
@@ -112,7 +93,7 @@ const AddShelterForm = () => {
     }
   };
 
-  return isStarting ? <p className="font-roboto text-title text-third font-bold text-center">CARGANDO...</p> : (
+  return (
 
     <form onSubmit={handleSubmit}>
       <Grid container spacing={3}>

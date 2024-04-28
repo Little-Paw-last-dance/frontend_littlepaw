@@ -1,20 +1,10 @@
 import { MenuItem, TextField } from '@mui/material'
 import React from 'react'
 import PhoneInput from 'react-phone-input-2'
+import { boliviaCities } from '../models/bolivianCities'
 
 
 const ProfileInput = ({title, content, setContent, type, setError, placeholder, isSelect}) => {
-    const boliviaCities = [
-        { value: "Santa Cruz", label: "Santa Cruz" },
-        { value: "La Paz", label: "La Paz" },
-        { value: "Cochabamba", label: "Cochabamba" },
-        { value: "Sucre", label: "Sucre" },
-        { value: "Tarija", label: "Tarija" },
-        { value: "Potosí", label: "Potosí" },
-        { value: "Oruro", label: "Oruro" },
-        { value: "Beni", label: "Beni" },
-        { value: "Pando", label: "Pando" },
-      ];
     
     const handlePhone = (e,value) => {
         let phone = e?.split(value?.dialCode)[1]

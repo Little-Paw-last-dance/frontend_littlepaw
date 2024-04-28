@@ -5,21 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import PhoneInput from 'react-phone-input-2';
+import { boliviaCities } from "../models/bolivianCities";
 
 const SignUpForm = () => {
-  
-  const boliviaCities = [
-    { value: "Santa Cruz", label: "Santa Cruz" },
-    { value: "La Paz", label: "La Paz" },
-    { value: "Cochabamba", label: "Cochabamba" },
-    { value: "Sucre", label: "Sucre" },
-    { value: "Tarija", label: "Tarija" },
-    { value: "Potosí", label: "Potosí" },
-    { value: "Oruro", label: "Oruro" },
-    { value: "Beni", label: "Beni" },
-    { value: "Pando", label: "Pando" },
-  ];
-
   const [formData, setFormData] = useState({
     names: "",
     paternalSurname: "",

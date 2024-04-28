@@ -125,7 +125,7 @@ const AddShelterForm = () => {
               color="primary"
               onChange={() => setUrlError(false)}
             />
-            {urlError && <p className="text-red-600 text-[1rem] text-center">Debe ingresar una URL válida</p>}
+            {urlError && <p className="font-roboto text-red-600 text-[1rem] text-center">Debe ingresar una URL válida</p>}
           </Grid>
           
           <Grid item xs={12} sm={6}>
@@ -146,7 +146,7 @@ const AddShelterForm = () => {
               containerClass="react-tel-input"
             />
             {phoneError && (
-              <p className="text-red-600 text-[1rem] text-center">
+              <p className="font-roboto text-red-600 text-[1rem] text-center">
                 Debe ingresar un número de teléfono válido
               </p>
             )}
@@ -171,21 +171,13 @@ const AddShelterForm = () => {
                 component="span"
                 variant="contained"
                 fullWidth
-                sx={{
-                  backgroundColor: "#47361A",
-                  color: "#F7C677",
-                  paddingTop: 2,
-                  paddingBottom: 2,
-                  "&:hover": {
-                    backgroundColor: "#705528",
-                  },
-                }}
+                className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
               >
                 {imageUrl ? "Reemplazar Imagen" : "Agregar Imagen"}
               </Button>
             </label>
             {imageError && (
-              <p className="text-red-600 text-[1rem] text-center">Debe seleccionar una imagen</p>
+              <p className="font-roboto text-red-600 text-[1rem] text-center">Debe seleccionar una imagen</p>
             )}
           </Grid>
 
@@ -195,15 +187,7 @@ const AddShelterForm = () => {
               type="submit"
               variant="contained"
               fullWidth
-              sx={{
-                backgroundColor: "#47361A",
-                color: "#F7C677",
-                paddingTop: 2,
-                paddingBottom: 2,
-                "&:hover": {
-                  backgroundColor: "#705528",
-                },
-              }}
+              className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
             >
               {isLoading ? "Cargando..." : "Agregar Refugio"}
             </Button>

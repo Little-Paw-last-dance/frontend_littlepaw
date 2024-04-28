@@ -32,13 +32,15 @@ const SignUpForm = () => {
     if (name === "age" || name === "countryCode" || name === "phone") {
       updatedValue = parseInt(value, 10);
     }
+    if(name === "confirmPassword") {
+      setMatchPasswordError(false);
+    }
     setFormData({ ...formData, [name]: updatedValue });
   };
 
   const handlePhoneChange = (value, country) => {
     setPhoneError(false);
     let phone = value?.split(country?.dialCode)[1];
-    console.log(phone)
     let newFormData = {...formData, phone: phone}
     setFormData(newFormData); 
     if (country) {
@@ -212,7 +214,7 @@ const SignUpForm = () => {
               onChange={handleChange}
             />
             {matchPasswordError && (
-              <p className="text-red-600 text-[1rem] text-center">
+              <p className="font-roboto text-red-600 text-[1rem] text-center">
                 Las contraseñas no coinciden
               </p>
             )}
@@ -235,7 +237,7 @@ const SignUpForm = () => {
               containerClass="react-tel-input"
             />
             {phoneError && (
-              <p className="text-red-600 text-[1rem] text-center">
+              <p className="font-roboto text-red-600 text-[1rem] text-center">
                 Debe ingresar un número de teléfono válido
               </p>
             )}
@@ -256,7 +258,7 @@ const SignUpForm = () => {
           </Grid>
         <Grid item xs={12}>
           {generalError && (
-            <p className="text-red-600 text-[1rem] text-center">
+            <p className="font-roboto text-red-600 text-[1rem] text-center">
               Hubo un error al enviar el formulario
             </p>
           )}
@@ -265,17 +267,7 @@ const SignUpForm = () => {
             disabled={isLoading}
             variant="contained"
             fullWidth
-            sx={{
-              backgroundColor: "#47361A",
-              color: "#F7C677",
-              paddingTop: 2,
-              paddingBottom: 2,
-              fontFamily: "Montserrat, sans-serif",
-              "&:hover": {
-                backgroundColor: "#705528", 
-              },
-              
-            }}
+            className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
           >
             {isLoading ? "Enviando..." : "Registrarse"}
           </Button>

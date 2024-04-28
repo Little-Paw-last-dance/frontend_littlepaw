@@ -5,12 +5,8 @@ import { Link } from "react-router-dom";
 const WelcomePage = () => {
   return (
     <div
-      className="min-h-screen relative flex flex-col justify-center items-center"
-      style={{
-        backgroundImage: `url(${logo})`, 
-        backgroundSize: "cover", 
-        backgroundPosition: "center", 
-      }}
+      style={{backgroundImage: `url(${logo})`}}
+      className="font-roboto bg-cover bg-center min-h-screen relative flex flex-col justify-center items-center"
     >
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="relative z-10 text-white text-center">
@@ -19,13 +15,13 @@ const WelcomePage = () => {
         <div className="flex justify-center space-x-6">
           <Link
             to="/signup"
-            className="bg-primary hover:bg-secondary text-thrird font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-2xl"
+            className="bg-primary no-underline hover:bg-secondary text-third font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-2xl"
           >
             Registrarse
           </Link>
           <Link
             to="/login"
-            className="bg-primary hover:bg-secondary text-thrird font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-2xl"
+            className="bg-primary no-underline hover:bg-secondary text-third font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-2xl"
           >
             Iniciar Sesión
           </Link>

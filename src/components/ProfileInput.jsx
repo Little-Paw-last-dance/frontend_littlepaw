@@ -22,7 +22,7 @@ const ProfileInput = ({title, content, setContent, type, setError, placeholder, 
   return (
     <div className="flex flex-col gap-[1rem] font-bold mt-[1rem]">
         
-        <label htmlFor={title} className="text-[2rem] text-thrird">{title}:</label>
+        <label htmlFor={title} className="font-roboto text-[2rem] text-third">{title}:</label>
         { type === "phone" ? 
         <PhoneInput
             specialLabel={""} 
@@ -32,7 +32,7 @@ const ProfileInput = ({title, content, setContent, type, setError, placeholder, 
             value={content}
             buttonStyle={{backgroundColor: "#F7C677", borderWidth: "3px", borderColor: "#47361A"}}
             dropdownStyle={{backgroundColor: "#F7C677", borderWidth: "3px", borderColor: "#47361A", }}
-            inputStyle={{backgroundColor: "#F7C677", borderWidth: "3px", borderColor: "#47361A", height: "3rem", fontSize: "1rem"}}
+            inputStyle={{backgroundColor: "#F7C677", borderWidth: "3px", borderColor: "#47361A", height: "3rem", fontSize: "1rem", fontWeight:700}}
             />:
         <TextField select={isSelect} placeholder={placeholder} type={type} 
         sx={{"& .MuiOutlinedInput-root": {"&.MuiInputBase-root fieldset": {borderColor: "secondary", borderWidth:"3px"}}}} id="standard" SelectProps={isSelect ?{id: title, style:{fontFamily:"Montserrat", fontWeight:700}, MenuProps:{MenuListProps:{style:{fontFamily:"Montserrat", fontWeight:700}}}} : {}}inputProps={{id: title, style:{fontFamily:"Montserrat", fontWeight:700}}} variant="outlined" value={content} onChange={handleInputChanges}>{

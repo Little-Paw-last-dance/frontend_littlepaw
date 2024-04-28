@@ -6,7 +6,7 @@ const RegisterLink = () => {
     
     <p className="align-center">
       <br />
-      <span className="text-black font-bold">
+      <span className="font-roboto text-black font-bold">
         ¿Aún no eres miembro?{' '}
       </span>
       <Link to="/signup" className="font-anybody text-white font-bold">

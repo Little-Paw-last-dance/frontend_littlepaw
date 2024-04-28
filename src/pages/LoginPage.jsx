@@ -6,18 +6,13 @@ import logoImg from '../assets/logo.png';
 const LoginPage = () => {
   return (
     <div className="bg-primary h-full w-full m-0 p-0">
-      <Container disableGutters style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+      <Container disableGutters className="w-full h-full flex flex-col justify-center items-center">
         <img className="w-[150px] h-[150px]" src={logoImg} alt="logo"/>
         <Typography
           variant="h2"
           align="center"
           gutterBottom
-          style={{
-            paddingBottom: 55,
-            fontFamily: 'Montserrat, sans-serif',
-            fontWeight: 700,
-            color: '#47361A',
-          }}
+          className="pb-10 font-montserrat font-bold text-third"
         >
           Little Paw
         </Typography>

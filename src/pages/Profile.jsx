@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom'
 const Profile = () => {
     
     const [names, setNames] = useState("Juan Carlos")
+    const [isLoading, setIsLoading] = useState(false)
     const [paternalSurname, setPaternalSurname] = useState("Pérez")
     const [maternalSurname, setMaternalSurname] = useState("García")
     const [age, setAge] = useState("25")
@@ -107,12 +108,15 @@ const Profile = () => {
 
     let ageNumber = parseInt(age)
     let countryCodeNumber = parseInt(dialCode)
+    setIsLoading(true)
     
     backendAPI.patch("/user", {names, paternalSurname, maternalSurname, age:ageNumber, city, phone: phoneNumber, countryCode: countryCodeNumber}, {headers: {"Authorization": `Bearer ${accessToken}`}}).then((response) => {
         setEditable(!editable)
         window.scrollTo(0, 0)
     }).catch((error) => {
         console.error("Error al actualizar el perfil:", error)
+    }).finally(() => {
+        setIsLoading(false)
     })
     
   }  
@@ -120,32 +124,32 @@ const Profile = () => {
   return (
     <div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
         <div className="flex flex-row justify-center items-center gap-[1rem]">
-            <h1 className="font-montserrat text-title text-thrird font-bold text-center">Perfil</h1>
+            <h1 className="font-montserrat text-title text-third font-bold text-center">Perfil</h1>
             {!editable &&
-            <FontAwesomeIcon onClick={() => {setEditable(!editable)}} icon={faPencil } className="text-thrird cursor-pointer" size={"xl"} />}
+            <FontAwesomeIcon onClick={() => {setEditable(!editable)}} icon={faPencil } className="text-third cursor-pointer" size={"xl"} />}
             
         </div>
 
-        <div className="flex flex-col justify-center items-left py-[3rem] px-[24rem] gap-[4rem]">
+        <div className="flex flex-col justify-center items-left py-[3rem] px-[24rem] gap-[1rem]">
             {isStarting ? <p className="font-montserrat text-white text-title text-center">CARGANDO...</p> :editable ? 
             <form onSubmit={submitChanges}>
                 <ProfileInput title={"Nombres"} content={names} setContent={setNames} type={"text"} setError={setNameError} placeholder={"Escriba su nombre"}/>
                 <br/>
-                {nameError && <p className="text-red-500 text-sm font-bold">{nameErrorMessage}</p>}
+                {nameError && <p className="font-roboto text-red-500 text-sm font-bold">{nameErrorMessage}</p>}
                 <ProfileInput title={"Apellido Paterno"} content={paternalSurname} setContent={setPaternalSurname} type={"text"} setError={setPaternalSurnameError} placeholder={"Escriba su apellido paterno"}/>
                 <br/>
-                {paternalSurnameError && <p className="text-red-500 text-sm font-bold">{paternalSurnameErrorMessage}</p>}
+                {paternalSurnameError && <p className="font-roboto text-red-500 text-sm font-bold">{paternalSurnameErrorMessage}</p>}
                 <ProfileInput title={"Apellido Materno"} content={maternalSurname} setContent={setMaternalSurname} type={"text"} placeholder={"Escriba su apellido materno"}/>
                 <ProfileInput title={"Edad"} content={age} setContent={setAge} type={"number"} setError={setAgeError} placeholder={"Escriba su edad"}/>
                 <br/>
-                {ageError && <p className="text-red-500 text-sm font-bold">{ageErrorMessage}</p>}
+                {ageError && <p className="font-roboto text-red-500 text-sm font-bold">{ageErrorMessage}</p>}
                 <ProfileInput title={"Ciudad"} isSelect content={city} setContent={setCity} type={"text"} setError={setCityError} placeholder={"Escriba su ciudad"}/>
                 <br/>
-                {cityError && <p className="text-red-500 text-sm font-bold">{cityError}</p>}
+                {cityError && <p className="font-roboto text-red-500 text-sm font-bold">{cityError}</p>}
 
                 <ProfileInput title={"Teléfono"} content={phone} setContent={setPhone} type={"phone"} setError={setPhoneError}/>
                 <br/>
-                {phoneError && <p className="text-red-500 text-sm font-bold">{phoneErrorMessage}</p>}
+                {phoneError && <p className="font-roboto text-red-500 text-sm font-bold">{phoneErrorMessage}</p>}
             </form>
             : <>
             <ProfileInfo title={"Nombres"} content={names}/>
@@ -159,8 +163,8 @@ const Profile = () => {
         </div>
 
         <div className="flex flex-row justify-center items-center gap-[1rem]">
-            {editable && <Button variant="contained" type="submit"  style={{ backgroundColor: "#47361A",color: "#F7C677", marginTop: 15, }} onClick={submitChanges}>GUARDAR CAMBIOS</Button>}
-            <Button variant="contained"  style={{ backgroundColor: "#47361A",color: "#F7C677",marginTop: 15, width: 100 }} onClick={() => {navigate("/")}}>VOLVER</Button>
+            {editable && <Button disabled={isLoading}variant="contained" type="submit" className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth" onClick={submitChanges}>{isLoading ? "GUARDANDO..." : "GUARDAR CAMBIOS"}</Button>}
+            <Button variant="contained"  className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth" onClick={() => {navigate("/")}}>VOLVER</Button>
         </div>
 
         

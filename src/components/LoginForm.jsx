@@ -52,25 +52,16 @@ const LoginForm = () => {
               setError(null);
               setPassword(e.target.value)
             }}
-            style={{ marginTop: 15 }}
+            className="mt-5"
           />
-          {error && <p className="text-red-600 text-[1rem] text-center">{error}</p>}
+          {error && <p className="font-roboto text-red-600 text-[1rem] text-center">{error}</p>}
         <Button
           disabled={isLoading}
           variant="contained"
           type="submit"
           fullWidth
-          sx={{
-            backgroundColor: "#47361A",
-            color: "#F7C677",
-            paddingTop: 2,
-            paddingBottom: 2,
-            marginTop: 5,
-            "&:hover": {
-              backgroundColor: "#705528",
-
-            },
-          }}
+          className="bg-third text-primary pt-2 pb-2 hover:bg-sixth mt-5"
+          
           
         >
           {isLoading ? 'Cargando...' : 'Iniciar sesión'}

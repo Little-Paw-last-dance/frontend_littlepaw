@@ -135,7 +135,7 @@ const AddPetForm = () => {
               <MenuItem value="dog">Perro</MenuItem>
               <MenuItem value="cat">Gato</MenuItem>
               <MenuItem value="bird">Ave</MenuItem>
-              <MenuItem value="bunny">Conejo</MenuItem>
+              <MenuItem value="rabbit">Conejo</MenuItem>
               <MenuItem value="reptile">Reptil</MenuItem>
               <MenuItem value="other">Otro</MenuItem>
             </TextField>
@@ -150,7 +150,7 @@ const AddPetForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h7" gutterBottom>
+            <Typography variant="h7" gutterBottom className="font-roboto">
               Seleccione el sexo de la mascota
             </Typography>
           </Grid>
@@ -160,10 +160,8 @@ const AddPetForm = () => {
               variant="contained"
               fullWidth
               onClick={() => handleGenderSelect("Male")}
-              style={{
-                backgroundColor: selectedGender === "Male" ? "#47361A" : "#AD833E",
-                color: "#FFFFFF",
-              }}
+              className={selectedGender === "Male" ? "bg-third text-white" : "bg-fifth text-white"}
+              
             >
               Macho
             </Button>
@@ -174,17 +172,14 @@ const AddPetForm = () => {
               variant="contained"
               fullWidth
               onClick={() => handleGenderSelect("Female")}
-              style={{
-                backgroundColor: selectedGender === "Female" ? "#47361A" : "#AD833E",
-                color: "#FFFFFF",
-              }}
+              className={selectedGender === "Female" ? "bg-third text-white" : "bg-fifth text-white"}
             >
               Hembra
             </Button>
           </Grid>
           <Grid item xs={12}>
 
-            {genderError && <p className="text-red-600 text-[1rem] text-center">
+            {genderError && <p className="font-roboto text-red-600 text-[1rem] text-center">
               Debe seleccionar el sexo de la mascota
             </p>}</Grid>
 
@@ -201,15 +196,7 @@ const AddPetForm = () => {
                     variant="contained"
                     fullWidth
                     onClick={() => handleRemoveImage(index)}
-                    sx={{
-                      backgroundColor: "#47361A",
-                      color: "#F7C677",
-                      paddingTop: 2,
-                      paddingBottom: 2,
-                      "&:hover": {
-                        backgroundColor: "#705528", 
-                      },
-                    }}
+                    className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
                   >
                     Seleccionar otra imagen
                   </Button>
@@ -221,15 +208,7 @@ const AddPetForm = () => {
                       component="span"
                       variant="contained"
                       fullWidth
-                      sx={{
-                        backgroundColor: "#47361A",
-                        color: "#F7C677",
-                        paddingTop: 2,
-                        paddingBottom: 2,
-                        "&:hover": {
-                          backgroundColor: "#705528", 
-                        },
-                      }}
+                      className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
                     >
                       Subir Imagen {index + 1}
                     </Button>
@@ -247,7 +226,7 @@ const AddPetForm = () => {
           ))}
           {imageError && (
             <Grid item xs={12}>
-              <p className="text-red-600 text-[1rem] text-center">
+              <p className="font-roboto text-red-600 text-[1rem] text-center">
                 Debe subir al menos una imagen
               </p>
             </Grid>
@@ -259,15 +238,7 @@ const AddPetForm = () => {
               type="submit"
               variant="contained"
               fullWidth
-              sx={{
-                backgroundColor: "#47361A",
-                color: "#F7C677",
-                paddingTop: 2,
-                paddingBottom: 2,
-                "&:hover": {
-                  backgroundColor: "#705528", 
-                },
-              }}
+              className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
             >
               {isLoading ? 'Cargando...' : 'Agregar Mascota'}
             </Button>

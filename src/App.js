@@ -13,6 +13,7 @@ import AddShelter from './pages/AddShelterPage';
 import SheltersPage from './pages/SheltersPage';
 import { ThemeProvider, useTheme } from '@mui/material';
 import { customTheme } from './themes/TextFieldTheme';
+import ShelterInfoPage from './pages/ShelterInfoPage';
 
 
 const App = () => {
@@ -31,7 +32,10 @@ const App = () => {
             <Route path="/addpet" element={<AddPetPage />} />
             <Route path="/welcome" element={<WelcomePage />} />
             <Route path="/addshelter" element={<AddShelter />} />
-            <Route path="/shelters" element={<SheltersPage />} />
+            <Route path="/shelters" >
+              <Route index element={<SheltersPage />} />
+              <Route path=":id" element={<ShelterInfoPage />} />
+            </Route>
             <Route path="/" element={<MainPage />} />
 
           </Routes>

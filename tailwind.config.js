@@ -19,7 +19,8 @@ module.exports = {
         sixth: "#705528",
       },
       fontSize: {
-        title: '3rem'
+        title: '3rem',
+        subtitle: '2rem',
       },
       fontWeight: {
         light: 300,

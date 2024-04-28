@@ -18,12 +18,18 @@ const MainPage = () => {
 
   )  
   return (
+    <>
     <div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
         <div className="flex flex-row justify-center items-center gap-[1rem]">
             <h1 className="font-montserrat text-title text-white font-bold text-center">{currentUser?.displayName ? `Bienvenido ${currentUser?.displayName}` : "CARGANDO..."}</h1>  
         </div>
         {currentUser?.displayName && content}
+        
     </div>
+    <div className="bg-primary flex flex-col items-center justify-center gap-[3rem]">
+      
+    </div>
+    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, TextField, Button } from "@mui/material";
 import { backendAPI } from "../config/axiosConfig";
 import { useAuth } from '../contexts/AuthContext';
@@ -8,9 +8,30 @@ import 'react-phone-input-2/lib/style.css';
 
 
 const AddShelterForm = () => {
+
+  const { accessToken, logout } = useAuth();
+  useEffect(() => {
+    if(accessToken === "") return
+      setIsStarting(true)
+      backendAPI.get("/user", {headers: {"Authorization": `Bearer ${accessToken}`}}).then((response) => {
+          let roles = response.data.user.roles.map((role) => role.name)
+          if(!roles.includes("admin")){
+              logout().then(() => {
+                navigate("/welcome")
+              }).catch((error) => {
+                console.error("Error al cerrar sesión:", error)
+              })
+          }
+      }).catch((error) => {
+          console.error(`Hubo un error al obtener los roles de usuario: ${error}`)
+      }).finally(() => {
+        setIsStarting(false)
+      })
+  },[accessToken])
+  const [isStarting, setIsStarting] = useState(false)
   const [isLoading, setIsLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
-  const { accessToken } = useAuth();
+  
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('');
@@ -83,7 +104,7 @@ const AddShelterForm = () => {
         }
       );
 
-      navigate("/");
+      navigate("/shelters");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     } finally {
@@ -91,7 +112,8 @@ const AddShelterForm = () => {
     }
   };
 
-  return (
+  return isStarting ? <p className="font-roboto text-title text-third font-bold text-center">CARGANDO...</p> : (
+
     <form onSubmit={handleSubmit}>
       <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
@@ -194,7 +216,7 @@ const AddShelterForm = () => {
           </Grid>
       </Grid>
     </form>
-  );
+  )
 };
 
 export default AddShelterForm;

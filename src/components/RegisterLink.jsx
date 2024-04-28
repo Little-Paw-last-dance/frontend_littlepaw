@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 const RegisterLink = () => {
   return (
     
-    <p style={{ textAlign: 'center' }}>
+    <p className="align-center">
       <br />
-      <span style={{ color: 'black', fontWeight: 'bold' }}>
+      <span className="text-black font-bold">
         ¿Aún no eres miembro?{' '}
       </span>
-      <Link to="/signup" style={{ fontFamily: 'Anybody, sans-serif', color: 'white', fontWeight: 'bold' }}>
+      <Link to="/signup" className="font-anybody text-white font-bold">
         Crear una cuenta
       </Link>
     </p>

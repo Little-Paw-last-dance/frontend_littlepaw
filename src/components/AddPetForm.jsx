@@ -184,7 +184,7 @@ const AddPetForm = () => {
           </Grid>
           <Grid item xs={12}>
 
-            {genderError && <p style={{ color: 'red', fontSize: '1rem', textAlign: 'center' }}>
+            {genderError && <p className="text-red-600 text-[1rem] text-center">
               Debe seleccionar el sexo de la mascota
             </p>}</Grid>
 
@@ -195,7 +195,7 @@ const AddPetForm = () => {
                   <img
                     src={imageUrls[index]}
                     alt={`Image ${index + 1}`}
-                    style={{ width: "100%", height: "auto", marginBottom: 5 }}
+                    className="w-full h-auto mb-5"
                   />
                   <Button
                     variant="contained"
@@ -207,7 +207,7 @@ const AddPetForm = () => {
                       paddingTop: 2,
                       paddingBottom: 2,
                       "&:hover": {
-                        backgroundColor: "#705528", // Cambia el color al colocar el mouse sobre el botón
+                        backgroundColor: "#705528", 
                       },
                     }}
                   >
@@ -227,7 +227,7 @@ const AddPetForm = () => {
                         paddingTop: 2,
                         paddingBottom: 2,
                         "&:hover": {
-                          backgroundColor: "#705528", // Cambia el color al colocar el mouse sobre el botón
+                          backgroundColor: "#705528", 
                         },
                       }}
                     >
@@ -238,7 +238,7 @@ const AddPetForm = () => {
                     id={`imageUpload-${index}`}
                     type="file"
                     accept="image/*"
-                    style={{ display: "none" }}
+                    className="hidden"
                     onChange={(e) => handleImageUpload(e, index)}
                   />
                 </>
@@ -247,7 +247,7 @@ const AddPetForm = () => {
           ))}
           {imageError && (
             <Grid item xs={12}>
-              <p style={{ color: 'red', fontSize: '1rem', textAlign: 'center' }}>
+              <p className="text-red-600 text-[1rem] text-center">
                 Debe subir al menos una imagen
               </p>
             </Grid>

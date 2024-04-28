@@ -212,7 +212,7 @@ const SignUpForm = () => {
               onChange={handleChange}
             />
             {matchPasswordError && (
-              <p style={{ color: "red", fontSize: "1rem", textAlign:"center" }}>
+              <p className="text-red-600 text-[1rem] text-center">
                 Las contraseñas no coinciden
               </p>
             )}
@@ -235,7 +235,7 @@ const SignUpForm = () => {
               containerClass="react-tel-input"
             />
             {phoneError && (
-              <p style={{ color: 'red', fontSize: '1rem', textAlign:'center' }}>
+              <p className="text-red-600 text-[1rem] text-center">
                 Debe ingresar un número de teléfono válido
               </p>
             )}
@@ -256,7 +256,7 @@ const SignUpForm = () => {
           </Grid>
         <Grid item xs={12}>
           {generalError && (
-            <p style={{ color: "red", fontSize: "1rem", textAlign:"center" }}>
+            <p className="text-red-600 text-[1rem] text-center">
               Hubo un error al enviar el formulario
             </p>
           )}

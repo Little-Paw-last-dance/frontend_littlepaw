@@ -54,7 +54,7 @@ const LoginForm = () => {
             }}
             style={{ marginTop: 15 }}
           />
-          {error && <p style={{ color: 'red', fontSize: '1rem', textAlign:"center" }}>{error}</p>}
+          {error && <p className="text-red-600 text-[1rem] text-center">{error}</p>}
         <Button
           disabled={isLoading}
           variant="contained"

@@ -125,7 +125,7 @@ const AddShelterForm = () => {
               color="primary"
               onChange={() => setUrlError(false)}
             />
-            {urlError && <p style={{ color: 'red', fontSize: '1rem', textAlign:'center' }}>Debe ingresar una URL válida</p>}
+            {urlError && <p className="text-red-600 text-[1rem] text-center">Debe ingresar una URL válida</p>}
           </Grid>
           
           <Grid item xs={12} sm={6}>
@@ -146,7 +146,7 @@ const AddShelterForm = () => {
               containerClass="react-tel-input"
             />
             {phoneError && (
-              <p style={{ color: 'red', fontSize: '1rem', textAlign:'center' }}>
+              <p className="text-red-600 text-[1rem] text-center">
                 Debe ingresar un número de teléfono válido
               </p>
             )}
@@ -156,13 +156,13 @@ const AddShelterForm = () => {
               <img
                 src={imageUrl}
                 alt="Imagen seleccionada"
-                style={{ width: "100%", height: "auto", marginBottom: 10 }}
+                className="w-full h-auto mb-4"
               />
             )}
             <input
               type="file"
               accept="image/*"
-              style={{ display: 'none' }}
+              className="hidden"
               onChange={handleImageUpload}
               id="imageInput"
             />
@@ -185,7 +185,7 @@ const AddShelterForm = () => {
               </Button>
             </label>
             {imageError && (
-              <p style={{ color: 'red', fontSize: '1rem', textAlign:'center' }}>Debe seleccionar una imagen</p>
+              <p className="text-red-600 text-[1rem] text-center">Debe seleccionar una imagen</p>
             )}
           </Grid>
 

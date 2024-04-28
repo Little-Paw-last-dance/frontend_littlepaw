@@ -1,71 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Grid, TextField, Button } from "@mui/material";
 import { backendAPI } from "../config/axiosConfig";
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from "react-router-dom";
-import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
-import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import { getAllCountries } from 'countries-and-timezones';
 
-const customTheme = (outerTheme) =>
-  createTheme({
-    palette: {
-      mode: outerTheme.palette.mode,
-    },
-    components: {
-      MuiTextField: {
-        styleOverrides: {
-          root: {
-            "--TextField-brandBorderColor": "#47361A",
-            "--TextField-brandBorderHoverColor": "#47361A",
-            "--TextField-brandBorderFocusedColor": "#47361A",
-            "& label.Mui-focused": {
-              color: "var(--TextField-brandBorderFocusedColor)",
-            },
-          },
-        },
-      },
-      MuiOutlinedInput: {
-        styleOverrides: {
-          notchedOutline: {
-            borderColor: "var(--TextField-brandBorderColor)",
-          },
-          root: {
-            [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderHoverColor)",
-            },
-            [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderFocusedColor)",
-            },
-          },
-        },
-      },
-    },
-  });
 
 const AddShelterForm = () => {
-  const [selectedGender, setSelectedGender] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const { accessToken } = useAuth();
   const navigate = useNavigate();
-  const outerTheme = useTheme();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('');
-  const [countries, setCountries] = useState([]);
+  
   const [completePhoneNumber, setCompletePhoneNumber] = useState('');
   const [imageError, setImageError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
-
-  useEffect(() => {
-    const allCountries = getAllCountries();
-    const countriesArray = Object.values(allCountries).map((country) => ({
-      name: country.name,
-      code: country.countryCallingCodes && country.countryCallingCodes[0] ? country.countryCallingCodes[0] : '', 
-    }));
-    setCountries(countriesArray);
-  }, []);
+  const [urlError, setUrlError] = useState(false);
 
   const handleImageUpload = async (event) => {
     setImageError(false);
@@ -102,6 +55,12 @@ const AddShelterForm = () => {
       setPhoneError(true);
       errors++;
     }
+    try{
+      new URL(event.target.urlPage.value);
+    } catch (error) {
+      setUrlError(true);
+      errors++;
+    }
     if(errors > 0) return;
     const formData = {
       name: event.target.names.value,
@@ -111,9 +70,9 @@ const AddShelterForm = () => {
       countryCode: countryCodeNumber,
       photo: imageUrl,
     };
-    console.log(formData);
+    setIsLoading(true);
     try {
-      const response = await backendAPI.post(
+      await backendAPI.post(
         `/shelter`,
         formData,
         {
@@ -127,13 +86,14 @@ const AddShelterForm = () => {
       navigate("/");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={3}>
-        <ThemeProvider theme={customTheme(outerTheme)}>
           <Grid item xs={12} sm={6}>
             <TextField
               name="names"
@@ -163,8 +123,11 @@ const AddShelterForm = () => {
               fullWidth
               required
               color="primary"
+              onChange={() => setUrlError(false)}
             />
+            {urlError && <p className="font-roboto text-red-600 text-[1rem] text-center">Debe ingresar una URL válida</p>}
           </Grid>
+          
           <Grid item xs={12} sm={6}>
             <PhoneInput
               country={'bo'}
@@ -183,7 +146,7 @@ const AddShelterForm = () => {
               containerClass="react-tel-input"
             />
             {phoneError && (
-              <p style={{ color: 'red', fontSize: '1rem', textAlign:'center' }}>
+              <p className="font-roboto text-red-600 text-[1rem] text-center">
                 Debe ingresar un número de teléfono válido
               </p>
             )}
@@ -193,13 +156,13 @@ const AddShelterForm = () => {
               <img
                 src={imageUrl}
                 alt="Imagen seleccionada"
-                style={{ width: "100%", height: "auto", marginBottom: 10 }}
+                className="w-full h-auto mb-4"
               />
             )}
             <input
               type="file"
               accept="image/*"
-              style={{ display: 'none' }}
+              className="hidden"
               onChange={handleImageUpload}
               id="imageInput"
             />
@@ -208,43 +171,27 @@ const AddShelterForm = () => {
                 component="span"
                 variant="contained"
                 fullWidth
-                sx={{
-                  backgroundColor: "#47361A",
-                  color: "#F7C677",
-                  paddingTop: 2,
-                  paddingBottom: 2,
-                  "&:hover": {
-                    backgroundColor: "#705528",
-                  },
-                }}
+                className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
               >
                 {imageUrl ? "Reemplazar Imagen" : "Agregar Imagen"}
               </Button>
             </label>
             {imageError && (
-              <p style={{ color: 'red', fontSize: '1rem' }}>Debe seleccionar una imagen</p>
+              <p className="font-roboto text-red-600 text-[1rem] text-center">Debe seleccionar una imagen</p>
             )}
           </Grid>
 
           <Grid item xs={12}>
             <Button
+              disabled={isLoading}
               type="submit"
               variant="contained"
               fullWidth
-              sx={{
-                backgroundColor: "#47361A",
-                color: "#F7C677",
-                paddingTop: 2,
-                paddingBottom: 2,
-                "&:hover": {
-                  backgroundColor: "#705528",
-                },
-              }}
+              className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
             >
-              Agregar Refugio
+              {isLoading ? "Cargando..." : "Agregar Refugio"}
             </Button>
           </Grid>
-        </ThemeProvider>
       </Grid>
     </form>
   );

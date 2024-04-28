@@ -3,43 +3,8 @@ import { Grid, TextField, Button, MenuItem, Typography } from "@mui/material";
 import { backendAPI } from "../config/axiosConfig";
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from "react-router-dom";
-import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
-import { outlinedInputClasses } from "@mui/material/OutlinedInput";
-const customTheme = (outerTheme) =>
-  createTheme({
-    palette: {
-      mode: outerTheme.palette.mode,
-    },
-    components: {
-      MuiTextField: {
-        styleOverrides: {
-          root: {
-            "--TextField-brandBorderColor": "#47361A",
-            "--TextField-brandBorderHoverColor": "#47361A",
-            "--TextField-brandBorderFocusedColor": "#47361A",
-            "& label.Mui-focused": {
-              color: "var(--TextField-brandBorderFocusedColor)",
-            },
-          },
-        },
-      },
-      MuiOutlinedInput: {
-        styleOverrides: {
-          notchedOutline: {
-            borderColor: "var(--TextField-brandBorderColor)",
-          },
-          root: {
-            [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderHoverColor)",
-            },
-            [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderFocusedColor)",
-            },
-          },
-        },
-      },
-    },
-  });
+
+
 const AddPetForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedGender, setSelectedGender] = useState(null);
@@ -48,8 +13,7 @@ const AddPetForm = () => {
   const [imageError, setImageError] = useState(false);
   const { accessToken } = useAuth();
   const navigate = useNavigate();
-  const outerTheme = useTheme();
-
+ 
   const handleGenderSelect = (gender) => {
     setGenderError(false);
     setSelectedGender(gender);
@@ -127,7 +91,6 @@ const AddPetForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={3}>
-        <ThemeProvider theme={customTheme(outerTheme)}>
           <Grid item xs={12} sm={6}>
             <TextField
               name="names"
@@ -309,7 +272,6 @@ const AddPetForm = () => {
               {isLoading ? 'Cargando...' : 'Agregar Mascota'}
             </Button>
           </Grid>
-        </ThemeProvider>
       </Grid>
     </form>
   );

@@ -5,61 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import PhoneInput from 'react-phone-input-2';
-const customTheme = (outerTheme) =>
-  createTheme({
-    palette: {
-      mode: outerTheme.palette.mode,
-    },
-    components: {
-      MuiTextField: {
-        styleOverrides: {
-          root: {
-            "--TextField-brandBorderColor": "#47361A",
-            "--TextField-brandBorderHoverColor": "#47361A",
-            "--TextField-brandBorderFocusedColor": "#47361A",
-            "& label.Mui-focused": {
-              color: "var(--TextField-brandBorderFocusedColor)",
-            },
-          },
-        },
-      },
-      MuiOutlinedInput: {
-        styleOverrides: {
-          notchedOutline: {
-            borderColor: "var(--TextField-brandBorderColor)",
-          },
-          root: {
-            [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderHoverColor)",
-            },
-            [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderFocusedColor)",
-            },
-          },
-        },
-      },
-    },
-  });
-const SignUpForm = () => {
-  const outerTheme = useTheme();
-  const countries = [
-    { value: "1", label: "🇺🇸 +1" },
-    { value: "44", label: "🇬🇧 +44" },
-    { value: "52", label: "🇲🇽 +52" },
-    { value: "591", label: "BO +591" },
-    { value: "54", label: "AR +54" },
-    { value: "55", label: "BR +55" },
-    { value: "56", label: "CL +56" },
-    { value: "57", label: "CO +57" },
-    { value: "58", label: "VE +58" },
-    { value: "593", label: "EC +593" },
-    { value: "595", label: "PY +595" },
-    { value: "598", label: "UY +598" },
-    { value: "595", label: "PY +595" },
-    { value: "507", label: "PA +507" },
-    { value: "51", label: "PE +51" },
-  ];
 
+const SignUpForm = () => {
+  
   const boliviaCities = [
     { value: "Santa Cruz", label: "Santa Cruz" },
     { value: "La Paz", label: "La Paz" },
@@ -158,7 +106,6 @@ const SignUpForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={3}>
-        <ThemeProvider theme={customTheme(outerTheme)}>
           <Grid item xs={12} sm={4}>
             <TextField
               name="names"
@@ -319,7 +266,6 @@ const SignUpForm = () => {
               fontFamily="Montserrat, sans-serif"
             />
           </Grid>
-        </ThemeProvider>
         <Grid item xs={12}>
           {generalError && (
             <p style={{ color: "red", fontSize: "1rem", textAlign:"center" }}>

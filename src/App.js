@@ -10,24 +10,31 @@ import 'react-phone-input-2/lib/style.css'
 import AddPetPage from './pages/AddPetPage';
 import WelcomePage from './pages/WelcomePage';
 import AddShelter from './pages/AddShelterPage';
+import { ThemeProvider, useTheme } from '@mui/material';
+import { customTheme } from './themes/TextFieldTheme';
 
 const App = () => {
-  return (
-    
-      <Router>
-        <AuthProvider>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/addpet" element={<AddPetPage />} />
-          <Route path="/welcome" element={<WelcomePage />} />
-          <Route path="/addshelter" element={<AddShelter />} />
-          <Route path="/" element={<MainPage/>}/>
 
-        </Routes>
-        </AuthProvider>
-      </Router>
+  const outerTheme = useTheme();
+
+  return (
+
+    <Router>
+      <AuthProvider>
+        <ThemeProvider theme={customTheme(outerTheme)}>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/addpet" element={<AddPetPage />} />
+            <Route path="/welcome" element={<WelcomePage />} />
+            <Route path="/addshelter" element={<AddShelter />} />
+            <Route path="/" element={<MainPage />} />
+
+          </Routes>
+          </ThemeProvider>
+      </AuthProvider>
+      </Router >
 
   
   );

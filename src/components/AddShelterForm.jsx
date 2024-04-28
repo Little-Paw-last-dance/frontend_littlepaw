@@ -1,73 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Grid, TextField, Button } from "@mui/material";
 import { backendAPI } from "../config/axiosConfig";
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from "react-router-dom";
-import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
-import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import { getAllCountries } from 'countries-and-timezones';
 
-const customTheme = (outerTheme) =>
-  createTheme({
-    palette: {
-      mode: outerTheme.palette.mode,
-    },
-    components: {
-      MuiTextField: {
-        styleOverrides: {
-          root: {
-            "--TextField-brandBorderColor": "#47361A",
-            "--TextField-brandBorderHoverColor": "#47361A",
-            "--TextField-brandBorderFocusedColor": "#47361A",
-            "& label.Mui-focused": {
-              color: "var(--TextField-brandBorderFocusedColor)",
-            },
-          },
-        },
-      },
-      MuiOutlinedInput: {
-        styleOverrides: {
-          notchedOutline: {
-            borderColor: "var(--TextField-brandBorderColor)",
-          },
-          root: {
-            [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderHoverColor)",
-            },
-            [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderFocusedColor)",
-            },
-          },
-        },
-      },
-    },
-  });
 
 const AddShelterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedGender, setSelectedGender] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const { accessToken } = useAuth();
   const navigate = useNavigate();
-  const outerTheme = useTheme();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('');
-  const [countries, setCountries] = useState([]);
+  
   const [completePhoneNumber, setCompletePhoneNumber] = useState('');
   const [imageError, setImageError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [urlError, setUrlError] = useState(false);
-
-  useEffect(() => {
-    const allCountries = getAllCountries();
-    const countriesArray = Object.values(allCountries).map((country) => ({
-      name: country.name,
-      code: country.countryCallingCodes && country.countryCallingCodes[0] ? country.countryCallingCodes[0] : '', 
-    }));
-    setCountries(countriesArray);
-  }, []);
 
   const handleImageUpload = async (event) => {
     setImageError(false);
@@ -143,7 +94,6 @@ const AddShelterForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={3}>
-        <ThemeProvider theme={customTheme(outerTheme)}>
           <Grid item xs={12} sm={6}>
             <TextField
               name="names"
@@ -258,7 +208,6 @@ const AddShelterForm = () => {
               {isLoading ? "Cargando..." : "Agregar Refugio"}
             </Button>
           </Grid>
-        </ThemeProvider>
       </Grid>
     </form>
   );

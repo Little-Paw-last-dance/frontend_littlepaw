@@ -3,45 +3,8 @@ import { TextField, Button, Grid } from '@mui/material';
 import { auth } from '../config/firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
-import { outlinedInputClasses } from "@mui/material/OutlinedInput";
-const customTheme = (outerTheme) =>
-  createTheme({
-    palette: {
-      mode: outerTheme.palette.mode,
-    },
-    components: {
-      MuiTextField: {
-        styleOverrides: {
-          root: {
-            "--TextField-brandBorderColor": "#47361A",
-            "--TextField-brandBorderHoverColor": "#47361A",
-            "--TextField-brandBorderFocusedColor": "#47361A",
-            "& label.Mui-focused": {
-              color: "var(--TextField-brandBorderFocusedColor)",
-            },
-          },
-        },
-      },
-      MuiOutlinedInput: {
-        styleOverrides: {
-          notchedOutline: {
-            borderColor: "var(--TextField-brandBorderColor)",
-          },
-          root: {
-            [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderHoverColor)",
-            },
-            [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderFocusedColor)",
-            },
-          },
-        },
-      },
-    },
-  });
+
 const LoginForm = () => {
-  const outerTheme = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -64,7 +27,6 @@ const LoginForm = () => {
 
   return (
     <Grid container direction="column" spacing={3} alignItems="center">
-      <ThemeProvider theme={customTheme(outerTheme)}>
         <form className="w-full" onSubmit={handleLogin}>
           <TextField
             label="Correo electrónico"
@@ -114,8 +76,6 @@ const LoginForm = () => {
           {isLoading ? 'Cargando...' : 'Iniciar sesión'}
         </Button>
         </form>
-        
-      </ThemeProvider>
     </Grid>
   );
 };

@@ -2,6 +2,7 @@ import React from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import PetCard from './PetCard'
 
 const MainPage = () => {
   const {logout, currentUser} = useAuth()
@@ -28,6 +29,7 @@ const MainPage = () => {
     </div>
     <div className="bg-primary flex flex-col items-center justify-center gap-[3rem]">
       
+       
     </div>
     </>
   )

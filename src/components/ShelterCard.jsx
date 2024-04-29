@@ -5,7 +5,7 @@ const ShelterCard = ({ id,name, location, phone, image }) => {
     const navigate = useNavigate()
     return (
         <Card onClick={() =>navigate(`/shelters/${id}`)} className="font-roboto flex justify-start p-[1rem] w-[500px] h-[200px] rounded-xl hover:shadow-3xl cursor-pointer">
-            <CardMedia component="img" className="w-[200px] rounded-xl" image={image} />
+            <CardMedia component="img" className="w-[200px] rounded-xl object-cover" image={image} />
             <CardContent className="flex flex-col justify-between items-center text-center ">
                     <Typography className="text-center font-bold" gutterBottom variant="h5" component="div">
                         {name}

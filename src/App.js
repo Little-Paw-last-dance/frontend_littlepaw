@@ -15,6 +15,7 @@ import { ThemeProvider, useTheme } from '@mui/material';
 import { customTheme } from './themes/TextFieldTheme';
 import ShelterInfoPage from './pages/ShelterInfoPage';
 import PrivateRoute from './helpers/PrivateRoute';
+import AdminAddPetPage from './pages/AdminAddPetPage';
 
 
 const App = () => {
@@ -39,6 +40,9 @@ const App = () => {
             <Route path="/" element={<MainPage />} />
             <Route element={<PrivateRoute />}>
               <Route path="/addshelter" element={<AddShelter />} />
+              <Route path="/shelteraddpet">
+                <Route path=":id" element={<AdminAddPetPage />} />
+              </Route>
             </Route>
 
           </Routes>

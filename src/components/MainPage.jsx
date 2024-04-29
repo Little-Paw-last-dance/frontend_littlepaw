@@ -12,6 +12,7 @@ const MainPage = () => {
       <Button variant="contained" className="bg-yellow-300 text-white"  style={{ backgroundColor: "#E0B46C", marginTop: 15 }} onClick={() => {navigate("/profile")}}>Ver Perfil</Button>
       <Button variant="contained" className="bg-yellow-300 text-white"  style={{ backgroundColor: "#E0B46C", marginTop: 15 }} onClick={() => {navigate("/addpet")}}>Añadir Mascota</Button>
       <Button variant="contained" className="bg-yellow-300 text-white"  style={{ backgroundColor: "#E0B46C", marginTop: 15 }} onClick={() => {navigate("/addshelter")}}>Añadir Refugio</Button>
+      <Button variant="contained" className="bg-yellow-300 text-white"  style={{ backgroundColor: "#E0B46C", marginTop: 15 }} onClick={() => {navigate("/shelters")}}>Ver Refugios</Button>
       <Button onClick={logout} variant="contained" className="bg-yellow-300 text-white"  style={{ backgroundColor: "#E0B46C", marginTop: 15 }}>Cerrar Sesión</Button>
 
     </div>

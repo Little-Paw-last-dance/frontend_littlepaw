@@ -184,7 +184,19 @@ const AddShelterForm = () => {
             )}
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid container spacing={4} className="mt-2 text-center pl-6">
+            <Grid item xs={12} sm={6}>
+              <Button
+                variant="contained"
+                fullWidth
+                className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+                onClick={() => navigate("/shelters")}
+              >
+                Volver
+              </Button>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
             <Button
               disabled={isLoading}
               type="submit"
@@ -194,6 +206,7 @@ const AddShelterForm = () => {
             >
               {isLoading ? "Cargando..." : "Agregar Refugio"}
             </Button>
+          </Grid>
           </Grid>
       </Grid>
     </form>

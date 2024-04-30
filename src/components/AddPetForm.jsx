@@ -236,16 +236,28 @@ const AddPetForm = ({isAdmin}) => {
             </Grid>
           )}
 
-          <Grid item xs={12}>
+        <Grid container spacing={4} className="mt-2 text-center pl-6">
+          <Grid item xs={12} sm={6}>
+          <Button variant="contained" fullWidth className="bg-third text-primary pt-2 pb-2 hover:bg-sixth" onClick={
+            isAdmin ? () => navigate(`/shelters/${id}`) : () => navigate("/")
+          }> 
+              VOLVER
+            </Button>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
             <Button
             disabled={isLoading}
               type="submit"
               variant="contained"
               fullWidth
+             
               className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
             >
               {isLoading ? 'Cargando...' : 'Agregar Mascota'}
             </Button>
+
+          </Grid>
           </Grid>
       </Grid>
     </form>

@@ -6,6 +6,7 @@ import { backendAPI } from '../config/axiosConfig'
 import { Button } from '@mui/material';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import PetCard from '../components/PetCard'
 
 const ShelterInfoPage = () => {
     const { id } = useParams()
@@ -18,6 +19,12 @@ const ShelterInfoPage = () => {
             setShelter(response.data)
             backendAPI.get("/user", {headers: {"Authorization": `Bearer ${accessToken}`}}).then((userResponse) => {
                 setRoles(userResponse.data.user.roles.map((role) => role.name))
+                backendAPI.get(`/shelter/${id}/pets`, {headers: {"Authorization": `Bearer ${accessToken}`}}).then((petsResponse) => {
+                    setPets(petsResponse.data.petPosts)
+                    window.scrollTo(0,0)
+                }).catch((error) => {
+                    console.error(`Hubo un error al obtener las mascotas: ${error}`)
+                })
             }).catch((error) => {
                 console.error(`Hubo un error al obtener los roles de usuario: ${error}`)
             })
@@ -29,10 +36,12 @@ const ShelterInfoPage = () => {
     }, [id])
 
     const [shelter, setShelter] = useState({})
+    const [pets, setPets] = useState([])
     
     return (
-        <div className="bg-primary min-h-screen flex flex-col justify-start items-center">
+        <div className="bg-primary min-h-screen flex flex-col justify-start items-center pb-10">
             {Object.keys(shelter).length !== 0 ?
+            <>
             <div className="bg-white w-[80%] flex flex-row justify-center items-start  mt-[2rem] py-[2rem] gap-[2rem] rounded-[4rem]">
                 <div className="flex flex-col justify-center items-center gap-[1rem]">
                     <img src={shelter.photo} alt="shelter" className="w-[500px] h-[500px] rounded-xl object-cover" />
@@ -53,8 +62,22 @@ const ShelterInfoPage = () => {
                     </div>
                 </div>
             </div>
+            {pets.length > 0 &&
+            <h1 className="font-roboto text-title text-third font-bold text-center mt-5">MASCOTAS</h1>}
+            <div className="flex flex-row justify-center items-center gap-[2rem] flex-wrap">
+                {pets.length > 0 && pets.map((pet) => (
+                    <PetCard name={pet.pet.name} sex={pet.pet.sex} breed={pet.pet.breed} age={pet.pet.age} image={pet.pet.photos[0]} />
+                ))}
+            </div>
+            
+
+            </>
+        
             : <p className="font-roboto text-title text-third font-bold text-center">CARGANDO...</p>}
-            {roles.includes("admin") && <Button variant="contained" onClick={() => navigate(`/shelteraddpet/${id}`)} className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth">AÑADIR MASCOTA</Button>}
+            <div className="flex flex-row justify-center items-center gap-[1rem]">
+                <Button variant='contained' className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth" onClick={() => navigate("/shelters")}>VOLVER</Button>
+                {roles.includes("admin") && <Button variant="contained" onClick={() => navigate(`/shelteraddpet/${id}`)} className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth">AÑADIR MASCOTA</Button>}
+            </div>
         </div>
     )
 }

@@ -3,9 +3,10 @@ import { Grid, TextField, Button, MenuItem, Typography } from "@mui/material";
 import { backendAPI } from "../config/axiosConfig";
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
-const AddPetForm = () => {
+const AddPetForm = ({isAdmin}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedGender, setSelectedGender] = useState(null);
   const [genderError, setGenderError] = useState(false);
@@ -13,6 +14,7 @@ const AddPetForm = () => {
   const [imageError, setImageError] = useState(false);
   const { accessToken } = useAuth();
   const navigate = useNavigate();
+  const { id } = useParams();
  
   const handleGenderSelect = (gender) => {
     setGenderError(false);
@@ -68,8 +70,10 @@ const AddPetForm = () => {
     setIsLoading(true);
 
     try {
+      let path = isAdmin ? `/shelter/${id}/pet` : '/pet';
+      
       await backendAPI.post(
-        `/pet`,
+        path,
         formData,
         {
           headers: {
@@ -232,16 +236,28 @@ const AddPetForm = () => {
             </Grid>
           )}
 
-          <Grid item xs={12}>
+        <Grid container spacing={4} className="mt-2 text-center pl-6">
+          <Grid item xs={12} sm={6}>
+          <Button variant="contained" fullWidth className="bg-third text-primary pt-2 pb-2 hover:bg-sixth" onClick={
+            isAdmin ? () => navigate(`/shelters/${id}`) : () => navigate("/")
+          }> 
+              VOLVER
+            </Button>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
             <Button
             disabled={isLoading}
               type="submit"
               variant="contained"
               fullWidth
+             
               className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
             >
               {isLoading ? 'Cargando...' : 'Agregar Mascota'}
             </Button>
+
+          </Grid>
           </Grid>
       </Grid>
     </form>

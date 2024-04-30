@@ -8,9 +8,11 @@ import 'react-phone-input-2/lib/style.css';
 
 
 const AddShelterForm = () => {
+
+  const { accessToken} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
-  const { accessToken } = useAuth();
+  
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('');
@@ -83,7 +85,7 @@ const AddShelterForm = () => {
         }
       );
 
-      navigate("/");
+      navigate("/shelters");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     } finally {
@@ -92,6 +94,7 @@ const AddShelterForm = () => {
   };
 
   return (
+
     <form onSubmit={handleSubmit}>
       <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
@@ -181,7 +184,19 @@ const AddShelterForm = () => {
             )}
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid container spacing={4} className="mt-2 text-center pl-6">
+            <Grid item xs={12} sm={6}>
+              <Button
+                variant="contained"
+                fullWidth
+                className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+                onClick={() => navigate("/shelters")}
+              >
+                Volver
+              </Button>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
             <Button
               disabled={isLoading}
               type="submit"
@@ -192,9 +207,10 @@ const AddShelterForm = () => {
               {isLoading ? "Cargando..." : "Agregar Refugio"}
             </Button>
           </Grid>
+          </Grid>
       </Grid>
     </form>
-  );
+  )
 };
 
 export default AddShelterForm;

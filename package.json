@@ -29,7 +29,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "createdoc": "jsdoc -c jsdoc.json -r src -d docs",
+    "createdocmd": "jsdoc2md src/components/*.jsx > docs/components.md"
   },
   "eslintConfig": {
     "extends": [
@@ -50,6 +52,8 @@
     ]
   },
   "devDependencies": {
+    "jsdoc": "^4.0.2",
+    "jsdoc-to-markdown": "^8.0.1",
     "tailwindcss": "^3.4.3"
   }
 }

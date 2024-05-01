@@ -7,7 +7,7 @@ import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
  * 
  * Componente de tarjeta de mascota que muestra la información básica de una mascota. 
  * 
- * 
+ * @component
  * @param {String} name - Nombre de la mascota
  * @param {String} sex - Sexo de la mascota, el valor puede ser "Male" o "Female"
  * @param {String} breed - Raza de la mascota

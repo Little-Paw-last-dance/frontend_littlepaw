@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/AddPetForm.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/AddPetForm.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import { Grid, TextField, Button, MenuItem, Typography } from "@mui/material";
+import { backendAPI } from "../config/axiosConfig";
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
+/**
+ * Componente de formulario para rellenar la información de una mascota y agregarla a la base de datos mediante una petición POST a la API.
+ * 
+ * @component
+ * @param {Boolean} isAdmin - Indica si el usuario es administrador o no, para enviar la petición a la ruta de guardado de mascotas en refugios si es administrador, o a la ruta de mascotas general si no lo es.
+ * 
+ * @state
+ * @property {Boolean} isLoading - Indica si la petición POST está en curso.
+ * @property {String} selectedGender - Sexo seleccionado de la mascota.
+ * @property {Boolean} genderError - Indica si no se ha seleccionado el sexo de la mascota.
+ * @property {Array} imageUrls - Arreglo con las URL de las imágenes de la mascota a subir.
+ * @property {Boolean} imageError - Indica si no se han subido imágenes de la mascota.
+ * 
+ * @form
+ * @property {String} name - Nombre de la mascota.
+ * @property {Number} age - Edad de la mascota.
+ * @property {String} sex - Sexo  de la mascota.
+ * @property {String} breed - Raza de la mascota.
+ * @property {String} description - Descripción de la mascota.
+ * @property {String} type - Tipo de mascota.
+ * @property {Array} photos - Arreglo con las imágenes de la mascota en formato base64.
+ * @returns {React.Component} - Componente de formulario para agregar una mascota.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * &lt;AddPetForm isAdmin={true} />
+ */
+
+const AddPetForm = ({isAdmin}) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedGender, setSelectedGender] = useState(null);
+  const [genderError, setGenderError] = useState(false);
+  const [imageUrls, setImageUrls] = useState([]);
+  const [imageError, setImageError] = useState(false);
+  const { accessToken } = useAuth();
+  const navigate = useNavigate();
+  const { id } = useParams();
+ 
+  const handleGenderSelect = (gender) => {
+    setGenderError(false);
+    setSelectedGender(gender);
+  };
+
+  const handleImageUpload = async (event, index) => {
+    setImageError(false);
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const imageUrl = e.target.result;
+      const updatedImageUrls = [...imageUrls];
+      updatedImageUrls[index] = imageUrl;
+      setImageUrls(updatedImageUrls);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = (index) => {
+    const updatedImageUrls = [...imageUrls];
+    updatedImageUrls[index] = null;
+    setImageUrls(updatedImageUrls);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    let errors = 0
+
+    if (!selectedGender) {
+      setGenderError(true);
+      errors++;
+
+    }
+    if(imageUrls.length === 0){
+      setImageError(true);
+      errors++;
+    }
+    if (errors > 0) return;
+
+
+    const formData = {
+      name: event.target.names.value,
+      age: parseInt(event.target.age.value),
+      sex: selectedGender,
+      breed: event.target.breed.value,
+      description: event.target.description.value,
+      type: event.target.type.value,
+      photos: imageUrls.filter((url) => url !== null),
+    };
+    setIsLoading(true);
+
+    try {
+      let path = isAdmin ? `/shelter/${id}/pet` : '/pet';
+      
+      await backendAPI.post(
+        path,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      navigate("/");
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    &lt;form onSubmit={handleSubmit}>
+      &lt;Grid container spacing={3}>
+          &lt;Grid item xs={12} sm={6}>
+            &lt;TextField
+              name="names"
+              label="Nombre"
+              variant="outlined"
+              fullWidth
+              required
+              inputProps={{ pattern: "[A-Za-z ]+", title: "Solo se permiten letras y espacios" }}
+              color="primary"
+            />
+          &lt;/Grid>
+          &lt;Grid item xs={12} sm={6}>
+            &lt;TextField
+              name="age"
+              label="Edad"
+              variant="outlined"
+              type="number"
+              fullWidth
+              required
+            />
+          &lt;/Grid>
+          &lt;Grid item xs={12} sm={12}>
+            &lt;TextField
+              name="description"
+              label="Descripción"
+              variant="outlined"
+              fullWidth
+              multiline
+              required
+              rows={4}
+            />
+          &lt;/Grid>
+          &lt;Grid item xs={12} sm={6}>
+            &lt;TextField
+              name="type"
+              label="Tipo"
+              variant="outlined"
+              fullWidth
+              select
+              required
+            >
+              &lt;MenuItem value="dog">Perro&lt;/MenuItem>
+              &lt;MenuItem value="cat">Gato&lt;/MenuItem>
+              &lt;MenuItem value="bird">Ave&lt;/MenuItem>
+              &lt;MenuItem value="rabbit">Conejo&lt;/MenuItem>
+              &lt;MenuItem value="reptile">Reptil&lt;/MenuItem>
+              &lt;MenuItem value="other">Otro&lt;/MenuItem>
+            &lt;/TextField>
+          &lt;/Grid>
+          &lt;Grid item xs={12} sm={6}>
+            &lt;TextField
+              name="breed"
+              label="Raza"
+              variant="outlined"
+              fullWidth
+              required
+            />
+          &lt;/Grid>
+          &lt;Grid item xs={12}>
+            &lt;Typography variant="h7" gutterBottom className="font-roboto">
+              Seleccione el sexo de la mascota
+            &lt;/Typography>
+          &lt;/Grid>
+          &lt;Grid item xs={12} sm={6}>
+            &lt;Button
+              type="button"
+              variant="contained"
+              fullWidth
+              onClick={() => handleGenderSelect("Male")}
+              className={selectedGender === "Male" ? "bg-third text-white" : "bg-fifth text-white"}
+              
+            >
+              Macho
+            &lt;/Button>
+          &lt;/Grid>
+          &lt;Grid item xs={12} sm={6}>
+            &lt;Button
+              type="button"
+              variant="contained"
+              fullWidth
+              onClick={() => handleGenderSelect("Female")}
+              className={selectedGender === "Female" ? "bg-third text-white" : "bg-fifth text-white"}
+            >
+              Hembra
+            &lt;/Button>
+          &lt;/Grid>
+          &lt;Grid item xs={12}>
+
+            {genderError &amp;&amp; &lt;p className="font-roboto text-red-600 text-[1rem] text-center">
+              Debe seleccionar el sexo de la mascota
+            &lt;/p>}&lt;/Grid>
+
+          {[0, 1, 2].map((index) => (
+            &lt;Grid item xs={12} sm={4} key={index}>
+              {imageUrls[index] ? (
+                &lt;>
+                  &lt;img
+                    src={imageUrls[index]}
+                    alt={`Image ${index + 1}`}
+                    className="w-full h-auto mb-5"
+                  />
+                  &lt;Button
+                    variant="contained"
+                    fullWidth
+                    onClick={() => handleRemoveImage(index)}
+                    className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+                  >
+                    Seleccionar otra imagen
+                  &lt;/Button>
+                &lt;/>
+              ) : (
+                &lt;>
+                  &lt;label htmlFor={`imageUpload-${index}`}>
+                    &lt;Button
+                      component="span"
+                      variant="contained"
+                      fullWidth
+                      className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+                    >
+                      Subir Imagen {index + 1}
+                    &lt;/Button>
+                  &lt;/label>
+                  &lt;input
+                    id={`imageUpload-${index}`}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => handleImageUpload(e, index)}
+                  />
+                &lt;/>
+              )}
+            &lt;/Grid>
+          ))}
+          {imageError &amp;&amp; (
+            &lt;Grid item xs={12}>
+              &lt;p className="font-roboto text-red-600 text-[1rem] text-center">
+                Debe subir al menos una imagen
+              &lt;/p>
+            &lt;/Grid>
+          )}
+
+        &lt;Grid container spacing={4} className="mt-2 text-center pl-6">
+          &lt;Grid item xs={12} sm={6}>
+          &lt;Button variant="contained" fullWidth className="bg-third text-primary pt-2 pb-2 hover:bg-sixth" onClick={
+            isAdmin ? () => navigate(`/shelters/${id}`) : () => navigate("/")
+          }> 
+              VOLVER
+            &lt;/Button>
+          &lt;/Grid>
+
+          &lt;Grid item xs={12} sm={6}>
+            &lt;Button
+            disabled={isLoading}
+              type="submit"
+              variant="contained"
+              fullWidth
+             
+              className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+            >
+              {isLoading ? 'Cargando...' : 'Agregar Mascota'}
+            &lt;/Button>
+
+          &lt;/Grid>
+          &lt;/Grid>
+      &lt;/Grid>
+    &lt;/form>
+  );
+};
+
+export default AddPetForm;
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddPetForm">AddPetForm</a></li><li><a href="global.html#AddPetPage">AddPetPage</a></li><li><a href="global.html#AddShelterForm">AddShelterForm</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#LoginForm">LoginForm</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#PetCard">PetCard</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#Profile">Profile</a></li><li><a href="global.html#ProfileInfo">ProfileInfo</a></li><li><a href="global.html#ProfileInput">ProfileInput</a></li><li><a href="global.html#RegisterLink">RegisterLink</a></li><li><a href="global.html#ShelterCard">ShelterCard</a></li><li><a href="global.html#ShelterInfoPage">ShelterInfoPage</a></li><li><a href="global.html#SheltersPage">SheltersPage</a></li><li><a href="global.html#SignUpForm">SignUpForm</a></li><li><a href="global.html#SignUpPage">SignUpPage</a></li><li><a href="global.html#WelcomePage">WelcomePage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu May 02 2024 13:51:51 GMT-0400 (hora de Bolivia)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

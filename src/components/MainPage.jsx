@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Button, InputBase } from '@mui/material';
-import { Search as SearchIcon } from '@mui/icons-material';
+import { Button, InputBase, Card, CardContent, Typography, Grid } from '@mui/material';
+import { Search as SearchIcon, Male, Female } from '@mui/icons-material'; 
 import { backendAPI } from '../config/axiosConfig';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,6 +12,24 @@ const MainPage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const { accessToken } = useAuth();
 
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        const response = await backendAPI.get(`/pet`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        setSearchResults(response.data);
+      } catch (error) {
+        console.error('Error al obtener mascotas:', error);
+      }
+    };
+
+    fetchPets();
+  }, [accessToken]);
+
   const handleSearch = async () => {
     try {
       const response = await backendAPI.get(`/pet`, {
@@ -19,7 +37,7 @@ const MainPage = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log('Resultados de búsqueda:', response.data);
+
       const filteredResults = response.data.filter((result) =>
         Object.values(result.pet).some((value) =>
           typeof value === 'string' && value.toLowerCase().includes(searchQuery.toLowerCase())
@@ -44,34 +62,36 @@ const MainPage = () => {
     logout();
   };
 
-  const content = (
-    <div className="flex flex-col items-center justify-center gap-[3rem]">
-      <Button
-        variant="contained"
-        className="bg-yellow-300 text-white"
-        style={{ backgroundColor: "#E0B46C", marginTop: 15 }}
-        onClick={handleProfileClick}
-      >
-        Ver Perfil
-      </Button>
-      <Button
-        variant="contained"
-        className="bg-yellow-300 text-white"
-        style={{ backgroundColor: "#E0B46C", marginTop: 15 }}
-        onClick={handleAddPetClick}
-      >
-        Añadir Mascota
-      </Button>
-      <Button
-        variant="contained"
-        className="bg-yellow-300 text-white"
-        style={{ backgroundColor: "#E0B46C", marginTop: 15 }}
-        onClick={handleLogout}
-      >
-        Cerrar Sesión
-      </Button>
-    </div>
-  );
+  const renderSearchResults = () => {
+    return (
+      <Grid container spacing={2}>
+        {searchResults.map((result) => (
+          <Grid item key={result.id} xs={12} sm={6} md={4}>
+            <Card>
+              <CardContent>
+                <Grid container spacing={2}>
+                  <Grid item xs={4}>
+                    <img src={result.pet.photos[0]} alt={result.pet.name} style={{ width: '100%' }} />
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Typography variant="h6" gutterBottom>{result.pet.name}</Typography>
+                    <Typography variant="body1" gutterBottom>{`Edad: ${result.pet.age}`}</Typography>
+                    <Typography variant="body1" gutterBottom>{`Raza: ${result.pet.breed}`}</Typography>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      {result.pet.sex === 'Male' ? <Male /> : <Female />}
+                      <Typography variant="body2" style={{ marginLeft: 5 }}>
+                        {result.pet.sex === 'Male' ? 'Macho' : 'Hembra'}
+                      </Typography>
+                    </div>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    );
+  };
 
   return (
     <div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
@@ -80,7 +100,34 @@ const MainPage = () => {
           {currentUser?.displayName ? `Bienvenido ${currentUser?.displayName}` : "CARGANDO..."}
         </h1>
       </div>
-      {currentUser?.displayName && content}
+      {currentUser?.displayName && (
+        <div className="flex flex-col items-center justify-center gap-[3rem]">
+          <Button
+            variant="contained"
+            className="bg-yellow-300 text-white"
+            style={{ backgroundColor: "#E0B46C", marginTop: 15 }}
+            onClick={handleProfileClick}
+          >
+            Ver Perfil
+          </Button>
+          <Button
+            variant="contained"
+            className="bg-yellow-300 text-white"
+            style={{ backgroundColor: "#E0B46C", marginTop: 15 }}
+            onClick={handleAddPetClick}
+          >
+            Añadir Mascota
+          </Button>
+          <Button
+            variant="contained"
+            className="bg-yellow-300 text-white"
+            style={{ backgroundColor: "#E0B46C", marginTop: 15 }}
+            onClick={handleLogout}
+          >
+            Cerrar Sesión
+          </Button>
+        </div>
+      )}
 
       <div className="flex justify-center mt-5">
         <div className="relative">
@@ -106,18 +153,7 @@ const MainPage = () => {
 
       {searchResults.length > 0 && (
         <div className="mt-5">
-          <h2>Resultados de búsqueda:</h2>
-          <ul>
-            {searchResults.map((result) => (
-              <li key={result.id}>
-                <h3>{result.pet.name}</h3>
-                <p>Edad: {result.pet.age}</p>
-                <p>Sexo: {result.pet.sex}</p>
-                <p>Raza: {result.pet.breed}</p>
-                <p>Descripción: {result.pet.description}</p>
-              </li>
-            ))}
-          </ul>
+          {renderSearchResults()}
         </div>
       )}
     </div>

@@ -23,7 +23,6 @@ import PetCard from '../components/PetCard'
  * @example
  * // Ejemplo de uso:
  * <ShelterInfoPage />
- * 
  */
 
 const ShelterInfoPage = () => {

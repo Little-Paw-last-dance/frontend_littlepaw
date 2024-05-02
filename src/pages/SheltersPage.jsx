@@ -5,6 +5,23 @@ import { useAuth } from '../contexts/AuthContext'
 import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
+/**
+ * 
+ * Página de refugios que muestra los refugios disponibles en la base de datos.
+ * 
+ * @requires ShelterCard
+ * 
+ * @state
+ * @property {Array} shelters - Lista de refugios.
+ * @property {Array} roles - Roles del usuario autenticado.
+ * 
+ * @returns {React.Component} Página de refugios.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <SheltersPage />
+ */
+
 const SheltersPage = () => {
     const {accessToken} = useAuth()
   const [shelters, setShelters] = useState([])

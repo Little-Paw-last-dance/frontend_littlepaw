@@ -1,7 +1,17 @@
 import React from 'react';
 import { Container, Typography } from '@mui/material';
 import AddPetForm from '../components/AddPetForm';
-import logoImg from '../assets/logo.png';
+
+/**
+ * Página para añadir una mascota a la base de datos.
+ * @requires AddPetForm
+ * 
+ * @returns {React.Component} Página de añadir mascota.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <AddPetPage />
+ */
 
 const AddPetPage = () => {
  

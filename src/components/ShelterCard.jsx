@@ -1,6 +1,21 @@
 import { Card, CardMedia, CardContent, Typography, Box } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+/**
+ * Componente de tarjeta de refugio que muestra la información básica de un refugio.
+ * 
+ * @component
+ * @param {Number} id - Identificador del refugio
+ * @param {String} name - Nombre del refugio
+ * @param {String} location - Ubicación del refugio
+ * @param {String} phone - Teléfono del refugio
+ * @param {String} image - Imagen del refugio
+ * @returns {React.Component} - Componente de tarjeta de refugio
+ * 
+ * @example
+ * // Ejemplo de uso de ShelterCard
+ * <ShelterCard id={1} name="Refugio de animales" location="Calle 123" phone="+123456789" image="https://www.example.com/refugio.jpg" />
+ */
 const ShelterCard = ({ id,name, location, phone, image }) => {
     const navigate = useNavigate()
     return (

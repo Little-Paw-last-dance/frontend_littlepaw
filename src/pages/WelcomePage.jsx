@@ -2,6 +2,17 @@ import React from "react";
 import logo from "../assets/fondo2.jpg";
 import { Link } from "react-router-dom";
 
+/**
+ * Página de bienvenida de la aplicación.
+ * 
+ * @returns {React.Component} Página de bienvenida.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <WelcomePage />
+ */
+
+
 const WelcomePage = () => {
   return (
     <div

@@ -6,6 +6,26 @@ import {
     Outlet,
   } from 'react-router-dom';
 
+/**
+ * Componente de ruta privada para componentes exclusivos de administradores. Todas las rutas que requieran roles de administrador deben estar protegidas por este componente.
+ * 
+ * @component
+ * 
+ * @state
+ * @property {Boolean} isStarting - Indica si la petición GET a la API para obtener los roles de usuario está en curso.
+ * @property {Array} roles - Roles de usuario obtenidos de la API.
+ * 
+ * @returns {React.Component} Componente de ruta privada.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <PrivateRoute>
+ *   <Component />
+ * </PrivateRoute>
+ *
+ * 
+ */  
+
 const PrivateRoute = () => {
     const { accessToken, logout } = useAuth()
     const [isStarting, setIsStarting] = useState(true)

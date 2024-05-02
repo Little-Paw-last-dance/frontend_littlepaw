@@ -4,6 +4,24 @@ import { auth } from '../config/firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * Componente de formulario para iniciar sesión en la aplicación con un correo electrónico y una contraseña, mediante una petición a Firebase Authentication.
+ * 
+ * @component
+ * 
+ * @state
+ * @property {String} email - Correo electrónico del usuario.
+ * @property {String} password - Contraseña del usuario.
+ * @property {String} error - Mensaje de error al iniciar sesión.
+ * @property {Boolean} isLoading - Indica si la petición de inicio de sesión está en curso.
+ * 
+ * @returns {React.Component} - Componente de formulario para iniciar sesión.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <LoginForm />
+ */
+
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

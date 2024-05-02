@@ -9,6 +9,38 @@ import { useAuth } from '../contexts/AuthContext'
 import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
+/**
+ * Página de perfil de usuario que muestra la información del usuario autenticado y permite editarla.
+ * 
+ * @requires ProfileInfo
+ * @requires ProfileInput
+ * 
+ * @state
+ * @property {String} names - Nombres del usuario.
+ * @property {Boolean} isLoading - Indica si la petición PATCH a la API está en curso.
+ * @property {String} paternalSurname - Apellido paterno del usuario.
+ * @property {String} maternalSurname - Apellido materno del usuario.
+ * @property {String} age - Edad del usuario.
+ * @property {String} city - Ciudad de residencia del usuario.
+ * @property {String} phone - Número de teléfono del usuario.
+ * @property {Boolean} editable - Indica si el formulario de edición está activo.
+ * @property {Boolean} phoneError - Indica si el número de teléfono ingresado es inválido.
+ * @property {String} phoneErrorMessage - Mensaje de error para el número de teléfono.
+ * @property {Boolean} nameError - Indica si el nombre ingresado es inválido.
+ * @property {String} nameErrorMessage - Mensaje de error para el nombre.
+ * @property {Boolean} paternalSurnameError - Indica si el apellido paterno ingresado es inválido.
+ * @property {String} paternalSurnameErrorMessage - Mensaje de error para el apellido paterno.
+ * @property {Boolean} ageError - Indica si la edad ingresada es inválida.
+ * @property {String} ageErrorMessage - Mensaje de error para la edad.
+ * @property {Boolean} cityError - Indica si la ciudad ingresada es inválida.
+ * @property {Boolean} isStarting - Indica si la petición GET a la API está en curso.
+ * 
+ * @returns {React.Component} Página de perfil de usuario.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <Profile />
+ */
 
 
 const Profile = () => {

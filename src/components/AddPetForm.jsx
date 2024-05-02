@@ -5,6 +5,33 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
+/**
+ * Componente de formulario para rellenar la información de una mascota y agregarla a la base de datos mediante una petición POST a la API.
+ * 
+ * @component
+ * @param {Boolean} isAdmin - Indica si el usuario es administrador o no, para enviar la petición a la ruta de guardado de mascotas en refugios si es administrador, o a la ruta de mascotas general si no lo es.
+ * 
+ * @state
+ * @property {Boolean} isLoading - Indica si la petición POST está en curso.
+ * @property {String} selectedGender - Sexo seleccionado de la mascota.
+ * @property {Boolean} genderError - Indica si no se ha seleccionado el sexo de la mascota.
+ * @property {Array} imageUrls - Arreglo con las URL de las imágenes de la mascota a subir.
+ * @property {Boolean} imageError - Indica si no se han subido imágenes de la mascota.
+ * 
+ * @form
+ * @property {String} name - Nombre de la mascota.
+ * @property {Number} age - Edad de la mascota.
+ * @property {String} sex - Sexo  de la mascota.
+ * @property {String} breed - Raza de la mascota.
+ * @property {String} description - Descripción de la mascota.
+ * @property {String} type - Tipo de mascota.
+ * @property {Array} photos - Arreglo con las imágenes de la mascota en formato base64.
+ * @returns {React.Component} - Componente de formulario para agregar una mascota.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <AddPetForm isAdmin={true} />
+ */
 
 const AddPetForm = ({isAdmin}) => {
   const [isLoading, setIsLoading] = useState(false);

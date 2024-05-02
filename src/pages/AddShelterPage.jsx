@@ -3,6 +3,17 @@ import { Container, Typography } from '@mui/material';
 import AddShelterForm from '../components/AddShelterForm';
 import logoImg from '../assets/logo.png';
 
+/**
+ * Página para añadir un refugio a la base de datos.
+ * @requires AddShelterForm
+ * 
+ * @returns {React.Component} Página de añadir refugio.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <AddShelterPage />
+ */
+
 const AddPetPage = () => {
  
   return (

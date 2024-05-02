@@ -6,6 +6,36 @@ import { useNavigate } from "react-router-dom";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
+/**
+ * Componente de formulario para agregar un refugio a la base de datos mediante una petición POST a la API. Exclusivo para administradores.
+ * 
+ * @component
+ * 
+ * @state
+ * @property {Boolean} isLoading - Indica si la petición POST está en curso.
+ * @property {String} imageUrl - URL en formato base64 de la imagen del refugio a subir.
+ * @property {String} phoneNumber - Número de teléfono del refugio.
+ * @property {String} countryCode - Código de país del número de teléfono del refugio.
+ * @property {String} completePhoneNumber - Número de teléfono completo del refugio.
+ * @property {Boolean} imageError - Indica si no se ha subido la imagen del refugio.
+ * @property {Boolean} phoneError - Indica si no se ha ingresado un número de teléfono válido.
+ * @property {Boolean} urlError - Indica si no se ha ingresado una URL válida para la página web del refugio.
+ * 
+ * @form
+ * @property {String} name - Nombre del refugio.
+ * @property {String} location - Ubicación del refugio.
+ * @property {String} urlPage - URL de la página web del refugio.
+ * @property {String} phone - Número de teléfono del refugio.
+ * @property {Number} countryCode - Código de país del número de teléfono del refugio.
+ * @property {String} photo - Imagen del refugio en formato base64.
+ * 
+ * @returns {React.Component} - Componente de formulario para agregar un refugio.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <AddShelterForm />
+ */
+
 
 const AddShelterForm = () => {
 

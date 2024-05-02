@@ -7,6 +7,38 @@ import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import PhoneInput from 'react-phone-input-2';
 import { boliviaCities } from "../models/bolivianCities";
 
+/**
+ * Componente de formulario para registrarse en la aplicación mediante una petición POST a la API.
+ * 
+ * @component
+ * 
+ * @state
+ * @property {Object} formData - Objeto con los datos del formulario de registro.
+ * @property {Boolean} isLoading - Indica si la petición POST está en curso.
+ * @property {Boolean} matchPasswordError - Indica si las contraseñas no coinciden.
+ * @property {String} completePhoneNumber - Número de teléfono completo del usuario.
+ * @property {Boolean} phoneError - Indica si no se ha ingresado un número de teléfono válido.
+ * @property {Boolean} generalError - Indica si ha ocurrido un error al enviar el formulario.
+ * 
+ * @form
+ * @property {String} names - Nombres del usuario.
+ * @property {String} paternalSurname - Apellido paterno del usuario.
+ * @property {String} maternalSurname - Apellido materno del usuario.
+ * @property {String} email - Correo electrónico del usuario.
+ * @property {String} city - Ciudad de residencia del usuario.
+ * @property {String} password - Contraseña del usuario.
+ * @property {String} confirmPassword - Confirmación de la contraseña del usuario.
+ * @property {Number} countryCode - Código de país del número de teléfono del usuario.
+ * @property {String} phone - Número de teléfono del usuario.
+ * @property {Number} age - Edad del usuario.
+ * 
+ * @returns {React.Component} - Componente de formulario de registro.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <SignUpForm />
+ */
+
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
     names: "",

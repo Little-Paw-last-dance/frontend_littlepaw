@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/ShelterInfoPage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/ShelterInfoPage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useEffect, useState} from 'react'
+import { faLocationPin, faPhone, faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useParams } from 'react-router-dom';
+import { backendAPI } from '../config/axiosConfig'
+import { Button } from '@mui/material';
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import PetCard from '../components/PetCard'
+
+/**
+ * Página de información de un refugio que muestra la información del refugio y las mascotas que alberga.
+ * 
+ * @requires PetCard
+ * 
+ * @state
+ * @property {Array} roles - Roles del usuario autenticado.
+ * @property {Object} shelter - Información del refugio.
+ * @property {Array} pets - Mascotas del refugio.
+ * 
+ * @returns {React.Component} Página de información de un refugio.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * &lt;ShelterInfoPage />
+ */
+
+const ShelterInfoPage = () => {
+    const { id } = useParams()
+    const [roles, setRoles] = useState([])
+    const {accessToken} = useAuth()
+    const navigate = useNavigate()
+    useEffect(() => {
+        if(id === "") return
+        backendAPI.get(`/shelter/${id}`).then((response) => {
+            setShelter(response.data)
+            backendAPI.get("/user", {headers: {"Authorization": `Bearer ${accessToken}`}}).then((userResponse) => {
+                setRoles(userResponse.data.user.roles.map((role) => role.name))
+                backendAPI.get(`/shelter/${id}/pets`, {headers: {"Authorization": `Bearer ${accessToken}`}}).then((petsResponse) => {
+                    setPets(petsResponse.data.petPosts)
+                    window.scrollTo(0,0)
+                }).catch((error) => {
+                    console.error(`Hubo un error al obtener las mascotas: ${error}`)
+                })
+            }).catch((error) => {
+                console.error(`Hubo un error al obtener los roles de usuario: ${error}`)
+            })
+        }).catch((error) => {
+            console.error(error)
+        })
+
+
+    }, [id])
+
+    const [shelter, setShelter] = useState({})
+    const [pets, setPets] = useState([])
+    
+    return (
+        &lt;div className="bg-primary min-h-screen flex flex-col justify-start items-center pb-10">
+            {Object.keys(shelter).length !== 0 ?
+            &lt;>
+            &lt;div className="bg-white w-[80%] flex flex-row justify-center items-start  mt-[2rem] py-[2rem] gap-[2rem] rounded-[4rem]">
+                &lt;div className="flex flex-col justify-center items-center gap-[1rem]">
+                    &lt;img src={shelter.photo} alt="shelter" className="w-[500px] h-[500px] rounded-xl object-cover" />
+                    &lt;h1 className="font-roboto text-title text-third font-bold text-center">{shelter.name}&lt;/h1>
+                &lt;/div>
+                &lt;div className="flex flex-col justify-start items-start gap-[1rem]">
+                    &lt;div className="flex flex-row justify-center items-center gap-[1rem]">
+                        &lt;FontAwesomeIcon icon={faLocationPin} size='xl' />
+                        &lt;p className="font-roboto text-subtitle text-third font-bold text-center">{shelter.location}&lt;/p>
+                    &lt;/div>
+                    &lt;div className="flex flex-row justify-center items-center gap-[1rem]">
+                        &lt;FontAwesomeIcon icon={faPhone} size='xl' />
+                        &lt;p className="font-roboto text-subtitle text-third font-bold text-center">{`+${shelter.countryCode}-${shelter.phone}`}&lt;/p>
+                    &lt;/div>
+                    &lt;div className="flex flex-row justify-center items-center gap-[1rem]">
+                        &lt;FontAwesomeIcon icon={faGlobe} size='xl' />
+                        &lt;p className="font-roboto text-subtitle text-third font-bold text-center">{shelter.urlPage}&lt;/p>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+            {pets.length > 0 &amp;&amp;
+            &lt;h1 className="font-roboto text-title text-third font-bold text-center mt-5">MASCOTAS&lt;/h1>}
+            &lt;div className="flex flex-row justify-center items-center gap-[2rem] flex-wrap">
+                {pets.length > 0 &amp;&amp; pets.map((pet) => (
+                    &lt;PetCard name={pet.pet.name} sex={pet.pet.sex} breed={pet.pet.breed} age={pet.pet.age} image={pet.pet.photos[0]} />
+                ))}
+            &lt;/div>
+            
+
+            &lt;/>
+        
+            : &lt;p className="font-roboto text-title text-third font-bold text-center">CARGANDO...&lt;/p>}
+            &lt;div className="flex flex-row justify-center items-center gap-[1rem]">
+                &lt;Button variant='contained' className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth" onClick={() => navigate("/shelters")}>VOLVER&lt;/Button>
+                {roles.includes("admin") &amp;&amp; &lt;Button variant="contained" onClick={() => navigate(`/shelteraddpet/${id}`)} className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth">AÑADIR MASCOTA&lt;/Button>}
+            &lt;/div>
+        &lt;/div>
+    )
+}
+
+export default ShelterInfoPage</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddPetForm">AddPetForm</a></li><li><a href="global.html#AddPetPage">AddPetPage</a></li><li><a href="global.html#AddShelterForm">AddShelterForm</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#LoginForm">LoginForm</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#PetCard">PetCard</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#Profile">Profile</a></li><li><a href="global.html#ProfileInfo">ProfileInfo</a></li><li><a href="global.html#ProfileInput">ProfileInput</a></li><li><a href="global.html#RegisterLink">RegisterLink</a></li><li><a href="global.html#ShelterCard">ShelterCard</a></li><li><a href="global.html#ShelterInfoPage">ShelterInfoPage</a></li><li><a href="global.html#SheltersPage">SheltersPage</a></li><li><a href="global.html#SignUpForm">SignUpForm</a></li><li><a href="global.html#SignUpPage">SignUpPage</a></li><li><a href="global.html#WelcomePage">WelcomePage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu May 02 2024 13:51:51 GMT-0400 (hora de Bolivia)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

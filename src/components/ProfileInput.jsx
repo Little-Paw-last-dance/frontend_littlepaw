@@ -3,6 +3,26 @@ import React from 'react'
 import PhoneInput from 'react-phone-input-2'
 import { boliviaCities } from '../models/bolivianCities'
 
+/**
+ * Componente que muestra un input de perfil, con un título y un contenido editable.
+ * 
+ * @component
+ * 
+ * @param {String} title - Título del input de perfil.
+ * @param {String} content - Contenido del input de perfil.
+ * @param {Function} setContent - Función para modificar el contenido del input de perfil.
+ * @param {String} type - Tipo de input de perfil, puede ser "text" o "phone".
+ * @param {Function} setError - Función para modificar el estado de error del input de perfil.
+ * @param {String} placeholder - Placeholder del input de perfil.
+ * @param {Boolean} isSelect - Indica si el input de perfil es un select.
+ * 
+ * @returns {React.Component} - Componente de input de perfil.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <ProfileInput title="Nombre" content="Juan Pérez" setContent={setContent} type="text" setError={setError} placeholder="Escribe tu nombre..." isSelect={false} />
+ * 
+ */
 
 const ProfileInput = ({title, content, setContent, type, setError, placeholder, isSelect}) => {
     

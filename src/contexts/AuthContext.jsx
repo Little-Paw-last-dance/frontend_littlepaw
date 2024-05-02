@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
  * 
  * @context
  * 
+ * @param {Object} children - Componentes hijos de la aplicación.
+ * 
  * @state
  * @property {Object} currentUser - Información completa del usuario autenticado.
  * @property {Boolean} isAuthenticated - Indica si el usuario está autenticado.

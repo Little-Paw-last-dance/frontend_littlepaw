@@ -3,6 +3,24 @@ import { onAuthStateChanged, signOut, onIdTokenChanged } from 'firebase/auth';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * Contexto de autenticación, provee información del usuario autenticado y funciones para cerrar sesión en todos los componentes de la aplicación.
+ * 
+ * @context
+ * 
+ * @state
+ * @property {Object} currentUser - Información completa del usuario autenticado.
+ * @property {Boolean} isAuthenticated - Indica si el usuario está autenticado.
+ * @property {String} accessToken - Token de acceso del usuario autenticado.
+ * @property {Function} logout - Función para cerrar sesión del usuario autenticado.
+ * 
+ * @returns {React.Context} Contexto de autenticación.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * const { currentUser, isAuthenticated, logout, accessToken } = useAuth();
+ */
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {

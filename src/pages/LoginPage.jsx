@@ -3,6 +3,19 @@ import { Container, Typography } from '@mui/material';
 import LoginForm from '../components/LoginForm';
 import RegisterLink from '../components/RegisterLink';
 import logoImg from '../assets/logo.png';
+/**
+ * 
+ * Página de inicio de sesión de la aplicación.
+ * @requires LoginForm
+ * @requires RegisterLink
+ * 
+ * @returns {React.Component} Página de inicio de sesión.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <LoginPage />
+ * 
+ */
 const LoginPage = () => {
   return (
     <div className="bg-primary h-full w-full m-0 p-0">

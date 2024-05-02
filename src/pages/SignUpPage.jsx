@@ -3,6 +3,17 @@ import { Container, Typography } from '@mui/material';
 import SignUpForm from '../components/SignUpForm';
 import logoImg from '../assets/logo.png';
 
+/**
+ * Página de registro de usuario.
+ * @requires SignUpForm
+ * 
+ * @returns {React.Component} Página de registro de usuario.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <SignUpPage />
+ */
+
 const SignUpPage = () => {
   return (
     <div className="bg-primary min-h-screen flex flex-col justify-center items-center">

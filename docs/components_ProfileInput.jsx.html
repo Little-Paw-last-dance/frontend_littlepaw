@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/ProfileInput.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/ProfileInput.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { MenuItem, TextField } from '@mui/material'
+import React from 'react'
+import PhoneInput from 'react-phone-input-2'
+import { boliviaCities } from '../models/bolivianCities'
+
+/**
+ * Componente que muestra un input de perfil, con un título y un contenido editable.
+ * 
+ * @component
+ * 
+ * @param {String} title - Título del input de perfil.
+ * @param {String} content - Contenido del input de perfil.
+ * @param {Function} setContent - Función para modificar el contenido del input de perfil.
+ * @param {String} type - Tipo de input de perfil, puede ser "text" o "phone".
+ * @param {Function} setError - Función para modificar el estado de error del input de perfil.
+ * @param {String} placeholder - Placeholder del input de perfil.
+ * @param {Boolean} isSelect - Indica si el input de perfil es un select.
+ * 
+ * @returns {React.Component} - Componente de input de perfil.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * &lt;ProfileInput title="Nombre" content="Juan Pérez" setContent={setContent} type="text" setError={setError} placeholder="Escribe tu nombre..." isSelect={false} />
+ * 
+ */
+
+const ProfileInput = ({title, content, setContent, type, setError, placeholder, isSelect}) => {
+    
+    const handlePhone = (e,value) => {
+        let phone = e?.split(value?.dialCode)[1]
+        setContent(`+${value?.dialCode}-${phone}`)
+    }
+    const handleInputChanges = (e) => {
+        if(e.target.value.match(/\d/) &amp;&amp; type === "text") return
+        setContent(e.target.value)
+        if(setError) {
+            setError(false)
+        }
+
+        
+    }
+  return (
+    &lt;div className="flex flex-col gap-[1rem] font-bold mt-[1rem]">
+        
+        &lt;label htmlFor={title} className="font-roboto text-[2rem] text-third">{title}:&lt;/label>
+        { type === "phone" ? 
+        &lt;PhoneInput
+            specialLabel={""} 
+            onChange={(e,phone) => handlePhone(e,phone)}
+            prefix='+'
+            country={"bo"}
+            value={content}
+            buttonStyle={{backgroundColor: "#F7C677", borderWidth: "3px", borderColor: "#47361A"}}
+            dropdownStyle={{backgroundColor: "#F7C677", borderWidth: "3px", borderColor: "#47361A", }}
+            inputStyle={{backgroundColor: "#F7C677", borderWidth: "3px", borderColor: "#47361A", height: "3rem", fontSize: "1rem", fontWeight:700}}
+            />:
+        &lt;TextField select={isSelect} placeholder={placeholder} type={type} 
+        sx={{"&amp; .MuiOutlinedInput-root": {"&amp;.MuiInputBase-root fieldset": {borderColor: "secondary", borderWidth:"3px"}}}} id="standard" SelectProps={isSelect ?{id: title, style:{fontFamily:"Montserrat", fontWeight:700}, MenuProps:{MenuListProps:{style:{fontFamily:"Montserrat", fontWeight:700}}}} : {}}inputProps={{id: title, style:{fontFamily:"Montserrat", fontWeight:700}}} variant="outlined" value={content} onChange={handleInputChanges}>{
+            isSelect &amp;&amp; boliviaCities.map((city) => {
+                return &lt;MenuItem key={city.value} value={city.value}>{city.label}&lt;/MenuItem>
+            })
+        }&lt;/TextField>
+        }
+    &lt;/div>
+  )
+}
+
+export default ProfileInput</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddPetForm">AddPetForm</a></li><li><a href="global.html#AddPetPage">AddPetPage</a></li><li><a href="global.html#AddShelterForm">AddShelterForm</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#LoginForm">LoginForm</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#PetCard">PetCard</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#Profile">Profile</a></li><li><a href="global.html#ProfileInfo">ProfileInfo</a></li><li><a href="global.html#ProfileInput">ProfileInput</a></li><li><a href="global.html#RegisterLink">RegisterLink</a></li><li><a href="global.html#ShelterCard">ShelterCard</a></li><li><a href="global.html#ShelterInfoPage">ShelterInfoPage</a></li><li><a href="global.html#SheltersPage">SheltersPage</a></li><li><a href="global.html#SignUpForm">SignUpForm</a></li><li><a href="global.html#SignUpPage">SignUpPage</a></li><li><a href="global.html#WelcomePage">WelcomePage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu May 02 2024 13:51:51 GMT-0400 (hora de Bolivia)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

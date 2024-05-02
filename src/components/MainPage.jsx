@@ -64,14 +64,13 @@ const MainPage = () => {
 
   const renderSearchResults = () => {
     return (
-      <Grid container spacing={2}>
+      <div className="flex flex-row justify-center items-center gap-[2rem] flex-wrap ">
         {searchResults.map((result) => (
-          <Grid item key={result.id} xs={12} sm={6} md={4}>
-            <Card>
+            <Card className="w-[550px] h-[250px] rounded-xl hover:shadow-3xl cursor-pointer">
               <CardContent>
                 <Grid container spacing={2}>
                   <Grid item xs={4}>
-                    <img src={result.pet.photos[0]} alt={result.pet.name} style={{ width: '100%' }} />
+                    <img src={result.pet.photos[0]} alt={result.pet.name} style={{ width: '100%', height:"200px", objectFit:"cover" }} />
                   </Grid>
                   <Grid item xs={8}>
                     <Typography variant="h6" gutterBottom>{result.pet.name}</Typography>
@@ -87,13 +86,14 @@ const MainPage = () => {
                 </Grid>
               </CardContent>
             </Card>
-          </Grid>
+          
         ))}
-      </Grid>
+      </div>
     );
   };
 
   return (
+    <>
     <div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
       <div className="flex flex-row justify-center items-center gap-[1rem]">
         <h1 className="font-anybody text-title text-white font-bold text-center">
@@ -126,6 +126,8 @@ const MainPage = () => {
           >
             Cerrar Sesión
           </Button>
+          <Button variant="contained" className="bg-yellow-300 text-white"  style={{ backgroundColor: "#E0B46C", marginTop: 15 }} onClick={() => {navigate("/addshelter")}}>Añadir Refugio</Button>
+        <Button variant="contained" className="bg-yellow-300 text-white"  style={{ backgroundColor: "#E0B46C", marginTop: 15 }} onClick={() => {navigate("/shelters")}}>Ver Refugios</Button>
         </div>
       )}
 
@@ -157,6 +159,8 @@ const MainPage = () => {
         </div>
       )}
     </div>
+    </>
+
   );
 };
 

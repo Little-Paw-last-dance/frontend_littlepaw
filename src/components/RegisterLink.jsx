@@ -1,6 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+/**
+ * Componente que muestra un enlace para redirigir a la página de registro desde la página de inicio de sesión.
+ * 
+ * @component
+ * 
+ * @returns {React.Component} - Componente de enlace de registro.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <RegisterLink />
+ * 
+ */
+
 const RegisterLink = () => {
   return (
     

@@ -8,6 +8,24 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import PetCard from '../components/PetCard'
 
+/**
+ * Página de información de un refugio que muestra la información del refugio y las mascotas que alberga.
+ * 
+ * @requires PetCard
+ * 
+ * @state
+ * @property {Array} roles - Roles del usuario autenticado.
+ * @property {Object} shelter - Información del refugio.
+ * @property {Array} pets - Mascotas del refugio.
+ * 
+ * @returns {React.Component} Página de información de un refugio.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <ShelterInfoPage />
+ * 
+ */
+
 const ShelterInfoPage = () => {
     const { id } = useParams()
     const [roles, setRoles] = useState([])

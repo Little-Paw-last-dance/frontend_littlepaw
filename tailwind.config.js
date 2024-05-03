@@ -11,12 +11,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#F7C677",
-        secondary: "#D6A24D",
-        third: "#47361A",
-        fourth: "#5C4521",
-        fifth: "#AD833E",
-        sixth: "#705528",
+        primary: "#F7E6C9",
+        secondary: "#D29A39",
+        third: "#DFA43C",
+        fourth: "#B08130",
+        fifth: "#8E6826",
+        sixth: "#6C4F1D",
       },
       fontSize: {
         title: '3rem',

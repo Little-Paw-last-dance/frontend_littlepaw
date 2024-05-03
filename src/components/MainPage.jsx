@@ -96,7 +96,7 @@ const MainPage = () => {
     <>
     <div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
       <div className="flex flex-row justify-center items-center gap-[1rem]">
-        <h1 className="font-anybody text-title text-white font-bold text-center">
+        <h1 className="font-anybody text-title text-sixth font-bold text-center">
           {currentUser?.displayName ? `Bienvenido ${currentUser?.displayName}` : "CARGANDO..."}
         </h1>
       </div>

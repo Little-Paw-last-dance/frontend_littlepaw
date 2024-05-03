@@ -62,7 +62,7 @@ const Profile = () => {
     const [ageError, setAgeError] = useState(false)
     const [ageErrorMessage, setAgeErrorMessage] = useState("")
     const [cityError, setCityError] = useState(false)
-    const {accessToken} = useAuth()
+    const {accessToken, updateDisplayName} = useAuth()
     const [isStarting, setIsStarting] = useState(true)
     const navigate = useNavigate()
 
@@ -143,8 +143,12 @@ const Profile = () => {
     setIsLoading(true)
     
     backendAPI.patch("/user", {names, paternalSurname, maternalSurname, age:ageNumber, city, phone: phoneNumber, countryCode: countryCodeNumber}, {headers: {"Authorization": `Bearer ${accessToken}`}}).then((response) => {
-        setEditable(!editable)
-        window.scrollTo(0, 0)
+        updateDisplayName(`${names} ${paternalSurname}`).then(() => {
+            setEditable(!editable)
+            window.scrollTo(0, 0)
+        }).catch((error) => {
+            console.error("Error al actualizar el nombre de usuario:", error)
+        })
     }).catch((error) => {
         console.error("Error al actualizar el perfil:", error)
     }).finally(() => {

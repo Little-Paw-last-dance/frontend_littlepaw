@@ -59,7 +59,7 @@ const ShelterInfoPage = () => {
         <div className="bg-primary min-h-screen flex flex-col justify-start items-center pb-10">
             {Object.keys(shelter).length !== 0 ?
             <>
-            <div className="bg-white w-[80%] flex flex-row justify-center items-start  mt-[2rem] py-[2rem] gap-[2rem] rounded-[4rem]">
+            <div className="bg-white w-[80%] flex flex-row justify-center items-start  mt-[2rem] py-[2rem] gap-[2rem] rounded-[4rem] px-[2rem]">
                 <div className="flex flex-col justify-center items-center gap-[1rem]">
                     <img src={shelter.photo} alt="shelter" className="w-[500px] h-[500px] rounded-xl object-cover" />
                     <h1 className="font-roboto text-title text-third font-bold text-center">{shelter.name}</h1>
@@ -75,7 +75,7 @@ const ShelterInfoPage = () => {
                     </div>
                     <div className="flex flex-row justify-center items-center gap-[1rem]">
                         <FontAwesomeIcon icon={faGlobe} size='xl' />
-                        <p className="font-roboto text-subtitle text-third font-bold text-center">{shelter.urlPage}</p>
+                        <p className="font-roboto text-subtitle text-third font-bold text-center break-all">{shelter.urlPage}</p>
                     </div>
                 </div>
             </div>
@@ -92,8 +92,8 @@ const ShelterInfoPage = () => {
         
             : <p className="font-roboto text-title text-third font-bold text-center">CARGANDO...</p>}
             <div className="flex flex-row justify-center items-center gap-[1rem]">
-                <Button variant='contained' className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth" onClick={() => navigate("/shelters")}>VOLVER</Button>
-                {roles.includes("admin") && <Button variant="contained" onClick={() => navigate(`/shelteraddpet/${id}`)} className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth">AÑADIR MASCOTA</Button>}
+                <Button variant='contained' className="bg-third text-sixth pt-2 pb-2 mt-5 hover:bg-fourth" onClick={() => navigate("/shelters")}>VOLVER</Button>
+                {roles.includes("admin") && <Button variant="contained" onClick={() => navigate(`/shelteraddpet/${id}`)} className="bg-third text-sixth pt-2 pb-2 mt-5 hover:bg-fourth">AÑADIR MASCOTA</Button>}
             </div>
         </div>
     )

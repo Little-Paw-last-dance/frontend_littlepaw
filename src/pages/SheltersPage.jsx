@@ -53,8 +53,8 @@ const SheltersPage = () => {
             
         </div>
         <div className="flex flex-row justify-center items-center gap-[1rem]">
-        <Button variant="contained" className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth" onClick={() => {navigate("/")}}>VOLVER</Button>
-          {roles.includes("admin") && <Button variant="contained" className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth" onClick={() => {navigate("/addshelter")}}>AÑADIR REFUGIO</Button>}
+        <Button variant="contained" className="bg-third text-sixth pt-2 pb-2 mt-5 hover:bg-fourth" onClick={() => {navigate("/")}}>VOLVER</Button>
+          {roles.includes("admin") && <Button variant="contained" className="bg-third text-sixth pt-2 pb-2 mt-5 hover:bg-fourth" onClick={() => {navigate("/addshelter")}}>AÑADIR REFUGIO</Button>}
         </div>
         
     </div>

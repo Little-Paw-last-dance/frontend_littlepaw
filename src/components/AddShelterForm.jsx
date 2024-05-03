@@ -171,11 +171,11 @@ const AddShelterForm = () => {
                 width: '100%',
                 height: '3rem',
                 fontSize: '1rem',
-                backgroundColor: '#F7C677',
+                backgroundColor: '#F7E6C9',
                 borderColor: '#47361A',
               }}
-              buttonStyle={{backgroundColor: "#F7C677",borderColor: "#47361A"}}
-              dropdownStyle={{backgroundColor: "#F7C677", borderColor: "#47361A", }}
+              buttonStyle={{backgroundColor: "#F7E6C9",borderColor: "#47361A"}}
+              dropdownStyle={{backgroundColor: "#F7E6C9", borderColor: "#47361A", }}
               containerClass="react-tel-input"
             />
             {phoneError && (
@@ -204,7 +204,7 @@ const AddShelterForm = () => {
                 component="span"
                 variant="contained"
                 fullWidth
-                className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+                className="bg-third text-sixth pt-2 pb-2 hover:bg-fourth"
               >
                 {imageUrl ? "Reemplazar Imagen" : "Agregar Imagen"}
               </Button>
@@ -219,7 +219,7 @@ const AddShelterForm = () => {
               <Button
                 variant="contained"
                 fullWidth
-                className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+                className="bg-third text-sixth pt-2 pb-2 hover:bg-fourth"
                 onClick={() => navigate("/shelters")}
               >
                 Volver
@@ -232,7 +232,7 @@ const AddShelterForm = () => {
               type="submit"
               variant="contained"
               fullWidth
-              className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+              className="bg-third text-sixth pt-2 pb-2 hover:bg-fourth"
             >
               {isLoading ? "Cargando..." : "Agregar Refugio"}
             </Button>

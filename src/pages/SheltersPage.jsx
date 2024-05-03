@@ -45,7 +45,7 @@ const SheltersPage = () => {
   return (
     
     <div className="bg-primary min-h-screen flex flex-col justify-start items-center pb-10">
-        <h1 className="font-montserrat text-title text-third font-bold text-center">Refugios</h1>
+        <h1 className="font-montserrat text-title text-sixth font-bold text-center">Refugios</h1>
         <div className="flex flex-row flex-wrap justify-center items-center gap-[1rem] px-[2rem]">
             {shelters.length > 0 ? shelters.map((shelter) => (
                 <ShelterCard key={shelter.id} id={shelter.id} name={shelter.name} location={shelter.location} phone={`+${shelter.countryCode}-${shelter.phone}`} image={shelter.photo} />

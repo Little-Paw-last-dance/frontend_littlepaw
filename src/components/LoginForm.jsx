@@ -78,7 +78,7 @@ const LoginForm = () => {
           variant="contained"
           type="submit"
           fullWidth
-          className="bg-third text-primary pt-2 pb-2 hover:bg-sixth mt-5"
+          className="bg-third text-sixth pt-2 pb-2 hover:bg-fourth mt-5"
           
           
         >

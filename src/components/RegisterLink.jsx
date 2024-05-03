@@ -19,10 +19,10 @@ const RegisterLink = () => {
     
     <p className="align-center">
       <br />
-      <span className="font-roboto text-black font-bold">
+      <span className="font-roboto text-sixth font-bold">
         ¿Aún no eres miembro?{' '}
       </span>
-      <Link to="/signup" className="font-anybody text-white font-bold">
+      <Link to="/signup" className="font-anybody text-fifth font-bold">
         Crear una cuenta
       </Link>
     </p>

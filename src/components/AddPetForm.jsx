@@ -191,7 +191,7 @@ const AddPetForm = ({isAdmin}) => {
               variant="contained"
               fullWidth
               onClick={() => handleGenderSelect("Male")}
-              className={selectedGender === "Male" ? "bg-third text-white" : "bg-fifth text-white"}
+              className={selectedGender === "Male" ? "bg-fourth text-sixth" : "bg-third text-sixth"}
               
             >
               Macho
@@ -203,7 +203,7 @@ const AddPetForm = ({isAdmin}) => {
               variant="contained"
               fullWidth
               onClick={() => handleGenderSelect("Female")}
-              className={selectedGender === "Female" ? "bg-third text-white" : "bg-fifth text-white"}
+              className={selectedGender === "Female" ? "bg-fourth text-sixth" : "bg-third text-sixth"}
             >
               Hembra
             </Button>
@@ -227,7 +227,7 @@ const AddPetForm = ({isAdmin}) => {
                     variant="contained"
                     fullWidth
                     onClick={() => handleRemoveImage(index)}
-                    className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+                    className="bg-third text-sixth pt-2 pb-2 hover:bg-fourth"
                   >
                     Seleccionar otra imagen
                   </Button>
@@ -239,7 +239,7 @@ const AddPetForm = ({isAdmin}) => {
                       component="span"
                       variant="contained"
                       fullWidth
-                      className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+                      className="bg-third text-sixth pt-2 pb-2 hover:bg-fourth"
                     >
                       Subir Imagen {index + 1}
                     </Button>
@@ -265,7 +265,7 @@ const AddPetForm = ({isAdmin}) => {
 
         <Grid container spacing={4} className="mt-2 text-center pl-6">
           <Grid item xs={12} sm={6}>
-          <Button variant="contained" fullWidth className="bg-third text-primary pt-2 pb-2 hover:bg-sixth" onClick={
+          <Button variant="contained" fullWidth className="bg-third text-sixth pt-2 pb-2 hover:bg-fourth" onClick={
             isAdmin ? () => navigate(`/shelters/${id}`) : () => navigate("/")
           }> 
               VOLVER
@@ -279,7 +279,7 @@ const AddPetForm = ({isAdmin}) => {
               variant="contained"
               fullWidth
              
-              className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+              className="bg-third text-sixth pt-2 pb-2 hover:bg-fourth"
             >
               {isLoading ? 'Cargando...' : 'Agregar Mascota'}
             </Button>

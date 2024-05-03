@@ -17,7 +17,7 @@ export const customTheme = (outerTheme) =>
             },
             input: {
               "&:-webkit-autofill": {
-                WebkitBoxShadow: "0 0 0 100px #F7C677 inset",
+                WebkitBoxShadow: "0 0 0 100px #F7E6C9 inset",
                 WebkitTextFillColor: "#47361A",
               }
             }

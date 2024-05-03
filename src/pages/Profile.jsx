@@ -160,9 +160,9 @@ const Profile = () => {
   return (
     <div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
         <div className="flex flex-row justify-center items-center gap-[1rem]">
-            <h1 className="font-montserrat text-title text-third font-bold text-center">Perfil</h1>
+            <h1 className="font-montserrat text-title text-sixth font-bold text-center">Perfil</h1>
             {!editable &&
-            <FontAwesomeIcon onClick={() => {setEditable(!editable)}} icon={faPencil } className="text-third cursor-pointer" size={"xl"} />}
+            <FontAwesomeIcon onClick={() => {setEditable(!editable)}} icon={faPencil } className="text-sixth cursor-pointer" size={"xl"} />}
             
         </div>
 
@@ -199,8 +199,8 @@ const Profile = () => {
         </div>
 
         <div className="flex flex-row justify-center items-center gap-[1rem]">
-            {editable && <Button disabled={isLoading}variant="contained" type="submit" className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth" onClick={submitChanges}>{isLoading ? "GUARDANDO..." : "GUARDAR CAMBIOS"}</Button>}
-            <Button variant="contained"  className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth" onClick={() => {navigate("/")}}>VOLVER</Button>
+            {editable && <Button disabled={isLoading}variant="contained" type="submit" className="bg-third text-sixth pt-2 pb-2 mt-5 hover:bg-fourth" onClick={submitChanges}>{isLoading ? "GUARDANDO..." : "GUARDAR CAMBIOS"}</Button>}
+            <Button variant="contained"  className="bg-third text-sixth pt-2 pb-2 mt-5 hover:bg-fourth" onClick={() => {navigate("/")}}>VOLVER</Button>
         </div>
 
         

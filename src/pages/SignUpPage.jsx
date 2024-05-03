@@ -22,7 +22,7 @@ const SignUpPage = () => {
           variant="h2"
           align="center"
           gutterBottom
-          className="pb-10 font-montserrat font-bold text-third"
+          className="pb-10 font-montserrat font-bold text-sixth"
         >
           Little Paw
         </Typography>

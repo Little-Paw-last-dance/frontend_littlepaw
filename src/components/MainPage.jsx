@@ -118,7 +118,10 @@ const MainPage = () => {
           >
             Añadir Mascota
           </Button>
-          <Button
+          
+          <Button variant="contained" className="bg-yellow-300 text-white"  style={{ backgroundColor: "#E0B46C", marginTop: 15 }} onClick={() => {navigate("/addshelter")}}>Añadir Refugio</Button>
+        <Button variant="contained" className="bg-yellow-300 text-white"  style={{ backgroundColor: "#E0B46C", marginTop: 15 }} onClick={() => {navigate("/shelters")}}>Ver Refugios</Button>
+        <Button
             variant="contained"
             className="bg-yellow-300 text-white"
             style={{ backgroundColor: "#E0B46C", marginTop: 15 }}
@@ -126,8 +129,6 @@ const MainPage = () => {
           >
             Cerrar Sesión
           </Button>
-          <Button variant="contained" className="bg-yellow-300 text-white"  style={{ backgroundColor: "#E0B46C", marginTop: 15 }} onClick={() => {navigate("/addshelter")}}>Añadir Refugio</Button>
-        <Button variant="contained" className="bg-yellow-300 text-white"  style={{ backgroundColor: "#E0B46C", marginTop: 15 }} onClick={() => {navigate("/shelters")}}>Ver Refugios</Button>
         </div>
       )}
 

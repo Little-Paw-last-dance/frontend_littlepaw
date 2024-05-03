@@ -1,5 +1,5 @@
 import { auth } from '../config/firebaseConfig';
-import { onAuthStateChanged, signOut, onIdTokenChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut, onIdTokenChanged, updateProfile } from 'firebase/auth';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -41,6 +41,16 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const updateDisplayName = async (name) => {
+        try {
+            await updateProfile(currentUser,{
+                displayName: name
+            });
+        } catch (error) {
+            console.error("Error al actualizar el nombre de usuario:", error);
+        }
+    }
+
     const onAuthStateChangedSelf = async (user) => {
         try {
             if (user) {
@@ -77,7 +87,7 @@ export const AuthProvider = ({ children }) => {
     
     },[])
     return (
-        <AuthContext.Provider value={{ currentUser, isAuthenticated, logout, accessToken }}>
+        <AuthContext.Provider value={{ currentUser, isAuthenticated, logout, accessToken, updateDisplayName }}>
             {children}
         </AuthContext.Provider>
     );

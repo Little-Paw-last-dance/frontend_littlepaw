@@ -10,6 +10,10 @@ import unselectedReptile from '../assets/unselectedReptile.png';
 import selectedReptile from '../assets/selectedReptile.png';
 import unselectedOther from '../assets/unselectedOther.png';
 import selectedOther from '../assets/selectedOther.png';
+import unselectedMale from '../assets/unselectedMale.png';
+import selectedMale from '../assets/selectedMale.png';
+import unselectedFemale from '../assets/unselectedFemale.png';
+import selectedFemale from '../assets/selectedFemale.png';
 
 export const petImages = [
     {type: 'dog', selected: selectedDog, unselected: unselectedDog},
@@ -18,4 +22,9 @@ export const petImages = [
     {type: 'rabbit', selected: selectedRabbit, unselected: unselectedRabbit},
     {type: 'reptile', selected: selectedReptile, unselected: unselectedReptile},
     {type: 'other', selected: selectedOther, unselected: unselectedOther},
+]
+
+export const petGenderImages = [
+    {type: 'Male', selected: selectedMale, unselected: unselectedMale},
+    {type: 'Female', selected: selectedFemale, unselected: unselectedFemale},
 ]

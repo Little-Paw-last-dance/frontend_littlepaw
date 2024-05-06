@@ -13,6 +13,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMars, faVenus } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 const PetInfoPage = () => {
   const { id } = useParams();
   const [petData, setPetData] = useState({});
@@ -20,6 +21,7 @@ const PetInfoPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchPetInfo = async () => {
       try {
         const response = await backendAPI.get(`/pet`, {
@@ -45,8 +47,7 @@ const PetInfoPage = () => {
   }, [id, accessToken]);
 
   const handleAdoptClick = () => {
-    // Aquí puedes implementar la lógica para el proceso de adopción
-    console.log("Adoptar mascota:", petData.name);
+    window.open(petData.contact, "_blank")
   };
 
   return (
@@ -129,12 +130,16 @@ const PetInfoPage = () => {
               >
                 VOLVER
               </Button>
+              
               <Button
                 variant="contained"
+                onClick={handleAdoptClick}
                 className="bg-third text-sixth pt-2 pb-2 mt-5 hover:bg-fourth w-full"
               >
+
                 Adoptar
               </Button>
+              
             </div>
           </Card>
         </>

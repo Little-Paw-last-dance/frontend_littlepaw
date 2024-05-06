@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Button, InputBase, Card, CardContent, Typography, Grid } from '@mui/material';
+import { Button, InputBase, Card, CardContent, Typography, Grid, Drawer } from '@mui/material';
 import { Search as SearchIcon, Male, Female } from '@mui/icons-material'; 
 import { backendAPI } from '../config/axiosConfig';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,8 @@ import { petTypes } from '../models/petTypes';
 import { petImages } from '../models/petImages';
 import { petSex } from '../models/petSex';
 import { petGenderImages } from '../models/petImages';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const MainPage = () => {
   const { logout, currentUser } = useAuth();
@@ -16,6 +18,7 @@ const MainPage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedType, setSelectedType] = useState('');
   const [selectedSex, setSelectedSex] = useState('');
+  const [open, setOpen] = useState(false);
   const { accessToken } = useAuth();
 
 
@@ -109,6 +112,7 @@ const MainPage = () => {
     <>
     <div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
       <div className="flex flex-row justify-center items-center gap-[1rem]">
+        <FontAwesomeIcon icon={faBars} size="2x" className="absolute text-sixth left-10 cursor-pointer" onClick={() => {setOpen(true)}} />
         <h1 className="font-anybody text-title text-sixth font-bold text-center">
           {currentUser?.displayName ? `Bienvenido ${currentUser?.displayName}` : "CARGANDO..."}
         </h1>

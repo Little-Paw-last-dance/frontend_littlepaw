@@ -10,6 +10,7 @@ import { petSex } from '../models/petSex';
 import { petGenderImages } from '../models/petImages';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DrawerMenu from './DrawerMenu';
 
 const MainPage = () => {
   const { logout, currentUser } = useAuth();
@@ -71,6 +72,9 @@ const MainPage = () => {
       setSelectedSex(value);
     }
   }
+  const handleToggleDrawer = () => {
+    setOpen(!open);
+  }
 
   const renderSearchResults = () => {
     return (
@@ -110,6 +114,7 @@ const MainPage = () => {
 
   return (
     <>
+    <DrawerMenu open={open} setOpen={handleToggleDrawer} />
     <div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
       <div className="flex flex-row justify-center items-center gap-[1rem]">
         <FontAwesomeIcon icon={faBars} size="2x" className="absolute text-sixth left-10 cursor-pointer" onClick={() => {setOpen(true)}} />
@@ -117,36 +122,6 @@ const MainPage = () => {
           {currentUser?.displayName ? `Bienvenido ${currentUser?.displayName}` : "CARGANDO..."}
         </h1>
       </div>
-      {currentUser?.displayName && (
-        <div className="flex flex-col items-center justify-center gap-[3rem]">
-          <Button
-            variant="contained"
-            className="bg-third text-sixth"
-            onClick={handleProfileClick}
-          >
-            Ver Perfil
-          </Button>
-          <Button
-            variant="contained"
-            className="bg-third text-sixth"
-            
-            onClick={handleAddPetClick}
-          >
-            Añadir Mascota
-          </Button>
-          
-          <Button variant="contained" className="bg-third text-sixth"  onClick={() => {navigate("/addshelter")}}>Añadir Refugio</Button>
-        <Button variant="contained" className="bg-third text-sixth"  onClick={() => {navigate("/shelters")}}>Ver Refugios</Button>
-        <Button
-            variant="contained"
-            className="bg-third text-sixth"
-            
-            onClick={handleLogout}
-          >
-            Cerrar Sesión
-          </Button>
-        </div>
-      )}
       <div className="flex flex-row justify-center items-center gap-[3rem] mt-[5rem]">
         {petTypes.map((type) => (
           <button

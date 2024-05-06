@@ -17,8 +17,9 @@ import { Link } from "react-router-dom";
 const PetInfoPage = () => {
   const { id, shelterId } = useParams();
   const [petData, setPetData] = useState({});
-  const { accessToken } = useAuth();
+  const { accessToken, currentUser } = useAuth();
   const navigate = useNavigate();
+  const [canAdopt, setCanAdopt] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -62,6 +63,17 @@ const PetInfoPage = () => {
 
     fetchPetInfo();
   }, [id, accessToken]);
+
+  useEffect(() => {
+
+    if(petData && petData.user && petData.user.email !== undefined && currentUser && currentUser.email !== undefined){
+      if(petData.user.email !== currentUser.email){
+        setCanAdopt(true);
+      }
+    }
+  },[petData, currentUser])
+
+
 
   const handleAdoptClick = () => {
     window.open(petData.contact, "_blank")
@@ -148,6 +160,7 @@ const PetInfoPage = () => {
                 VOLVER
               </Button>
               
+              {canAdopt && (
               <Button
                 variant="contained"
                 onClick={handleAdoptClick}
@@ -155,7 +168,7 @@ const PetInfoPage = () => {
               >
 
                 Adoptar
-              </Button>
+              </Button>)}
               
             </div>
           </Card>

@@ -4,13 +4,20 @@ import { Button, InputBase, Card, CardContent, Typography, Grid } from '@mui/mat
 import { Search as SearchIcon, Male, Female } from '@mui/icons-material'; 
 import { backendAPI } from '../config/axiosConfig';
 import { useNavigate } from 'react-router-dom';
+import { petTypes } from '../models/petTypes';
+import { petImages } from '../models/petImages';
+import { petSex } from '../models/petSex';
+import { petGenderImages } from '../models/petImages';
 
 const MainPage = () => {
   const { logout, currentUser } = useAuth();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [selectedType, setSelectedType] = useState('');
+  const [selectedSex, setSelectedSex] = useState('');
   const { accessToken } = useAuth();
+
 
   useEffect(() => {
     const fetchPets = async () => {
@@ -30,26 +37,7 @@ const MainPage = () => {
     fetchPets();
   }, [accessToken]);
 
-  const handleSearch = async () => {
-    try {
-      const response = await backendAPI.get(`/pet`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      const filteredResults = response.data.filter((result) =>
-        Object.values(result.pet).some((value) =>
-          typeof value === 'string' && value.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      );
-
-      setSearchResults(filteredResults);
-    } catch (error) {
-      console.error('Error al realizar la búsqueda:', error);
-    }
-  };
-
+  
   const handleProfileClick = () => {
     navigate("/profile");
   };
@@ -62,10 +50,28 @@ const MainPage = () => {
     logout();
   };
 
+  const handlePetTypeClick = (type) => {
+    if(selectedType === type) {
+      setSelectedType('');
+    } else {
+      setSelectedType(type);
+    }
+  } 
+  const handlePetSexClick = (value) => {
+    if(selectedSex === value) {
+      setSelectedSex('');
+    } else {
+      setSelectedSex(value);
+    }
+  }
+
   const renderSearchResults = () => {
     return (
       <div className="flex flex-row justify-center items-center gap-[2rem] flex-wrap ">
-        {searchResults.map((result) => (
+        {searchResults.filter((pet) => 
+        Object.values(pet.pet).some((value) =>
+        (typeof value === 'string' && value.toLowerCase().includes(searchQuery.toLowerCase())) && (selectedType === '' || pet.pet.type === selectedType) && (selectedSex === '' || pet.pet.sex === selectedSex)
+        )).map((result) => (
             <Card className="w-[550px] h-[250px] rounded-xl hover:shadow-3xl cursor-pointer">
               <CardContent>
                 <Grid container spacing={2}>
@@ -130,6 +136,30 @@ const MainPage = () => {
           </Button>
         </div>
       )}
+      <div className="flex flex-row justify-center items-center gap-[3rem] mt-[5rem]">
+        {petTypes.map((type) => (
+          <button
+            variant="contained"
+            className={selectedType === type.value ?"bg-primary text-sixth w-[150px] h-[150px] border-none cursor-pointer shadow-xl rounded-xl" : 
+            "bg-white text-sixth w-[150px] h-[150px] border-none cursor-pointer hover:shadow-xl rounded-xl"}
+            onClick={() => handlePetTypeClick(type.value)}
+          >
+            <img className="w-full"src={selectedType === type.value ?petImages.find((image) => image.type === type.value).selected :petImages.find((image) => image.type === type.value).unselected} alt={type.label} />
+          </button>
+        ))}
+
+      </div>
+      <div className="flex flex-row justify-center items-center gap-[3rem] mt-[5rem]">
+        {petSex.map((sex) => (
+          <button
+            variant="contained"
+            className={selectedSex === sex ? "bg-primary text-sixth w-[150px] h-[150px] border-none cursor-pointer shadow-xl rounded-xl" :
+            "bg-white text-sixth w-[150px] h-[150px] border-none cursor-pointer hover:shadow-xl rounded-xl"}
+            onClick={() => handlePetSexClick(sex)}>
+            <img className="w-full" src={selectedSex === sex ? petGenderImages.find((image) => image.type === sex).selected : petGenderImages.find((image) => image.type === sex).unselected} alt={sex} />
+            </button>
+        ))}
+      </div>  
 
       <div className="flex justify-center mt-5">
         <div className="relative">
@@ -143,16 +173,9 @@ const MainPage = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <Button
-            variant="contained"
-            className="bg-third text-sixth ml-10"
-            onClick={handleSearch}
-          >
-            Buscar
-          </Button>
         </div>
       </div>
-
+      
       {searchResults.length > 0 && (
         <div className="mt-5">
           {renderSearchResults()}

@@ -12,7 +12,7 @@ const MainPage = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  
+  const [selectedType, setSelectedType] = useState('');
   const { accessToken } = useAuth();
 
 
@@ -47,12 +47,20 @@ const MainPage = () => {
     logout();
   };
 
+  const handlePetTypeClick = (type) => {
+    if(selectedType === type) {
+      setSelectedType('');
+    } else {
+      setSelectedType(type);
+    }
+  } 
+
   const renderSearchResults = () => {
     return (
       <div className="flex flex-row justify-center items-center gap-[2rem] flex-wrap ">
         {searchResults.filter((pet) => 
         Object.values(pet.pet).some((value) =>
-          typeof value === 'string' && value.toLowerCase().includes(searchQuery.toLowerCase())
+        (typeof value === 'string' && value.toLowerCase().includes(searchQuery.toLowerCase())) && (selectedType === '' || pet.pet.type === selectedType)
         )).map((result) => (
             <Card className="w-[550px] h-[250px] rounded-xl hover:shadow-3xl cursor-pointer">
               <CardContent>
@@ -118,7 +126,19 @@ const MainPage = () => {
           </Button>
         </div>
       )}
-      
+      <div className="flex flex-row justify-center items-center gap-[3rem] mt-[5rem]">
+        {petTypes.map((type) => (
+          <button
+            variant="contained"
+            className={selectedType === type.value ?"bg-primary text-sixth w-[150px] h-[150px] border-none cursor-pointer shadow-xl rounded-xl" : 
+            "bg-white text-sixth w-[150px] h-[150px] border-none cursor-pointer hover:shadow-xl rounded-xl"}
+            onClick={() => handlePetTypeClick(type.value)}
+          >
+            <img className="w-full"src={selectedType === type.value ?petImages.find((image) => image.type === type.value).selected :petImages.find((image) => image.type === type.value).unselected} alt={type.label} />
+          </button>
+        ))}
+
+      </div>
 
       <div className="flex justify-center mt-5">
         <div className="relative">

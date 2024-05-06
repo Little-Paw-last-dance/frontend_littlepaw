@@ -28,7 +28,7 @@ const PetInfoPage = () => {
           },
         });
 
-        const pet = response.data.find((pet) => pet.id === parseInt(id));
+        const pet = response.data.find((pet) => pet.pet.id  === parseInt(id));
         if (pet) {
           setPetData(pet);
         } else {

@@ -58,6 +58,10 @@ const MainPage = () => {
     navigate("/addpet");
   };
 
+  const handlePetClick = (petId) => {
+    navigate(`/pet/${petId}`); 
+  };
+
   const handleLogout = () => {
     logout();
   };
@@ -66,27 +70,30 @@ const MainPage = () => {
     return (
       <div className="flex flex-row justify-center items-center gap-[2rem] flex-wrap ">
         {searchResults.map((result) => (
-            <Card className="w-[550px] h-[250px] rounded-xl hover:shadow-3xl cursor-pointer">
-              <CardContent>
-                <Grid container spacing={2}>
-                  <Grid item xs={4}>
-                    <img src={result.pet.photos[0]} alt={result.pet.name} style={{ width: '100%', height:"200px", objectFit:"cover" }} />
-                  </Grid>
-                  <Grid item xs={8}>
-                    <Typography variant="h6" gutterBottom>{result.pet.name}</Typography>
-                    <Typography variant="body1" gutterBottom>{`Edad: ${result.pet.age}`}</Typography>
-                    <Typography variant="body1" gutterBottom>{`Raza: ${result.pet.breed}`}</Typography>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      {result.pet.sex === 'Male' ? <Male /> : <Female />}
-                      <Typography variant="body2" style={{ marginLeft: 5 }}>
-                        {result.pet.sex === 'Male' ? 'Macho' : 'Hembra'}
-                      </Typography>
-                    </div>
-                  </Grid>
+          <Card
+            key={result.pet.id}
+            className="w-[550px] h-[250px] rounded-xl hover:shadow-3xl cursor-pointer"
+            onClick={() => handlePetClick(result.pet.id)}
+          >
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={4}>
+                  <img src={result.pet.photos[0]} alt={result.pet.name} style={{ width: '100%', height: "200px", objectFit: "cover" }} />
                 </Grid>
-              </CardContent>
-            </Card>
-          
+                <Grid item xs={8}>
+                  <Typography variant="h6" gutterBottom>{result.pet.name}</Typography>
+                  <Typography variant="body1" gutterBottom>{`Edad: ${result.pet.age}`}</Typography>
+                  <Typography variant="body1" gutterBottom>{`Raza: ${result.pet.breed}`}</Typography>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    {result.pet.sex === 'Male' ? <Male /> : <Female />}
+                    <Typography variant="body2" style={{ marginLeft: 5 }}>
+                      {result.pet.sex === 'Male' ? 'Macho' : 'Hembra'}
+                    </Typography>
+                  </div>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
         ))}
       </div>
     );

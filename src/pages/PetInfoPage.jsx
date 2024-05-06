@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMars, faVenus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 const PetInfoPage = () => {
-  const { id } = useParams();
+  const { id, shelterId } = useParams();
   const [petData, setPetData] = useState({});
   const { accessToken } = useAuth();
   const navigate = useNavigate();
@@ -34,9 +34,26 @@ const PetInfoPage = () => {
         if (pet) {
           setPetData(pet);
         } else {
+          if(shelterId){
+            const shelterPetsResponse = await backendAPI.get(`/shelter/${shelterId}/pets`, {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            });
+            const shelterPet = shelterPetsResponse.data.petPosts.find((pet) => pet.pet.id === parseInt(id));
+            if(shelterPet){
+              setPetData(shelterPet);
+              
+            } else {
+              console.error(
+                "No se encontró información de la mascota con el ID proporcionado."
+              );
+            }
+          } else {
           console.error(
             "No se encontró información de la mascota con el ID proporcionado."
           );
+        }
         }
       } catch (error) {
         console.error("Error al obtener la información de la mascota:", error);

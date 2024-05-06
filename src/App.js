@@ -37,9 +37,13 @@ const App = () => {
             <Route path="/shelters" >
               <Route index element={<SheltersPage />} />
               <Route path=":id" element={<ShelterInfoPage />} />
+              
             </Route>
             <Route path="/" element={<MainPage />} />
-            <Route path="/pet/:id" element={<PetInfoPage />} />
+            <Route path="/pet/:id">
+              <Route index element={<PetInfoPage />} />
+              <Route path="shelter/:shelterId" element={<PetInfoPage />} />
+            </Route>
             <Route element={<PrivateRoute />}>
               <Route path="/addshelter" element={<AddShelter />} />
               <Route path="/shelteraddpet">

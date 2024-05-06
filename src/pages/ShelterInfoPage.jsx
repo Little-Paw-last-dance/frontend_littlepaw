@@ -83,7 +83,7 @@ const ShelterInfoPage = () => {
             <h1 className="font-roboto text-title text-third font-bold text-center mt-5">MASCOTAS</h1>}
             <div className="flex flex-row justify-center items-center gap-[2rem] flex-wrap">
                 {pets.length > 0 && pets.map((pet) => (
-                    <PetCard name={pet.pet.name} sex={pet.pet.sex} breed={pet.pet.breed} age={pet.pet.age} image={pet.pet.photos[0]} />
+                    <PetCard id={pet.pet.id} name={pet.pet.name} sex={pet.pet.sex} breed={pet.pet.breed} age={pet.pet.age} image={pet.pet.photos[0]} shelterId={id}/>
                 ))}
             </div>
             

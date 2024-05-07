@@ -19,7 +19,7 @@ const PetInfoPage = () => {
   const [petData, setPetData] = useState({});
   const { accessToken, currentUser } = useAuth();
   const navigate = useNavigate();
-  const [canAdopt, setCanAdopt] = useState(false);
+  const [canAdopt, setCanAdopt] = useState(shelterId ? true: false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -65,6 +65,8 @@ const PetInfoPage = () => {
   }, [id, accessToken]);
 
   useEffect(() => {
+    console.log(currentUser)
+    console.log(petData)
 
     if(petData && petData.user && petData.user.email !== undefined && currentUser && currentUser.email !== undefined){
       if(petData.user.email !== currentUser.email){
@@ -78,6 +80,14 @@ const PetInfoPage = () => {
   const handleAdoptClick = () => {
     window.open(petData.contact, "_blank")
   };
+
+  const handleGoBack = () => {
+    if(shelterId){
+      navigate(`/shelters/${shelterId}`);
+    } else {
+      navigate("/");
+    }
+  }
 
   return (
     <div className="bg-primary min-h-screen flex flex-col justify-start items-center pb-10">
@@ -155,7 +165,7 @@ const PetInfoPage = () => {
               <Button
                 variant="contained"
                 className="bg-third text-sixth pt-2 pb-2 mt-5 w-full hover:bg-fourth"
-                onClick={() => navigate("/")}
+                onClick={handleGoBack}
               >
                 VOLVER
               </Button>

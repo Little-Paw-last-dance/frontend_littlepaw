@@ -1,4 +1,32 @@
-import React, { useEffect, useState } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/PetInfoPage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/PetInfoPage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { backendAPI } from "../config/axiosConfig";
 import {
@@ -27,7 +55,7 @@ import { Link } from "react-router-dom";
  * 
  * @example
  * // Ejemplo de uso:
- * <PetInfoPage />
+ * &lt;PetInfoPage />
  * 
 */
 
@@ -82,7 +110,10 @@ const PetInfoPage = () => {
   }, [id, accessToken]);
 
   useEffect(() => {
-    if(petData && petData.user && petData.user.email !== undefined && currentUser && currentUser.email !== undefined){
+    console.log(currentUser)
+    console.log(petData)
+
+    if(petData &amp;&amp; petData.user &amp;&amp; petData.user.email !== undefined &amp;&amp; currentUser &amp;&amp; currentUser.email !== undefined){
       if(petData.user.email !== currentUser.email){
         setCanAdopt(true);
       }
@@ -104,53 +135,53 @@ const PetInfoPage = () => {
   }
 
   return (
-    <div className="bg-primary min-h-screen flex flex-col justify-start items-center pb-10">
+    &lt;div className="bg-primary min-h-screen flex flex-col justify-start items-center pb-10">
       {Object.keys(petData).length !== 0 ? (
-        <>
-          <Card className="bg-white w-[80%] flex flex-col items-start mt-[2rem] py-[2rem] gap-[2rem] rounded-[4rem] px-[3rem]">
-            <div className="flex flex-row w-full gap-[2rem]">
-              <CardMedia
+        &lt;>
+          &lt;Card className="bg-white w-[80%] flex flex-col items-start mt-[2rem] py-[2rem] gap-[2rem] rounded-[4rem] px-[3rem]">
+            &lt;div className="flex flex-row w-full gap-[2rem]">
+              &lt;CardMedia
                 component="img"
                 className="w-[450px] h-[450px] rounded-xl object-cover"
                 image={petData.pet.photos[0]}
               />
 
-              <CardContent>
-                <Typography
+              &lt;CardContent>
+                &lt;Typography
                   className="font-bold text-[2rem]"
                   variant="body2"
                   component="h6"
                 >
                   Descripción:
-                  <hr className="w-full border-[1px] border-primary mt-2 mb-2" />
+                  &lt;hr className="w-full border-[1px] border-primary mt-2 mb-2" />
                   {petData.pet.description}
-                </Typography>
-              </CardContent>
-            </div>
-            <div className="flex flex-row justify-center items-center gap-[1rem]">
-              <CardContent className="flex flex-col justify-between items-start text-center mr-80">
-                <Box className="flex flex-row justify-between  gap-[1rem]">
-                  <Typography
+                &lt;/Typography>
+              &lt;/CardContent>
+            &lt;/div>
+            &lt;div className="flex flex-row justify-center items-center gap-[1rem]">
+              &lt;CardContent className="flex flex-col justify-between items-start text-center mr-80">
+                &lt;Box className="flex flex-row justify-between  gap-[1rem]">
+                  &lt;Typography
                     className="text-center font-bold text-[3rem]"
                     gutterBottom
                     variant="h1"
                     component="div"
                   >
                     {petData.pet.name}
-                  </Typography>
-                  <FontAwesomeIcon
+                  &lt;/Typography>
+                  &lt;FontAwesomeIcon
                     icon={petData.pet.sex === "Male" ? faMars : faVenus}
                     size="xl"
                   />
-                </Box>
-                <Typography
+                &lt;/Box>
+                &lt;Typography
                   className="font-bold text-[2rem]"
                   variant="body2"
                   component="h6"
                 >
                   {petData.pet.breed}
-                </Typography>
-                <Typography
+                &lt;/Typography>
+                &lt;Typography
                   className="font-bold text-[1.2rem]"
                   variant="body2"
                   component="p"
@@ -158,52 +189,75 @@ const PetInfoPage = () => {
                   {`${petData.pet.age} ${
                     petData.pet.age === 1 ? "año" : "años"
                   }`}
-                </Typography>
-              </CardContent>
+                &lt;/Typography>
+              &lt;/CardContent>
 
-              {petData.pet.photos && petData.pet.photos.length > 1 && (
-                <div className="flex flex-row justify-between items-center gap-[2rem] mt-4">
+              {petData.pet.photos &amp;&amp; petData.pet.photos.length > 1 &amp;&amp; (
+                &lt;div className="flex flex-row justify-between items-center gap-[2rem] mt-4">
                   {petData.pet.photos.slice(1).map((photo, index) => (
-                    <CardMedia
+                    &lt;CardMedia
                       key={index}
                       component="img"
                       className="w-[200px] h-[200px] rounded-xl object-cover"
                       image={photo}
                     />
                   ))}
-                </div>
+                &lt;/div>
               )}
-            </div>
+            &lt;/div>
 
-            <div className="flex flex-row justify-center items-center gap-[1rem] w-full">
-              <Button
+            &lt;div className="flex flex-row justify-center items-center gap-[1rem] w-full">
+              &lt;Button
                 variant="contained"
                 className="bg-third text-sixth pt-2 pb-2 mt-5 w-full hover:bg-fourth"
                 onClick={handleGoBack}
               >
                 VOLVER
-              </Button>
+              &lt;/Button>
               
-              {canAdopt && (
-              <Button
+              {canAdopt &amp;&amp; (
+              &lt;Button
                 variant="contained"
                 onClick={handleAdoptClick}
                 className="bg-third text-sixth pt-2 pb-2 mt-5 hover:bg-fourth w-full"
               >
 
                 Adoptar
-              </Button>)}
+              &lt;/Button>)}
               
-            </div>
-          </Card>
-        </>
+            &lt;/div>
+          &lt;/Card>
+        &lt;/>
       ) : (
-        <p className="font-roboto text-title text-third font-bold text-center">
+        &lt;p className="font-roboto text-title text-third font-bold text-center">
           CARGANDO...
-        </p>
+        &lt;/p>
       )}
-    </div>
+    &lt;/div>
   );
 };
 
 export default PetInfoPage;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddPetForm">AddPetForm</a></li><li><a href="global.html#AddPetPage">AddPetPage</a></li><li><a href="global.html#AddShelterForm">AddShelterForm</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#DrawerMenu">DrawerMenu</a></li><li><a href="global.html#DrawerOption">DrawerOption</a></li><li><a href="global.html#LoginForm">LoginForm</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#MainPage">MainPage</a></li><li><a href="global.html#PetCard">PetCard</a></li><li><a href="global.html#PetInfoPage">PetInfoPage</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#Profile">Profile</a></li><li><a href="global.html#ProfileInfo">ProfileInfo</a></li><li><a href="global.html#ProfileInput">ProfileInput</a></li><li><a href="global.html#RegisterLink">RegisterLink</a></li><li><a href="global.html#ShelterCard">ShelterCard</a></li><li><a href="global.html#ShelterInfoPage">ShelterInfoPage</a></li><li><a href="global.html#SheltersPage">SheltersPage</a></li><li><a href="global.html#SignUpForm">SignUpForm</a></li><li><a href="global.html#SignUpPage">SignUpPage</a></li><li><a href="global.html#WelcomePage">WelcomePage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 07 2024 12:40:16 GMT-0400 (hora de Bolivia)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

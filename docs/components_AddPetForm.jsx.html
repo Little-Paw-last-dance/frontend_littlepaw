@@ -138,7 +138,9 @@ const AddPetForm = ({isAdmin}) => {
         }
       );
 
-      navigate("/");
+      let navigatePath = isAdmin ? `/shelters/${id}` : "/";
+
+      navigate(navigatePath);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
 
@@ -219,7 +221,7 @@ const AddPetForm = ({isAdmin}) => {
               variant="contained"
               fullWidth
               onClick={() => handleGenderSelect("Male")}
-              className={selectedGender === "Male" ? "bg-third text-white" : "bg-fifth text-white"}
+              className={selectedGender === "Male" ? "bg-fourth text-sixth" : "bg-third text-sixth"}
               
             >
               Macho
@@ -231,7 +233,7 @@ const AddPetForm = ({isAdmin}) => {
               variant="contained"
               fullWidth
               onClick={() => handleGenderSelect("Female")}
-              className={selectedGender === "Female" ? "bg-third text-white" : "bg-fifth text-white"}
+              className={selectedGender === "Female" ? "bg-fourth text-sixth" : "bg-third text-sixth"}
             >
               Hembra
             &lt;/Button>
@@ -255,7 +257,7 @@ const AddPetForm = ({isAdmin}) => {
                     variant="contained"
                     fullWidth
                     onClick={() => handleRemoveImage(index)}
-                    className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+                    className="bg-third text-sixth pt-2 pb-2 hover:bg-fourth"
                   >
                     Seleccionar otra imagen
                   &lt;/Button>
@@ -267,7 +269,7 @@ const AddPetForm = ({isAdmin}) => {
                       component="span"
                       variant="contained"
                       fullWidth
-                      className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+                      className="bg-third text-sixth pt-2 pb-2 hover:bg-fourth"
                     >
                       Subir Imagen {index + 1}
                     &lt;/Button>
@@ -293,7 +295,7 @@ const AddPetForm = ({isAdmin}) => {
 
         &lt;Grid container spacing={4} className="mt-2 text-center pl-6">
           &lt;Grid item xs={12} sm={6}>
-          &lt;Button variant="contained" fullWidth className="bg-third text-primary pt-2 pb-2 hover:bg-sixth" onClick={
+          &lt;Button variant="contained" fullWidth className="bg-third text-sixth pt-2 pb-2 hover:bg-fourth" onClick={
             isAdmin ? () => navigate(`/shelters/${id}`) : () => navigate("/")
           }> 
               VOLVER
@@ -307,7 +309,7 @@ const AddPetForm = ({isAdmin}) => {
               variant="contained"
               fullWidth
              
-              className="bg-third text-primary pt-2 pb-2 hover:bg-sixth"
+              className="bg-third text-sixth pt-2 pb-2 hover:bg-fourth"
             >
               {isLoading ? 'Cargando...' : 'Agregar Mascota'}
             &lt;/Button>
@@ -332,13 +334,13 @@ export default AddPetForm;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddPetForm">AddPetForm</a></li><li><a href="global.html#AddPetPage">AddPetPage</a></li><li><a href="global.html#AddShelterForm">AddShelterForm</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#LoginForm">LoginForm</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#PetCard">PetCard</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#Profile">Profile</a></li><li><a href="global.html#ProfileInfo">ProfileInfo</a></li><li><a href="global.html#ProfileInput">ProfileInput</a></li><li><a href="global.html#RegisterLink">RegisterLink</a></li><li><a href="global.html#ShelterCard">ShelterCard</a></li><li><a href="global.html#ShelterInfoPage">ShelterInfoPage</a></li><li><a href="global.html#SheltersPage">SheltersPage</a></li><li><a href="global.html#SignUpForm">SignUpForm</a></li><li><a href="global.html#SignUpPage">SignUpPage</a></li><li><a href="global.html#WelcomePage">WelcomePage</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddPetForm">AddPetForm</a></li><li><a href="global.html#AddPetPage">AddPetPage</a></li><li><a href="global.html#AddShelterForm">AddShelterForm</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#DrawerMenu">DrawerMenu</a></li><li><a href="global.html#DrawerOption">DrawerOption</a></li><li><a href="global.html#LoginForm">LoginForm</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#MainPage">MainPage</a></li><li><a href="global.html#PetCard">PetCard</a></li><li><a href="global.html#PetInfoPage">PetInfoPage</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#Profile">Profile</a></li><li><a href="global.html#ProfileInfo">ProfileInfo</a></li><li><a href="global.html#ProfileInput">ProfileInput</a></li><li><a href="global.html#RegisterLink">RegisterLink</a></li><li><a href="global.html#ShelterCard">ShelterCard</a></li><li><a href="global.html#ShelterInfoPage">ShelterInfoPage</a></li><li><a href="global.html#SheltersPage">SheltersPage</a></li><li><a href="global.html#SignUpForm">SignUpForm</a></li><li><a href="global.html#SignUpPage">SignUpPage</a></li><li><a href="global.html#WelcomePage">WelcomePage</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu May 02 2024 13:51:51 GMT-0400 (hora de Bolivia)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 07 2024 12:40:16 GMT-0400 (hora de Bolivia)
 </footer>
 
 <script> prettyPrint(); </script>

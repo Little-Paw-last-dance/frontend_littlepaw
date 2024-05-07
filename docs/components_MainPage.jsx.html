@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/MainPage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/MainPage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { Button, InputBase, Card, CardContent, Typography, Grid, Drawer } from '@mui/material';
+import { Search as SearchIcon, Male, Female } from '@mui/icons-material'; 
+import { backendAPI } from '../config/axiosConfig';
+import { useNavigate } from 'react-router-dom';
+import { petTypes } from '../models/petTypes';
+import { petImages } from '../models/petImages';
+import { petSex } from '../models/petSex';
+import { petGenderImages } from '../models/petImages';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DrawerMenu from './DrawerMenu';
+
+/** 
+ * Página principal de la aplicación que muestra las mascotas disponibles para adopción.
+ * 
+ * @component
+ * 
+ * @state
+ * @property {String} searchQuery - Búsqueda de mascotas.
+ * @property {Array} searchResults - Resultados de la búsqueda de mascotas.
+ * @property {String} selectedType - Tipo de mascota seleccionado.
+ * @property {String} selectedSex - Sexo de mascota seleccionado.
+ * @property {Boolean} open - Indica si el menú lateral está abierto.
+ * @returns {React.Component} Página principal de la aplicación.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * &lt;MainPage />
+ * 
+ * 
+*/
+
+const MainPage = () => {
+  const { logout, currentUser } = useAuth();
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedType, setSelectedType] = useState('');
+  const [selectedSex, setSelectedSex] = useState('');
+  const [open, setOpen] = useState(false);
+  const { accessToken } = useAuth();
+
+
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        const response = await backendAPI.get(`/pet`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        setSearchResults(response.data);
+      } catch (error) {
+        console.error('Error al obtener mascotas:', error);
+      }
+    };
+
+    fetchPets();
+  }, [accessToken]);
+
+  
+  const handleProfileClick = () => {
+    navigate("/profile");
+  };
+
+  const handleAddPetClick = () => {
+    navigate("/addpet");
+  };
+
+  const handlePetClick = (petId) => {
+    navigate(`/pet/${petId}`); 
+  };
+
+  const handleLogout = () => {
+    logout();
+  };
+
+  const handlePetTypeClick = (type) => {
+    if(selectedType === type) {
+      setSelectedType('');
+    } else {
+      setSelectedType(type);
+    }
+  } 
+  const handlePetSexClick = (value) => {
+    if(selectedSex === value) {
+      setSelectedSex('');
+    } else {
+      setSelectedSex(value);
+    }
+  }
+  const handleToggleDrawer = () => {
+    setOpen(!open);
+  }
+
+  const renderSearchResults = () => {
+    return (
+      &lt;div className="flex flex-row justify-center items-center gap-[2rem] flex-wrap ">
+        {searchResults.filter((pet) => 
+        Object.values(pet.pet).some((value) =>
+        (typeof value === 'string' &amp;&amp; value.toLowerCase().includes(searchQuery.toLowerCase())) &amp;&amp; (selectedType === '' || pet.pet.type === selectedType) &amp;&amp; (selectedSex === '' || pet.pet.sex === selectedSex)
+        )).map((result) => (
+          &lt;Card
+            key={result.pet.id}
+            className="w-[550px] h-[250px] rounded-xl hover:shadow-3xl cursor-pointer"
+            onClick={() => handlePetClick(result.pet.id)}
+          >
+            &lt;CardContent>
+              &lt;Grid container spacing={2}>
+                &lt;Grid item xs={4}>
+                  &lt;img src={result.pet.photos[0]} alt={result.pet.name} style={{ width: '100%', height: "200px", objectFit: "cover" }} />
+                &lt;/Grid>
+                &lt;Grid item xs={8}>
+                  &lt;Typography variant="h6" gutterBottom>{result.pet.name}&lt;/Typography>
+                  &lt;Typography variant="body1" gutterBottom>{`Edad: ${result.pet.age}`}&lt;/Typography>
+                  &lt;Typography variant="body1" gutterBottom>{`Raza: ${result.pet.breed}`}&lt;/Typography>
+                  &lt;div style={{ display: 'flex', alignItems: 'center' }}>
+                    {result.pet.sex === 'Male' ? &lt;Male /> : &lt;Female />}
+                    &lt;Typography variant="body2" style={{ marginLeft: 5 }}>
+                      {result.pet.sex === 'Male' ? 'Macho' : 'Hembra'}
+                    &lt;/Typography>
+                  &lt;/div>
+                &lt;/Grid>
+              &lt;/Grid>
+            &lt;/CardContent>
+          &lt;/Card>
+        ))}
+      &lt;/div>
+    );
+  };
+
+  return (
+    &lt;>
+    &lt;DrawerMenu open={open} setOpen={handleToggleDrawer} />
+    &lt;div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
+      &lt;div className="flex flex-row justify-center items-center gap-[1rem]">
+        &lt;FontAwesomeIcon icon={faBars} size="2x" className="absolute text-sixth left-10 cursor-pointer" onClick={() => {setOpen(true)}} />
+        &lt;h1 className="font-anybody text-title text-sixth font-bold text-center">
+          {currentUser?.displayName ? `Bienvenido ${currentUser?.displayName}` : "CARGANDO..."}
+        &lt;/h1>
+      &lt;/div>
+      &lt;div className="flex flex-row justify-center items-center gap-[3rem] mt-[5rem]">
+        {petTypes.map((type) => (
+          &lt;button
+            variant="contained"
+            className={selectedType === type.value ?"bg-primary text-sixth w-[150px] h-[150px] border-none cursor-pointer shadow-xl rounded-xl" : 
+            "bg-white text-sixth w-[150px] h-[150px] border-none cursor-pointer hover:shadow-xl rounded-xl"}
+            onClick={() => handlePetTypeClick(type.value)}
+          >
+            &lt;img className="w-full"src={selectedType === type.value ?petImages.find((image) => image.type === type.value).selected :petImages.find((image) => image.type === type.value).unselected} alt={type.label} />
+          &lt;/button>
+        ))}
+
+      &lt;/div>
+      &lt;div className="flex flex-row justify-center items-center gap-[3rem] mt-[5rem]">
+        {petSex.map((sex) => (
+          &lt;button
+            variant="contained"
+            className={selectedSex === sex ? "bg-primary text-sixth w-[150px] h-[150px] border-none cursor-pointer shadow-xl rounded-xl" :
+            "bg-white text-sixth w-[150px] h-[150px] border-none cursor-pointer hover:shadow-xl rounded-xl"}
+            onClick={() => handlePetSexClick(sex)}>
+            &lt;img className="w-full" src={selectedSex === sex ? petGenderImages.find((image) => image.type === sex).selected : petGenderImages.find((image) => image.type === sex).unselected} alt={sex} />
+            &lt;/button>
+        ))}
+      &lt;/div>  
+
+      &lt;div className="flex justify-center mt-5">
+        &lt;div className="relative">
+          &lt;div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            &lt;SearchIcon style={{ color: "#E0B46C" }} />
+          &lt;/div>
+          &lt;InputBase
+            placeholder="Buscar..."
+            className="pl-10 pr-3 py-2 rounded-full bg-gray-100 border border-gray-300 focus:outline-none focus:border-[#E0B46C] w-80"
+            inputProps={{ 'aria-label': 'search' }}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        &lt;/div>
+      &lt;/div>
+      
+      {searchResults.length > 0 &amp;&amp; (
+        &lt;div className="mt-5">
+          {renderSearchResults()}
+        &lt;/div>
+      )}
+    &lt;/div>
+    &lt;/>
+
+  );
+};
+
+export default MainPage;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddPetForm">AddPetForm</a></li><li><a href="global.html#AddPetPage">AddPetPage</a></li><li><a href="global.html#AddShelterForm">AddShelterForm</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#DrawerMenu">DrawerMenu</a></li><li><a href="global.html#DrawerOption">DrawerOption</a></li><li><a href="global.html#LoginForm">LoginForm</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#MainPage">MainPage</a></li><li><a href="global.html#PetCard">PetCard</a></li><li><a href="global.html#PetInfoPage">PetInfoPage</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#Profile">Profile</a></li><li><a href="global.html#ProfileInfo">ProfileInfo</a></li><li><a href="global.html#ProfileInput">ProfileInput</a></li><li><a href="global.html#RegisterLink">RegisterLink</a></li><li><a href="global.html#ShelterCard">ShelterCard</a></li><li><a href="global.html#ShelterInfoPage">ShelterInfoPage</a></li><li><a href="global.html#SheltersPage">SheltersPage</a></li><li><a href="global.html#SignUpForm">SignUpForm</a></li><li><a href="global.html#SignUpPage">SignUpPage</a></li><li><a href="global.html#WelcomePage">WelcomePage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 07 2024 12:40:16 GMT-0400 (hora de Bolivia)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

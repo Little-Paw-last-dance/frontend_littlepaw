@@ -90,7 +90,7 @@ const Profile = () => {
     const [ageError, setAgeError] = useState(false)
     const [ageErrorMessage, setAgeErrorMessage] = useState("")
     const [cityError, setCityError] = useState(false)
-    const {accessToken} = useAuth()
+    const {accessToken, updateDisplayName} = useAuth()
     const [isStarting, setIsStarting] = useState(true)
     const navigate = useNavigate()
 
@@ -171,8 +171,12 @@ const Profile = () => {
     setIsLoading(true)
     
     backendAPI.patch("/user", {names, paternalSurname, maternalSurname, age:ageNumber, city, phone: phoneNumber, countryCode: countryCodeNumber}, {headers: {"Authorization": `Bearer ${accessToken}`}}).then((response) => {
-        setEditable(!editable)
-        window.scrollTo(0, 0)
+        updateDisplayName(`${names} ${paternalSurname}`).then(() => {
+            setEditable(!editable)
+            window.scrollTo(0, 0)
+        }).catch((error) => {
+            console.error("Error al actualizar el nombre de usuario:", error)
+        })
     }).catch((error) => {
         console.error("Error al actualizar el perfil:", error)
     }).finally(() => {
@@ -184,9 +188,9 @@ const Profile = () => {
   return (
     &lt;div className="bg-primary flex flex-col min-h-screen pt-[2rem] px-[2rem] pb-[10rem]">
         &lt;div className="flex flex-row justify-center items-center gap-[1rem]">
-            &lt;h1 className="font-montserrat text-title text-third font-bold text-center">Perfil&lt;/h1>
+            &lt;h1 className="font-montserrat text-title text-sixth font-bold text-center">Perfil&lt;/h1>
             {!editable &amp;&amp;
-            &lt;FontAwesomeIcon onClick={() => {setEditable(!editable)}} icon={faPencil } className="text-third cursor-pointer" size={"xl"} />}
+            &lt;FontAwesomeIcon onClick={() => {setEditable(!editable)}} icon={faPencil } className="text-sixth cursor-pointer" size={"xl"} />}
             
         &lt;/div>
 
@@ -223,8 +227,8 @@ const Profile = () => {
         &lt;/div>
 
         &lt;div className="flex flex-row justify-center items-center gap-[1rem]">
-            {editable &amp;&amp; &lt;Button disabled={isLoading}variant="contained" type="submit" className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth" onClick={submitChanges}>{isLoading ? "GUARDANDO..." : "GUARDAR CAMBIOS"}&lt;/Button>}
-            &lt;Button variant="contained"  className="bg-third text-primary pt-2 pb-2 mt-5 hover:bg-sixth" onClick={() => {navigate("/")}}>VOLVER&lt;/Button>
+            {editable &amp;&amp; &lt;Button disabled={isLoading}variant="contained" type="submit" className="bg-third text-sixth pt-2 pb-2 mt-5 hover:bg-fourth" onClick={submitChanges}>{isLoading ? "GUARDANDO..." : "GUARDAR CAMBIOS"}&lt;/Button>}
+            &lt;Button variant="contained"  className="bg-third text-sixth pt-2 pb-2 mt-5 hover:bg-fourth" onClick={() => {navigate("/")}}>VOLVER&lt;/Button>
         &lt;/div>
 
         
@@ -243,13 +247,13 @@ export default Profile</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddPetForm">AddPetForm</a></li><li><a href="global.html#AddPetPage">AddPetPage</a></li><li><a href="global.html#AddShelterForm">AddShelterForm</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#LoginForm">LoginForm</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#PetCard">PetCard</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#Profile">Profile</a></li><li><a href="global.html#ProfileInfo">ProfileInfo</a></li><li><a href="global.html#ProfileInput">ProfileInput</a></li><li><a href="global.html#RegisterLink">RegisterLink</a></li><li><a href="global.html#ShelterCard">ShelterCard</a></li><li><a href="global.html#ShelterInfoPage">ShelterInfoPage</a></li><li><a href="global.html#SheltersPage">SheltersPage</a></li><li><a href="global.html#SignUpForm">SignUpForm</a></li><li><a href="global.html#SignUpPage">SignUpPage</a></li><li><a href="global.html#WelcomePage">WelcomePage</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddPetForm">AddPetForm</a></li><li><a href="global.html#AddPetPage">AddPetPage</a></li><li><a href="global.html#AddShelterForm">AddShelterForm</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#DrawerMenu">DrawerMenu</a></li><li><a href="global.html#DrawerOption">DrawerOption</a></li><li><a href="global.html#LoginForm">LoginForm</a></li><li><a href="global.html#LoginPage">LoginPage</a></li><li><a href="global.html#MainPage">MainPage</a></li><li><a href="global.html#PetCard">PetCard</a></li><li><a href="global.html#PetInfoPage">PetInfoPage</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#Profile">Profile</a></li><li><a href="global.html#ProfileInfo">ProfileInfo</a></li><li><a href="global.html#ProfileInput">ProfileInput</a></li><li><a href="global.html#RegisterLink">RegisterLink</a></li><li><a href="global.html#ShelterCard">ShelterCard</a></li><li><a href="global.html#ShelterInfoPage">ShelterInfoPage</a></li><li><a href="global.html#SheltersPage">SheltersPage</a></li><li><a href="global.html#SignUpForm">SignUpForm</a></li><li><a href="global.html#SignUpPage">SignUpPage</a></li><li><a href="global.html#WelcomePage">WelcomePage</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu May 02 2024 13:51:51 GMT-0400 (hora de Bolivia)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 07 2024 12:40:16 GMT-0400 (hora de Bolivia)
 </footer>
 
 <script> prettyPrint(); </script>

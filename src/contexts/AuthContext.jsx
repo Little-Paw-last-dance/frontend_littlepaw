@@ -34,8 +34,10 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await signOut(auth);
             navigate('/welcome');
+            await signOut(auth);
+            setAccessToken("");
+            setIsAuthenticated(false);
         } catch (error) {
             console.error("Error al cerrar sesión:", error);
         }

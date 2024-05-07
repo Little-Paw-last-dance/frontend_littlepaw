@@ -1,4 +1,4 @@
-## Contexts
+## Constants
 
 <dl>
 <dt><a href="#AuthContext">AuthContext</a> ⇒ <code>React.Context</code></dt>
@@ -6,7 +6,7 @@
 </dd>
 </dl>
 
-## Components
+## Functions
 
 <dl>
 <dt><a href="#AddPetForm">AddPetForm(isAdmin)</a> ⇒ <code>React.Component</code></dt>
@@ -15,10 +15,19 @@
 <dt><a href="#AddShelterForm">AddShelterForm()</a> ⇒ <code>React.Component</code></dt>
 <dd><p>Componente de formulario para agregar un refugio a la base de datos mediante una petición POST a la API. Exclusivo para administradores.</p>
 </dd>
+<dt><a href="#DrawerMenu">DrawerMenu(open, setOpen)</a> ⇒ <code>React.Component</code></dt>
+<dd><p>Componente de menú lateral para el usuario autenticado.</p>
+</dd>
+<dt><a href="#DrawerOption">DrawerOption(icon, content, path, action)</a> ⇒ <code>React.Component</code></dt>
+<dd><p>Componente de opción de menú para el componente de DrawerMenu</p>
+</dd>
 <dt><a href="#LoginForm">LoginForm()</a> ⇒ <code>React.Component</code></dt>
 <dd><p>Componente de formulario para iniciar sesión en la aplicación con un correo electrónico y una contraseña, mediante una petición a Firebase Authentication.</p>
 </dd>
-<dt><a href="#PetCard">PetCard(name, sex, breed, age, image)</a> ⇒ <code>React.Component</code></dt>
+<dt><a href="#MainPage">MainPage()</a> ⇒ <code>React.Component</code></dt>
+<dd><p>Página principal de la aplicación que muestra las mascotas disponibles para adopción.</p>
+</dd>
+<dt><a href="#PetCard">PetCard(id, name, sex, breed, age, image, shelterId)</a> ⇒ <code>React.Component</code></dt>
 <dd><p>Componente de tarjeta de mascota que muestra la información básica de una mascota.</p>
 </dd>
 <dt><a href="#ProfileInfo">ProfileInfo(title, content)</a> ⇒ <code>React.Component</code></dt>
@@ -39,9 +48,6 @@
 <dt><a href="#PrivateRoute">PrivateRoute()</a> ⇒ <code>React.Component</code></dt>
 <dd><p>Componente de ruta privada para componentes exclusivos de administradores. Todas las rutas que requieran roles de administrador deben estar protegidas por este componente.</p>
 </dd>
-
-## Pages
-
 <dt><a href="#AddPetPage">AddPetPage()</a> ⇒ <code>React.Component</code></dt>
 <dd><p>Página para añadir una mascota a la base de datos.</p>
 </dd>
@@ -50,6 +56,9 @@
 </dd>
 <dt><a href="#LoginPage">LoginPage()</a> ⇒ <code>React.Component</code></dt>
 <dd><p>Página de inicio de sesión de la aplicación.</p>
+</dd>
+<dt><a href="#PetInfoPage">PetInfoPage()</a> ⇒ <code>React.Component</code></dt>
+<dd><p>Página de información de una mascota en específico.</p>
 </dd>
 <dt><a href="#Profile">Profile()</a> ⇒ <code>React.Component</code></dt>
 <dd><p>Página de perfil de usuario que muestra la información del usuario autenticado y permite editarla.</p>
@@ -76,7 +85,7 @@ Contexto de autenticación, provee información del usuario autenticado y funcio
 **Kind**: global constant  
 **Returns**: <code>React.Context</code> - Contexto de autenticación.  
 **Context**:   
-**State**   
+**State**:   
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -93,8 +102,7 @@ Contexto de autenticación, provee información del usuario autenticado y funcio
 
 **Example**  
 ```js
-// Ejemplo de uso:
-const { currentUser, isAuthenticated, logout, accessToken } = useAuth();
+// Ejemplo de uso:const { currentUser, isAuthenticated, logout, accessToken } = useAuth();
 ```
 <a name="AddPetForm"></a>
 
@@ -104,7 +112,7 @@ Componente de formulario para rellenar la información de una mascota y agregarl
 **Kind**: global function  
 **Returns**: <code>React.Component</code> - - Componente de formulario para agregar una mascota.  
 **Component**:   
-**State**   
+**State**:   
 **Form**:   
 
 | Param | Type | Description |
@@ -130,8 +138,7 @@ Componente de formulario para rellenar la información de una mascota y agregarl
 
 **Example**  
 ```js
-// Ejemplo de uso:
-<AddPetForm isAdmin={true} />
+// Ejemplo de uso:<AddPetForm isAdmin={true} />
 ```
 <a name="AddShelterForm"></a>
 
@@ -141,7 +148,7 @@ Componente de formulario para agregar un refugio a la base de datos mediante una
 **Kind**: global function  
 **Returns**: <code>React.Component</code> - - Componente de formulario para agregar un refugio.  
 **Component**:   
-**State**   
+**State**:   
 **Form**:   
 **Properties**
 
@@ -164,8 +171,46 @@ Componente de formulario para agregar un refugio a la base de datos mediante una
 
 **Example**  
 ```js
-// Ejemplo de uso:
-<AddShelterForm />
+// Ejemplo de uso:<AddShelterForm />
+```
+<a name="DrawerMenu"></a>
+
+## DrawerMenu(open, setOpen) ⇒ <code>React.Component</code>
+Componente de menú lateral para el usuario autenticado.
+
+**Kind**: global function  
+**Returns**: <code>React.Component</code> - Componente de menú lateral.  
+**Requires**: <code>module:DrawerOption</code>  
+**Component**:   
+
+| Param | Type | Description |
+| --- | --- | --- |
+| open | <code>Boolean</code> | Indica si el menú está abierto o cerrado. |
+| setOpen | <code>function</code> | Función para abrir o cerrar el menú. |
+
+**Example**  
+```js
+// Ejemplo de uso:<DrawerMenu open={true} setOpen={setOpen}/>
+```
+<a name="DrawerOption"></a>
+
+## DrawerOption(icon, content, path, action) ⇒ <code>React.Component</code>
+Componente de opción de menú para el componente de DrawerMenu
+
+**Kind**: global function  
+**Returns**: <code>React.Component</code> - Componente de opción de menú  
+**Component**:   
+
+| Param | Type | Description |
+| --- | --- | --- |
+| icon | <code>IconDefinition</code> | Icono de FontAwesome a mostrar |
+| content | <code>String</code> | Contenido de la opción |
+| path | <code>String</code> | Ruta a la que redirigir al hacer click |
+| action | <code>function</code> | Función a ejecutar al hacer click, solo se ejecuta si el usuario desea cerrar sesión |
+
+**Example**  
+```js
+// Ejemplo de uso:<DrawerOption icon={faPaw} content="AÑADIR MASCOTA" path="/addpet"/>
 ```
 <a name="LoginForm"></a>
 
@@ -175,7 +220,7 @@ Componente de formulario para iniciar sesión en la aplicación con un correo el
 **Kind**: global function  
 **Returns**: <code>React.Component</code> - - Componente de formulario para iniciar sesión.  
 **Component**:   
-**State**   
+**State**:   
 **Properties**
 
 | Name | Type | Description |
@@ -187,12 +232,34 @@ Componente de formulario para iniciar sesión en la aplicación con un correo el
 
 **Example**  
 ```js
-// Ejemplo de uso:
-<LoginForm />
+// Ejemplo de uso:<LoginForm />
+```
+<a name="MainPage"></a>
+
+## MainPage() ⇒ <code>React.Component</code>
+Página principal de la aplicación que muestra las mascotas disponibles para adopción.
+
+**Kind**: global function  
+**Returns**: <code>React.Component</code> - Página principal de la aplicación.  
+**Component**:   
+**State**:   
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| searchQuery | <code>String</code> | Búsqueda de mascotas. |
+| searchResults | <code>Array</code> | Resultados de la búsqueda de mascotas. |
+| selectedType | <code>String</code> | Tipo de mascota seleccionado. |
+| selectedSex | <code>String</code> | Sexo de mascota seleccionado. |
+| open | <code>Boolean</code> | Indica si el menú lateral está abierto. |
+
+**Example**  
+```js
+// Ejemplo de uso:<MainPage />
 ```
 <a name="PetCard"></a>
 
-## PetCard(name, sex, breed, age, image) ⇒ <code>React.Component</code>
+## PetCard(id, name, sex, breed, age, image, shelterId) ⇒ <code>React.Component</code>
 Componente de tarjeta de mascota que muestra la información básica de una mascota.
 
 **Kind**: global function  
@@ -201,16 +268,17 @@ Componente de tarjeta de mascota que muestra la información básica de una masc
 
 | Param | Type | Description |
 | --- | --- | --- |
+| id | <code>Number</code> | ID de la mascota |
 | name | <code>String</code> | Nombre de la mascota |
 | sex | <code>String</code> | Sexo de la mascota, el valor puede ser "Male" o "Female" |
 | breed | <code>String</code> | Raza de la mascota |
 | age | <code>Number</code> | Edad de la mascota |
 | image | <code>String</code> | Imagen de la mascota |
+| shelterId | <code>Number</code> | ID del refugio al que pertenece la mascota |
 
 **Example**  
 ```js
-// Ejemplo de uso de PetCard
-<PetCard name="Firulais" sex="Male" breed="Pitbull" age={2} image="https://www.example.com/firulais.jpg" />
+// Ejemplo de uso de PetCard<PetCard name="Firulais" sex="Male" breed="Pitbull" age={2} image="https://www.example.com/firulais.jpg" />
 ```
 <a name="ProfileInfo"></a>
 
@@ -228,8 +296,7 @@ Componente que muestra una sección de información de perfil, con un título y 
 
 **Example**  
 ```js
-// Ejemplo de uso:
-<ProfileInfo title="Nombre" content="Juan Pérez" />
+// Ejemplo de uso:<ProfileInfo title="Nombre" content="Juan Pérez" />
 ```
 <a name="ProfileInput"></a>
 
@@ -252,8 +319,7 @@ Componente que muestra un input de perfil, con un título y un contenido editabl
 
 **Example**  
 ```js
-// Ejemplo de uso:
-<ProfileInput title="Nombre" content="Juan Pérez" setContent={setContent} type="text" setError={setError} placeholder="Escribe tu nombre..." isSelect={false} />
+// Ejemplo de uso:<ProfileInput title="Nombre" content="Juan Pérez" setContent={setContent} type="text" setError={setError} placeholder="Escribe tu nombre..." isSelect={false} />
 ```
 <a name="RegisterLink"></a>
 
@@ -265,8 +331,7 @@ Componente que muestra un enlace para redirigir a la página de registro desde l
 **Component**:   
 **Example**  
 ```js
-// Ejemplo de uso:
-<RegisterLink />
+// Ejemplo de uso:<RegisterLink />
 ```
 <a name="ShelterCard"></a>
 
@@ -287,8 +352,7 @@ Componente de tarjeta de refugio que muestra la información básica de un refug
 
 **Example**  
 ```js
-// Ejemplo de uso de ShelterCard
-<ShelterCard id={1} name="Refugio de animales" location="Calle 123" phone="+123456789" image="https://www.example.com/refugio.jpg" />
+// Ejemplo de uso de ShelterCard<ShelterCard id={1} name="Refugio de animales" location="Calle 123" phone="+123456789" image="https://www.example.com/refugio.jpg" />
 ```
 <a name="SignUpForm"></a>
 
@@ -298,7 +362,7 @@ Componente de formulario para registrarse en la aplicación mediante una petici�
 **Kind**: global function  
 **Returns**: <code>React.Component</code> - - Componente de formulario de registro.  
 **Component**:   
-**State**   
+**State**:   
 **Form**:   
 **Properties**
 
@@ -323,8 +387,7 @@ Componente de formulario para registrarse en la aplicación mediante una petici�
 
 **Example**  
 ```js
-// Ejemplo de uso:
-<SignUpForm />
+// Ejemplo de uso:<SignUpForm />
 ```
 <a name="PrivateRoute"></a>
 
@@ -334,7 +397,7 @@ Componente de ruta privada para componentes exclusivos de administradores. Todas
 **Kind**: global function  
 **Returns**: <code>React.Component</code> - Componente de ruta privada.  
 **Component**:   
-**State**   
+**State**:   
 **Properties**
 
 | Name | Type | Description |
@@ -344,10 +407,7 @@ Componente de ruta privada para componentes exclusivos de administradores. Todas
 
 **Example**  
 ```js
-// Ejemplo de uso:
-<PrivateRoute>
-  <Component />
-</PrivateRoute>
+// Ejemplo de uso:<PrivateRoute>  <Component /></PrivateRoute>
 ```
 <a name="AddPetPage"></a>
 
@@ -359,8 +419,7 @@ Página para añadir una mascota a la base de datos.
 **Requires**: <code>module:AddPetForm</code>  
 **Example**  
 ```js
-// Ejemplo de uso:
-<AddPetPage />
+// Ejemplo de uso:<AddPetPage />
 ```
 <a name="AddPetPage"></a>
 
@@ -372,8 +431,7 @@ Página para añadir un refugio a la base de datos.
 **Requires**: <code>module:AddShelterForm</code>  
 **Example**  
 ```js
-// Ejemplo de uso:
-<AddShelterPage />
+// Ejemplo de uso:<AddShelterPage />
 ```
 <a name="LoginPage"></a>
 
@@ -385,8 +443,27 @@ Página de inicio de sesión de la aplicación.
 **Requires**: <code>module:LoginForm</code>, <code>module:RegisterLink</code>  
 **Example**  
 ```js
-// Ejemplo de uso:
-<LoginPage />
+// Ejemplo de uso:<LoginPage />
+```
+<a name="PetInfoPage"></a>
+
+## PetInfoPage() ⇒ <code>React.Component</code>
+Página de información de una mascota en específico.
+
+**Kind**: global function  
+**Returns**: <code>React.Component</code> - Página de información de una mascota.  
+**Component**:   
+**State**:   
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| petData | <code>Object</code> | Información de la mascota. |
+| canAdopt | <code>Boolean</code> | Indica si el usuario puede adoptar la mascota. |
+
+**Example**  
+```js
+// Ejemplo de uso:<PetInfoPage />
 ```
 <a name="Profile"></a>
 
@@ -396,7 +473,7 @@ Página de perfil de usuario que muestra la información del usuario autenticado
 **Kind**: global function  
 **Returns**: <code>React.Component</code> - Página de perfil de usuario.  
 **Requires**: <code>module:ProfileInfo</code>, <code>module:ProfileInput</code>  
-**State**   
+**State**:   
 **Properties**
 
 | Name | Type | Description |
@@ -422,8 +499,7 @@ Página de perfil de usuario que muestra la información del usuario autenticado
 
 **Example**  
 ```js
-// Ejemplo de uso:
-<Profile />
+// Ejemplo de uso:<Profile />
 ```
 <a name="ShelterInfoPage"></a>
 
@@ -433,7 +509,7 @@ Página de información de un refugio que muestra la información del refugio y 
 **Kind**: global function  
 **Returns**: <code>React.Component</code> - Página de información de un refugio.  
 **Requires**: <code>module:PetCard</code>  
-**State**   
+**State**:   
 **Properties**
 
 | Name | Type | Description |
@@ -444,8 +520,7 @@ Página de información de un refugio que muestra la información del refugio y 
 
 **Example**  
 ```js
-// Ejemplo de uso:
-<ShelterInfoPage />
+// Ejemplo de uso:<ShelterInfoPage />
 ```
 <a name="SheltersPage"></a>
 
@@ -455,7 +530,7 @@ Página de refugios que muestra los refugios disponibles en la base de datos.
 **Kind**: global function  
 **Returns**: <code>React.Component</code> - Página de refugios.  
 **Requires**: <code>module:ShelterCard</code>  
-**State**   
+**State**:   
 **Properties**
 
 | Name | Type | Description |
@@ -465,8 +540,7 @@ Página de refugios que muestra los refugios disponibles en la base de datos.
 
 **Example**  
 ```js
-// Ejemplo de uso:
-<SheltersPage />
+// Ejemplo de uso:<SheltersPage />
 ```
 <a name="SignUpPage"></a>
 
@@ -478,8 +552,7 @@ Página de registro de usuario.
 **Requires**: <code>module:SignUpForm</code>  
 **Example**  
 ```js
-// Ejemplo de uso:
-<SignUpPage />
+// Ejemplo de uso:<SignUpPage />
 ```
 <a name="WelcomePage"></a>
 
@@ -490,6 +563,5 @@ Página de bienvenida de la aplicación.
 **Returns**: <code>React.Component</code> - Página de bienvenida.  
 **Example**  
 ```js
-// Ejemplo de uso:
-<WelcomePage />
+// Ejemplo de uso:<WelcomePage />
 ```

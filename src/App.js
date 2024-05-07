@@ -17,6 +17,7 @@ import ShelterInfoPage from './pages/ShelterInfoPage';
 import PrivateRoute from './helpers/PrivateRoute';
 import AdminAddPetPage from './pages/AdminAddPetPage';
 import PetInfoPage from './pages/PetInfoPage';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 
 
 const App = () => {
@@ -24,6 +25,14 @@ const App = () => {
   const outerTheme = useTheme();
 
   return (
+    <>
+    <HelmetProvider>
+      <Helmet>
+        <title>Little Paw</title>
+        <meta name="description" content="Little Paw es una aplicación web que conecta a refugios de animales y dueños de mascotas con personas interesadas en adoptar mascotas." />
+        <meta name="keywords" content="mascotas, adopción, refugios, animales, perros, gatos, conejos, reptiles, aves" />
+      </Helmet>
+    </HelmetProvider>
 
     <Router>
       <AuthProvider>
@@ -55,6 +64,7 @@ const App = () => {
           </ThemeProvider>
       </AuthProvider>
       </Router >
+      </>
 
   
   );

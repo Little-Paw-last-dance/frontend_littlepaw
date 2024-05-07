@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: pages/AddShelterPage.jsx</title>
+    <title>JSDoc: Source: components/DrawerOption.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: pages/AddShelterPage.jsx</h1>
+    <h1 class="page-title">Source: components/DrawerOption.jsx</h1>
 
     
 
@@ -26,39 +26,44 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react';
-import { Container, Typography } from '@mui/material';
-import AddShelterForm from '../components/AddShelterForm';
-import logoImg from '../assets/logo.png';
+            <pre class="prettyprint source linenums"><code>import React from 'react'
+import Typography from '@mui/material/Typography'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Box } from '@mui/material'
+import {useNavigate} from 'react-router-dom'
 
 /**
- * Página para añadir un refugio a la base de datos.
- * @requires AddShelterForm
+ * Componente de opción de menú para el componente de DrawerMenu
  * 
- * @returns {React.Component} Página de añadir refugio.
+ * @component
+ * @param {IconDefinition} icon - Icono de FontAwesome a mostrar
+ * @param {String} content - Contenido de la opción
+ * @param {String} path - Ruta a la que redirigir al hacer click
+ * @param {Function} action - Función a ejecutar al hacer click, solo se ejecuta si el usuario desea cerrar sesión
+ * @returns {React.Component} Componente de opción de menú
  * 
  * @example
  * // Ejemplo de uso:
- * &lt;AddShelterPage />
+ * &lt;DrawerOption icon={faPaw} content="AÑADIR MASCOTA" path="/addpet"/>
+ *
+ * 
+ * 
+ * 
  */
 
-const AddPetPage = () => {
- 
+const DrawerOption = ({icon, content, path, action}) => {
+    const navigate = useNavigate()
   return (
-    &lt;div className="bg-primary min-h-screen flex flex-col justify-center items-center">
-      &lt;Typography variant="h2" align="center" gutterBottom fontWeight="bold" 
-      className="font-montserrat text-sixth pb-10 pt-10">
-        Añadir Refugio
-      &lt;/Typography>
-      &lt;Container maxWidth="sm" disableGutters>
-        &lt;AddShelterForm />
-      &lt;/Container>
-    &lt;/div>
-  );
-};
+    &lt;Box onClick={path !== undefined ?() => {navigate(path)} : action}sx={{direction:'row', gap:'1rem', display:'flex', alignItems:'center', justifyContent:'center'}}>
+        &lt;FontAwesomeIcon icon={icon} size='xl' color='#6C4F1D'/>
+        &lt;Typography sx={{fontFamily:"Anybody", fontWeight:700, color:"#6C4F1D", cursor:"pointer"}} variant='h5'>
+            {content}
+        &lt;/Typography>
+    &lt;/Box>
+  )
+}
 
-export default AddPetPage;
-</code></pre>
+export default DrawerOption</code></pre>
         </article>
     </section>
 

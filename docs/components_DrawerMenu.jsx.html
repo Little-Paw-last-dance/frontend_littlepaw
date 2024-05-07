@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: pages/AddShelterPage.jsx</title>
+    <title>JSDoc: Source: components/DrawerMenu.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: pages/AddShelterPage.jsx</h1>
+    <h1 class="page-title">Source: components/DrawerMenu.jsx</h1>
 
     
 
@@ -26,39 +26,68 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react';
-import { Container, Typography } from '@mui/material';
-import AddShelterForm from '../components/AddShelterForm';
-import logoImg from '../assets/logo.png';
+            <pre class="prettyprint source linenums"><code>import { Drawer, Typography } from '@mui/material'
+import React from 'react'
+import { faPaw } from '@fortawesome/free-solid-svg-icons'
+import { faDog } from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faDoorOpen } from '@fortawesome/free-solid-svg-icons'
+import DrawerOption from './DrawerOption'
+import { useAuth } from '../contexts/AuthContext';
 
 /**
- * Página para añadir un refugio a la base de datos.
- * @requires AddShelterForm
+ * Componente de menú lateral para el usuario autenticado.
  * 
- * @returns {React.Component} Página de añadir refugio.
+ * @requires DrawerOption
+ * 
+ * @component
+ * @param {Boolean} open - Indica si el menú está abierto o cerrado.
+ * @param {Function} setOpen - Función para abrir o cerrar el menú.
+ * @returns {React.Component} Componente de menú lateral.
  * 
  * @example
  * // Ejemplo de uso:
- * &lt;AddShelterPage />
+ * &lt;DrawerMenu open={true} setOpen={setOpen}/>
  */
 
-const AddPetPage = () => {
- 
+const DrawerMenu = ({open, setOpen}) => {
+  const {logout} = useAuth()
+  const handleLogout = () => {
+    logout()
+  }
   return (
-    &lt;div className="bg-primary min-h-screen flex flex-col justify-center items-center">
-      &lt;Typography variant="h2" align="center" gutterBottom fontWeight="bold" 
-      className="font-montserrat text-sixth pb-10 pt-10">
-        Añadir Refugio
-      &lt;/Typography>
-      &lt;Container maxWidth="sm" disableGutters>
-        &lt;AddShelterForm />
-      &lt;/Container>
-    &lt;/div>
-  );
-};
+    &lt;Drawer 
+        PaperProps={{
+            sx: {
+                backgroundColor: '#F7E6C9',
+                width: '300px',
+                flexDirection: 'column',
+                justifyContent: 'start',
+                alignItems: 'center',
+                display: 'flex',
+                fontFamily: 'Anybody',
+                gap: '8rem',
+                padding: '2rem',
 
-export default AddPetPage;
-</code></pre>
+                
+                
+            }
+        }}
+    open={open} onClose={setOpen}>       
+        
+
+        &lt;Typography sx={{fontFamily:"Anybody", fontWeight:700, color:"#6C4F1D"}} variant='h4'>
+            MENÚ
+        &lt;/Typography>
+        &lt;DrawerOption icon={faPaw} content="AÑADIR MASCOTA" path="/addpet"/>
+        &lt;DrawerOption icon={faDog} content="REFUGIOS" path="/shelters"/>
+        &lt;DrawerOption icon={faUser} content="PERFIL" path="/profile"/>
+        &lt;DrawerOption icon={faDoorOpen} content="CERRAR SESIÓN" action={handleLogout}/>
+    &lt;/Drawer>
+  )
+}
+
+export default DrawerMenu</code></pre>
         </article>
     </section>
 

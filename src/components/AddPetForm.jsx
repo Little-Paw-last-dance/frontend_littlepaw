@@ -110,7 +110,9 @@ const AddPetForm = ({isAdmin}) => {
         }
       );
 
-      navigate("/");
+      let navigatePath = isAdmin ? `/shelters/${id}` : "/";
+
+      navigate(navigatePath);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
 

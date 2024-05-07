@@ -12,6 +12,26 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DrawerMenu from './DrawerMenu';
 
+/** 
+ * Página principal de la aplicación que muestra las mascotas disponibles para adopción.
+ * 
+ * @component
+ * 
+ * @state
+ * @property {String} searchQuery - Búsqueda de mascotas.
+ * @property {Array} searchResults - Resultados de la búsqueda de mascotas.
+ * @property {String} selectedType - Tipo de mascota seleccionado.
+ * @property {String} selectedSex - Sexo de mascota seleccionado.
+ * @property {Boolean} open - Indica si el menú lateral está abierto.
+ * @returns {React.Component} Página principal de la aplicación.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <MainPage />
+ * 
+ * 
+*/
+
 const MainPage = () => {
   const { logout, currentUser } = useAuth();
   const navigate = useNavigate();

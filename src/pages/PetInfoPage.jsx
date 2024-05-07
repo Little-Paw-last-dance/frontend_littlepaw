@@ -14,6 +14,23 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMars, faVenus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+
+/** 
+ * Página de información de una mascota en específico.
+ * 
+ * @component
+ * @state
+ * @property {Object} petData - Información de la mascota.
+ * @property {Boolean} canAdopt - Indica si el usuario puede adoptar la mascota.
+ * 
+ * @returns {React.Component} Página de información de una mascota.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <PetInfoPage />
+ * 
+*/
+
 const PetInfoPage = () => {
   const { id, shelterId } = useParams();
   const [petData, setPetData] = useState({});

@@ -10,6 +10,8 @@ import { useAuth } from '../contexts/AuthContext';
 /**
  * Componente de menú lateral para el usuario autenticado.
  * 
+ * @requires DrawerOption
+ * 
  * @component
  * @param {Boolean} open - Indica si el menú está abierto o cerrado.
  * @param {Function} setOpen - Función para abrir o cerrar el menú.

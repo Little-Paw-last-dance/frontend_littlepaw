@@ -7,6 +7,19 @@ import { faDoorOpen } from '@fortawesome/free-solid-svg-icons'
 import DrawerOption from './DrawerOption'
 import { useAuth } from '../contexts/AuthContext';
 
+/**
+ * Componente de menú lateral para el usuario autenticado.
+ * 
+ * @component
+ * @param {Boolean} open - Indica si el menú está abierto o cerrado.
+ * @param {Function} setOpen - Función para abrir o cerrar el menú.
+ * @returns {React.Component} Componente de menú lateral.
+ * 
+ * @example
+ * // Ejemplo de uso:
+ * <DrawerMenu open={true} setOpen={setOpen}/>
+ */
+
 const DrawerMenu = ({open, setOpen}) => {
   const {logout} = useAuth()
   const handleLogout = () => {

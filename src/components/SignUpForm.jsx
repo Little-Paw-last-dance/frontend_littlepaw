@@ -57,12 +57,16 @@ const SignUpForm = () => {
   const [completePhoneNumber, setCompletePhoneNumber] = useState('');
   const [phoneError, setPhoneError] = useState(false);
   const [generalError, setGeneralError] = useState(false);
+  const [ageError, setAgeError] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     let updatedValue = value;
     if (name === "age" || name === "countryCode" || name === "phone") {
       updatedValue = parseInt(value, 10);
+    }
+    if(name === "age"){
+      setAgeError(false);
     }
     if(name === "confirmPassword") {
       setMatchPasswordError(false);
@@ -93,6 +97,10 @@ const SignUpForm = () => {
     }
     if(formData.phone=== "undefined" || formData.phone.length < 8){
       setPhoneError(true);
+      errors++;
+    }
+    if(formData.age < 18){
+      setAgeError(true);
       errors++;
     }
     if (errors > 0) return;
@@ -287,6 +295,11 @@ const SignUpForm = () => {
               onChange={handleChange}
               fontFamily="Montserrat, sans-serif"
             />
+            {ageError && (
+              <p className="font-roboto text-red-600 text-[1rem] text-center">
+                Solo se permiten mayores de 18 años
+              </p>
+            )}
           </Grid>
         <Grid item xs={12}>
           {generalError && (

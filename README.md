@@ -130,6 +130,46 @@ La página de perfil editable es donde se muestra la información del usuario, c
 - [Montserrat](https://fonts.google.com/specimen/Montserrat)
 - [Roboto](https://fonts.google.com/specimen/Roboto)
 
+## Autores
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/camgany">
+            <img src="https://avatars.githubusercontent.com/u/84194948?v=4" width="50;" alt="camgany"/>
+            <br />
+            <sub><b>Camila Alejandra Grandy Camacho</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/NatiBilbao">
+            <img src="https://avatars.githubusercontent.com/u/49278336?v=4" width="50;" alt="camgany"/>
+            <br />
+            <sub><b>Natalia Bilbao Cano</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/MarcosHT4">
+            <img src="https://avatars.githubusercontent.com/u/80705427?v=4" width="50;" alt="MarcosHT4"/>
+            <br />
+            <sub><b>Marcos Andres Simon Agreda</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/ElJoamy">
+            <img src="https://avatars.githubusercontent.com/u/68487005?v=4" width="50;" alt="ElJoamy"/>
+            <br />
+            <sub><b>Joseph Anthony Meneses Salguero</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Dylan-Chambi">
+            <img src="https://avatars.githubusercontent.com/u/82673278?v=4" width="50;" alt="Dylan-Chambi"/>
+            <br />
+            <sub><b>Dylan Imanol Chambi Frontanilla</b></sub>
+        </a>
+    </td></tr>
+</table>
+
 ## LICENSE
 <!DOCTYPE html>
 <html lang="es">
